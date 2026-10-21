@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Clock,
   Gem,
+  Globe,
   Heart,
   Lock,
   MapPin,
@@ -18,6 +19,7 @@ import {
   Phone,
   ShieldCheck,
   Sparkles,
+  Star,
   Truck,
   User,
   Users,
@@ -35,6 +37,7 @@ import heroVideo from "../../assets/videos/short_video.mp4";
 import numerologyVideo from "../../assets/videos/video4.mp4";
 import matchVideo from "../../assets/videos/video9.mp4";
 import kundliVideo from "../../assets/videos/video2.mp4";
+import tarotVideo from "../../assets/videos/video10.mp4";
 import AppDownloadBanner from "../../assets/background_banner/app_download_banner.svg";
 import LeftMandala from "../../assets/background_banner/Left mandala.png";
 import RightMandala from "../../assets/background_banner/Right mandala.png";
@@ -322,15 +325,19 @@ export default function AstroHomePage() {
     tob: "",
     place: "",
   });
+  const [tarotForm, setTarotForm] = useState({ name: "", question: "" });
   const [numerologyLoading, setNumerologyLoading] = useState(false);
   const [matchMakingLoading, setMatchMakingLoading] = useState(false);
   const [kundliLoading, setKundliLoading] = useState(false);
+  const [tarotLoading, setTarotLoading] = useState(false);
   const [numerologyResult, setNumerologyResult] = useState(null);
   const [matchMakingResult, setMatchMakingResult] = useState(null);
   const [kundliResult, setKundliResult] = useState(null);
+  const [tarotResult, setTarotResult] = useState(null);
   const [numerologyError, setNumerologyError] = useState(null);
   const [matchMakingError, setMatchMakingError] = useState(null);
   const [kundliError, setKundliError] = useState(null);
+  const [tarotError, setTarotError] = useState(null);
   const blogs = useMemo(() => blogsData.slice(0, 4), []);
 
   const goPrevZodiac = () => {
@@ -445,6 +452,29 @@ export default function AstroHomePage() {
     }
   };
 
+  const submitTarot = async (e) => {
+    e.preventDefault();
+    setTarotError(null);
+    setTarotResult(null);
+    setTarotLoading(true);
+    try {
+      const response = await fetch(`${API_BASE}/ai/tarot/reading`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(tarotForm),
+      });
+      const payload = await response.json().catch(() => null);
+      if (!response.ok) {
+        throw new Error(payload?.message || "Could not generate tarot reading.");
+      }
+      setTarotResult(payload.data);
+    } catch (err) {
+      setTarotError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setTarotLoading(false);
+    }
+  };
+
   const submitKundli = async (e) => {
     e.preventDefault();
     setKundliError(null);
@@ -522,6 +552,32 @@ export default function AstroHomePage() {
         </div>
       </section>
 
+      {/* STATS STRIP — premium floating card */}
+      <div className="astro-stats" aria-label="Platform highlights">
+        <div className="astro-stat">
+          <span className="astro-stat__icon"><BadgeCheck className="h-5 w-5" /></span>
+          <strong className="astro-stat__number">1,000+</strong>
+          <span className="astro-stat__label">Verified Astrologers</span>
+        </div>
+        <div className="astro-stat__divider" aria-hidden="true" />
+        <div className="astro-stat">
+          <span className="astro-stat__icon"><Globe className="h-5 w-5" /></span>
+          <strong className="astro-stat__number">10+</strong>
+          <span className="astro-stat__label">Countries</span>
+        </div>
+        <div className="astro-stat__divider" aria-hidden="true" />
+        <div className="astro-stat">
+          <span className="astro-stat__icon"><Users className="h-5 w-5" /></span>
+          <strong className="astro-stat__number">10,000+</strong>
+          <span className="astro-stat__label">Users Guided</span>
+        </div>
+        <div className="astro-stat__divider" aria-hidden="true" />
+        <div className="astro-stat">
+          <span className="astro-stat__icon"><Star className="h-5 w-5" /></span>
+          <strong className="astro-stat__number">4.8 ★</strong>
+          <span className="astro-stat__label">Average Rating</span>
+        </div>
+      </div>
 
       {/* TRUST BAR + OUR SERVICES — Figma rounded cards */}
       <section className="astro-services-section">
@@ -921,8 +977,8 @@ export default function AstroHomePage() {
         >
           <source src={matchVideo} type="video/mp4" />
         </video>
-        <div className="astro-promo-banner__scrim" aria-hidden="true" />
-        <div className="astro-section astro-promo-banner__inner">
+        <div className="astro-promo-banner__scrim astro-promo-banner__scrim--right" aria-hidden="true" />
+        <div className="astro-section astro-promo-banner__inner astro-promo-banner__inner--right">
           <div className="astro-promo-banner__copy">
             <p className="astro-promo-banner__eyebrow">Free Matchmaking</p>
             <h2>
@@ -1157,6 +1213,113 @@ export default function AstroHomePage() {
                 ) : null}
                 <button type="button" className="astro-promo-banner__link" onClick={openModal}>
                   Share contact details
+                </button>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      {/* CHECK WHAT TAROT SAYS — right-aligned banner */}
+      <section className="astro-promo-banner astro-promo-banner--video">
+        <video
+          className="astro-promo-banner__video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+        >
+          <source src={tarotVideo} type="video/mp4" />
+        </video>
+        <div className="astro-promo-banner__scrim astro-promo-banner__scrim--right" aria-hidden="true" />
+        <div className="astro-section astro-promo-banner__inner astro-promo-banner__inner--right">
+          <div className="astro-promo-banner__copy">
+            <p className="astro-promo-banner__eyebrow">Free Tarot Reading</p>
+            <h2>
+              Check What Tarot
+              <br />
+              Says About You
+            </h2>
+            <p className="astro-promo-banner__sub">
+              Ask the cards a question and receive a free personalised tarot
+              reading — guidance from the universe, just for you.
+            </p>
+
+            <form className="astro-promo-banner__form" onSubmit={submitTarot}>
+              <label className="astro-promo-field">
+                <User className="h-4 w-4" aria-hidden="true" />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={tarotForm.name}
+                  onChange={(e) =>
+                    setTarotForm((prev) => ({ ...prev, name: e.target.value }))
+                  }
+                  required
+                />
+              </label>
+              <label className="astro-promo-field astro-promo-field--wide">
+                <Sparkles className="h-4 w-4" aria-hidden="true" />
+                <input
+                  type="text"
+                  name="question"
+                  placeholder="What is your question for the cards?"
+                  value={tarotForm.question}
+                  onChange={(e) =>
+                    setTarotForm((prev) => ({ ...prev, question: e.target.value }))
+                  }
+                  required
+                />
+              </label>
+              <button
+                type="submit"
+                className="astro-promo-banner__btn"
+                disabled={tarotLoading}
+              >
+                {tarotLoading ? "Reading the Cards..." : "Reveal My Tarot Reading"}
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </form>
+            {tarotError ? (
+              <p className="astro-promo-banner__status is-error">{tarotError}</p>
+            ) : null}
+            {tarotResult ? (
+              <div className="astro-promo-banner__status is-success astro-ai-brief">
+                {tarotResult.card ? (
+                  <p className="astro-ai-brief__eyebrow">
+                    <strong>{tarotResult.card}</strong>
+                    {tarotResult.archetype ? ` · ${tarotResult.archetype}` : ""}
+                  </p>
+                ) : null}
+                {tarotResult.message ? <p>{tarotResult.message}</p> : null}
+                {tarotResult.guidance ? (
+                  <div className="astro-ai-brief__block">
+                    <h4>Guidance</h4>
+                    <p>{tarotResult.guidance}</p>
+                  </div>
+                ) : null}
+                {tarotResult.energy ? (
+                  <div className="astro-ai-brief__block">
+                    <h4>Energy around you</h4>
+                    <p>{tarotResult.energy}</p>
+                  </div>
+                ) : null}
+                {tarotResult.action ? (
+                  <div className="astro-ai-brief__block">
+                    <h4>Suggested action</h4>
+                    <p>{tarotResult.action}</p>
+                  </div>
+                ) : null}
+                {tarotResult.affirmation ? (
+                  <div className="astro-ai-brief__block">
+                    <h4>Affirmation</h4>
+                    <p>{tarotResult.affirmation}</p>
+                  </div>
+                ) : null}
+                <button type="button" className="astro-promo-banner__link" onClick={openModal}>
+                  Talk to a Tarot Expert
                 </button>
               </div>
             ) : null}

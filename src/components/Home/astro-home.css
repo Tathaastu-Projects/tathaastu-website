@@ -354,37 +354,132 @@
 
 .astro-stats {
   width: min(var(--astro-max), calc(100% - (var(--astro-gutter) * 2)));
-  margin: -1.75rem auto 1.75rem;
+  margin: -2.25rem auto 2.5rem;
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
-  padding: 1.15rem 1.25rem;
-  border-radius: 1.35rem;
-  background: #fff;
-  border: 1px solid rgba(6, 66, 51, 0.08);
-  box-shadow: 0 14px 34px rgba(7, 51, 73, 0.1);
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: center;
+  padding: 1.75rem 2.25rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, #064233 0%, #0a5a45 50%, #073349 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 50px rgba(6, 66, 51, 0.35),
+    0 4px 16px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+/* Subtle shimmer overlay */
+.astro-stats::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(214, 179, 92, 0.08) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
 }
 
 .astro-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
   text-align: center;
-  padding: 0.55rem 0.35rem;
+  transition: transform 0.22s ease;
 }
 
-.astro-stat strong {
+.astro-stat:hover {
+  transform: translateY(-3px);
+}
+
+.astro-stat__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: rgba(214, 179, 92, 0.15);
+  border: 1px solid rgba(214, 179, 92, 0.3);
+  color: #d6b35c;
+  margin-bottom: 0.2rem;
+  box-shadow: 0 0 14px rgba(214, 179, 92, 0.18);
+  flex-shrink: 0;
+}
+
+.astro-stat__number {
   display: block;
-  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
   font-weight: 800;
-  line-height: 1.15;
-  color: #064233;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #f0d080 0%, #d6b35c 50%, #c49a38 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.astro-stat span {
+.astro-stat__label {
   display: block;
-  margin-top: 0.2rem;
-  font-size: 0.84rem;
-  color: #6b7a80;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* Vertical divider */
+.astro-stat__divider {
+  width: 1px;
+  height: 3.5rem;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.15) 30%,
+    rgba(255, 255, 255, 0.15) 70%,
+    transparent
+  );
+  flex-shrink: 0;
+}
+
+@media (max-width: 700px) {
+  .astro-stats {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 0;
+    margin-top: 0;
+    border-radius: 1.1rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .astro-stat__divider {
+    display: none;
+  }
+
+  .astro-stat {
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .astro-stat:nth-child(n+5) {
+    border-bottom: none;
+  }
+
+  .astro-stat__label {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 600px) {
+  .astro-stats {
+    width: calc(100% - (var(--astro-gutter) * 2));
+  }
 }
 
 /* Quick links */
@@ -1535,6 +1630,15 @@
   pointer-events: none;
 }
 
+.astro-promo-banner__scrim--right {
+  background: linear-gradient(
+    90deg,
+    rgba(246, 241, 230, 0.16) 0%,
+    rgba(246, 241, 230, 0.48) 58%,
+    rgba(246, 241, 230, 0.72) 100%
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   .astro-promo-banner__video {
     display: none;
@@ -1549,6 +1653,10 @@
   box-sizing: border-box;
   padding-top: 3rem;
   padding-bottom: 3rem;
+}
+
+.astro-promo-banner__inner--right {
+  justify-content: flex-end;
 }
 
 .astro-promo-banner__copy {
@@ -1610,6 +1718,12 @@
   border: 1px solid rgba(7, 51, 73, 0.08);
   box-shadow: 0 8px 20px rgba(7, 51, 73, 0.05);
   color: #e74660;
+}
+
+.astro-promo-field--wide {
+  flex: 1 1 100%;
+  max-width: 100%;
+  border-radius: 1.25rem;
 }
 
 .astro-promo-field input {
