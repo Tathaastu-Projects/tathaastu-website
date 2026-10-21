@@ -489,6 +489,31 @@
   display: block;
 }
 
+.astro-flip__marks {
+  position: absolute;
+  left: 0.55rem;
+  bottom: 0.55rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  max-width: calc(100% - 1.1rem);
+  padding: 0.28rem 0.48rem;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.94);
+  color: #2c2c2c;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.astro-flip__marks span + span::before {
+  content: "·";
+  margin-right: 0.32rem;
+  color: #c4a035;
+}
+
 .astro-flip__back {
   display: flex;
   flex-direction: column;

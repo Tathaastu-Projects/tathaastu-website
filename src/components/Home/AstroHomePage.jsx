@@ -575,10 +575,15 @@ export default function AstroHomePage() {
             />
             <div className="astro-astro-grid">
               {ASTROLOGERS.map((a) => (
-                <div key={a.name} className="astro-flip" tabIndex={0} aria-label={a.name}>
+                <div key={a.name} className="astro-flip" tabIndex={0} aria-label={`${a.name}, ${a.expertise.join(", ")}`}>
                   <div className="astro-flip__inner">
                     <div className="astro-flip__face astro-flip__front">
                       <img src={a.img} alt="" />
+                      <div className="astro-flip__marks">
+                        {a.expertise.map((tag) => (
+                          <span key={tag}>{tag}</span>
+                        ))}
+                      </div>
                     </div>
                     <div className="astro-flip__face astro-flip__back">
                       <div className="astro-flip__head">
