@@ -11,28 +11,28 @@ const mode = process.argv[2] || 'dev';
 const port = process.env.PORT;
 
 if (!port) {
-  console.error('PORT is not defined in frontend/.env');
-  process.exit(1);
+    console.error('PORT is not defined in frontend/.env');
+    process.exit(1);
 }
 
 const nextBin = path.join(rootDir, 'node_modules', 'next', 'dist', 'bin', 'next');
 const args = mode === 'build'
-  ? ['build']
-  : mode === 'start'
-    ? ['start', '-p', port]
-    : ['dev', '-p', port];
+    ? ['build']
+    : mode === 'start'
+        ? ['start', '-p', port]
+        : ['dev', '-p', port];
 
 const child = spawn(process.execPath, [nextBin, ...args], {
-  cwd: rootDir,
-  stdio: 'inherit',
-  env: { ...process.env, PORT: port },
+    cwd: rootDir,
+    stdio: 'inherit',
+    env: { ...process.env, PORT: port },
 });
 
 child.on('exit', (code) => {
-  process.exit(code ?? 0);
+    process.exit(code ?? 0);
 });
 
 child.on('error', (error) => {
-  console.error(error);
-  process.exit(1);
+    console.error(error);
+    process.exit(1);
 });
