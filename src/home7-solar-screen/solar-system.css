@@ -1,0 +1,442 @@
+/* Solar system animations - from Deepseek reference */
+
+.hs_slider_main_wrapper {
+  float: left;
+  width: 100%;
+  padding-top: 100px;
+  padding-bottom: 430px;
+  background-color: rgba(46, 87, 107, 0.4);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><circle cx='15' cy='28' r='1.2' fill='white' opacity='0.8'/><circle cx='87' cy='143' r='1.5' fill='white' opacity='0.9'/><circle cx='176' cy='55' r='1' fill='white' opacity='0.6'/><circle cx='43' cy='182' r='1.8' fill='white' opacity='0.7'/><circle cx='122' cy='92' r='1.1' fill='white' opacity='1'/><circle cx='5' cy='110' r='1.4' fill='white' opacity='0.8'/><circle cx='190' cy='170' r='1.3' fill='white' opacity='0.8'/><circle cx='60' cy='20' r='1.6' fill='white' opacity='0.5'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg width='300' height='300' viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'><circle cx='40' cy='240' r='2' fill='%23ffeedd' opacity='0.3'/><circle cx='280' cy='50' r='2.5' fill='%23ccddff' opacity='0.25'/><circle cx='150' cy='150' r='3' fill='%23ffffff' opacity='0.15'/><circle cx='210' cy='280' r='1.8' fill='%23eebb99' opacity='0.2'/></svg>");
+  background-repeat: repeat-x, repeat-x;
+  background-position: 0px 20%, 0px 95%, 0px 0px, 0px 100%, 0px 0px;
+  position: relative;
+  min-height: 900px;
+  animation: para 90s linear infinite;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 2000px rgba(46, 87, 107, 0.15);
+}
+
+@keyframes para {
+  100% {
+    background-position: -5000px 20%, -800px 95%, 500px 0px, 1000px 100%, 400px 0px;
+  }
+}
+
+.hs_slider_img_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(46, 87, 107, 0.2);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hs_slider_heading_wrapper {
+  float: left;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 20;
+}
+
+.hs_slider_logo_wraper {
+  float: left;
+  width: 100%;
+  display: inline-block;
+}
+
+.hs_slider_logo_wraper img {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  border: 0;
+  vertical-align: middle;
+}
+
+.hs_slider_logo_cont_wraper {
+  float: left;
+  width: 100%;
+  display: inline-block;
+}
+
+.hs_slider_logo_cont_wraper h2 {
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 42px;
+  padding-top: 10px;
+  font-style: italic;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.1;
+  text-shadow: 2px 2px 6px #0a1c2c;
+}
+
+.hs_slider_logo_cont_wraper h2 span {
+  background: transparent;
+  color: #ffde9e;
+}
+
+.hs_slider_cont_wrapper {
+  position: relative;
+  display: block;
+  perspective: 1000px;
+  perspective-origin: 60% 50%;
+  transform: rotate(-10deg);
+  padding-top: 200px;
+  margin: 0 auto;
+  width: 100%;
+  z-index: 15;
+}
+
+.hs_slider_cont_wrapper > div {
+  position: relative;
+  transform-style: preserve-3d;
+  height: 0;
+  margin: 0 auto;
+}
+
+.sun {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  border-radius: 250px;
+  margin: 0 auto;
+}
+
+.star {
+  width: 250px;
+  height: 250px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23ffdd77' /><circle cx='30' cy='35' r='8' fill='%23ffb347' opacity='0.5'/><circle cx='70' cy='60' r='12' fill='%23ffaa33' opacity='0.5'/><circle cx='55' cy='25' r='6' fill='%23ffaa33' opacity='0.6'/></svg>")
+    0% 0% / cover no-repeat;
+  border-radius: 250px;
+  margin: 0 auto;
+  animation: spinsun 40s linear infinite;
+}
+
+@keyframes spinsun {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+.hs_waves2 {
+  position: absolute;
+  width: 100%;
+  top: 120px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+.hs_wave {
+  width: 700px;
+  height: 700px;
+  margin-left: 50%;
+  left: -350px;
+  position: absolute;
+  bottom: -350px;
+  z-index: -1;
+  transform: scale(0.1, 0.1);
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  animation: pulse 3000ms ease-out infinite;
+}
+
+.hs_wave:nth-of-type(2) {
+  animation-delay: 600ms;
+}
+.hs_wave:nth-of-type(3) {
+  animation-delay: 1200ms;
+}
+.hs_wave:nth-of-type(4) {
+  animation-delay: 1800ms;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.1, 0.1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2, 1.2);
+    opacity: 0;
+  }
+}
+
+.mercury {
+  position: absolute;
+  width: 400px;
+  z-index: 2;
+  top: 35px;
+  left: 40%;
+  transform: translateX(-50%);
+  animation: orbitmercury 12s linear infinite;
+  transform-origin: center center;
+}
+
+.venus {
+  position: absolute;
+  width: 506px;
+  z-index: 3;
+  top: 30px;
+  left: 30%;
+  transform: translateX(-50%);
+  animation: orbitvenus 15s linear infinite;
+  transform-origin: center center;
+}
+
+.earth {
+  position: absolute;
+  width: 610px;
+  z-index: 4;
+  top: 50px;
+  left: 20%;
+  transform: translateX(-50%);
+  animation: orbitearth 20s linear infinite;
+  transform-origin: center center;
+}
+
+.mars {
+  position: absolute;
+  width: 706px;
+  z-index: 5;
+  top: 50px;
+  left: 20%;
+  transform: translateX(-50%);
+  animation: orbitmars 30s linear infinite;
+  transform-origin: center center;
+}
+
+.jupiter {
+  position: absolute;
+  width: 800px;
+  z-index: 6;
+  top: -34px;
+  left: 30%;
+  transform: translateX(-50%);
+  animation: orbitjupiter 50s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes orbitmercury {
+  0% {
+    z-index: 2;
+    transform: translateX(-50%) rotateY(0deg);
+  }
+  49% {
+    z-index: 2;
+  }
+  50% {
+    z-index: -2;
+    transform: translateX(-50%) rotateY(180deg);
+  }
+  99% {
+    z-index: -2;
+  }
+  100% {
+    z-index: 2;
+    transform: translateX(-50%) rotateY(360deg);
+  }
+}
+
+@keyframes orbitvenus {
+  0% {
+    z-index: -3;
+    transform: translateX(-50%) rotateY(0deg);
+  }
+  49% {
+    z-index: -3;
+  }
+  50% {
+    z-index: 3;
+    transform: translateX(-50%) rotateY(180deg);
+  }
+  99% {
+    z-index: 3;
+  }
+  100% {
+    z-index: 3;
+    transform: translateX(-50%) rotateY(360deg);
+  }
+}
+
+@keyframes orbitearth {
+  0% {
+    z-index: -4;
+    transform: translateX(-50%) rotateY(0deg);
+  }
+  49% {
+    z-index: -4;
+  }
+  50% {
+    z-index: 4;
+    transform: translateX(-50%) rotateY(180deg);
+  }
+  99% {
+    z-index: 4;
+  }
+  100% {
+    z-index: 4;
+    transform: translateX(-50%) rotateY(360deg);
+  }
+}
+
+@keyframes orbitmars {
+  0% {
+    z-index: -5;
+    transform: translateX(-50%) rotateY(0deg);
+  }
+  49% {
+    z-index: -5;
+  }
+  50% {
+    z-index: 5;
+    transform: translateX(-50%) rotateY(180deg);
+  }
+  99% {
+    z-index: 5;
+  }
+  100% {
+    z-index: 5;
+    transform: translateX(-50%) rotateY(360deg);
+  }
+}
+
+@keyframes orbitjupiter {
+  0% {
+    z-index: -6;
+    transform: translateX(-50%) rotateY(0deg);
+  }
+  49% {
+    z-index: -6;
+  }
+  50% {
+    z-index: 6;
+    transform: translateX(-50%) rotateY(180deg);
+  }
+  99% {
+    z-index: 6;
+  }
+  100% {
+    z-index: 6;
+    transform: translateX(-50%) rotateY(360deg);
+  }
+}
+
+.planet {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  overflow: hidden;
+  border-radius: 50%;
+  position: absolute;
+  left: 70%;
+  top: 50%;
+}
+
+.shadow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><radialGradient id='grad' cx='30%' cy='30%' r='70%'><stop offset='0%' stop-color='black' stop-opacity='0.4'/><stop offset='70%' stop-color='black' stop-opacity='0'/></radialGradient><rect width='100' height='100' fill='url(%23grad)'/></svg>")
+    0% 0% / cover no-repeat transparent;
+  border-radius: 100%;
+}
+
+@keyframes anti-spin {
+  0% {
+    transform: translate(-50%, -50%) rotateY(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateY(-360deg);
+  }
+}
+
+.mercury .planet {
+  width: 15px;
+  height: 15px;
+  left: calc(50% + 200px);
+  top: 50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%238c7a6b'/><circle cx='28' cy='30' r='8' fill='%235e4f44'/><circle cx='72' cy='55' r='10' fill='%234f3f35'/></svg>");
+  animation: anti-spin 12s linear infinite;
+}
+
+.venus .planet {
+  width: 38px;
+  height: 38px;
+  left: calc(50% + 253px);
+  top: 50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23e6b856'/><circle cx='32' cy='40' r='12' fill='%23b8822b'/><circle cx='70' cy='62' r='9' fill='%239f681f'/></svg>");
+  animation: anti-spin 15s linear infinite;
+}
+
+.earth .planet {
+  width: 40px;
+  height: 40px;
+  left: calc(50% + 355px);
+  top: 50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%233a75b0'/><circle cx='30' cy='30' r='12' fill='%23228b22'/><circle cx='72' cy='58' r='8' fill='%2335993b'/><circle cx='50' cy='70' r='10' fill='%232a7734'/></svg>");
+  animation: anti-spin 20s linear infinite;
+}
+
+.mars .planet {
+  width: 22px;
+  height: 22px;
+  left: calc(50% + 353px);
+  top: 50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23c45b3a'/><circle cx='26' cy='34' r='8' fill='%23993e24'/><circle cx='67' cy='58' r='11' fill='%23803017'/></svg>");
+  animation: anti-spin 30s linear infinite;
+}
+
+.jupiter .planet {
+  width: 128px;
+  height: 128px;
+  left: calc(50% + 550px);
+  top: 50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23d1a977'/><ellipse cx='40' cy='45' rx='12' ry='6' fill='%23b28248'/><ellipse cx='65' cy='58' rx='16' ry='7' fill='%239f6f3a'/><circle cx='25' cy='63' r='6' fill='%23ad7a42'/></svg>");
+  animation: anti-spin 50s linear infinite;
+}
+
+.hs_weather_search {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 28px;
+  font-weight: 300;
+  z-index: 100;
+  text-shadow: 2px 2px 6px #00000070;
+  pointer-events: none;
+}
+
+.hs_weather_search span {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 25px;
+  border-radius: 40px;
+  backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 240, 0.3);
+  font-family: "Roboto", sans-serif;
+}
+

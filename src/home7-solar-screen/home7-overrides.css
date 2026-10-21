@@ -1,0 +1,63 @@
+/* Home7 overrides: real planet images + background */
+
+.home7 .hs_slider_main_wrapper {
+  background-image: url("../assets/slide_bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  animation: none !important;
+  box-shadow: none;
+  float: none !important;
+  display: block;
+  width: 100%;
+}
+
+.home7 .hs_slider_main_wrapper {
+  background-position: center !important;
+}
+
+.home7 .hs_slider_img_overlay {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.home7 .star {
+  background: url("../assets/sun.png") center / cover no-repeat;
+  box-shadow: 0 0 60px rgba(255, 170, 51, 0.55), 0 0 120px rgba(255, 136, 51, 0.35);
+}
+
+.home7 .mercury .planet {
+  background-image: url("../assets/mercury.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: none;
+}
+
+.home7 .venus .planet {
+  background-image: url("../assets/venus.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: none;
+}
+
+.home7 .earth .planet {
+  background-image: url("../assets/earth.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: none;
+}
+
+.home7 .mars .planet {
+  background-image: url("../assets/mars.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: none;
+}
+
+.home7 .jupiter .planet {
+  background-image: url("../assets/jupiter.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: none;
+}
+
