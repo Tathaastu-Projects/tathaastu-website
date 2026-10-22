@@ -1,0 +1,415 @@
+/* ==========================================================================
+   Astro Blog Section — Luxury Vedic Design & Scroll Reveal Animations
+   ========================================================================== */
+
+.astro-blog-section {
+  position: relative;
+  width: 100%;
+  padding: 4.5rem 1.5rem 5rem;
+  background:
+    radial-gradient(
+      ellipse 70% 35% at 50% 0%,
+      rgba(212, 168, 83, 0.1),
+      transparent 70%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #faf7f0 50%, #f6f1e6 100%);
+  border-top: 1px solid rgba(212, 168, 83, 0.2);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.astro-blog-container {
+  width: min(var(--astro-max, 1200px), 100%);
+  margin: 0 auto;
+}
+
+/* Header */
+.astro-blog-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.astro-blog-head__copy {
+  max-width: 44rem;
+}
+
+.astro-blog-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.14);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  color: #8c631a;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 2px 8px rgba(212, 168, 83, 0.08);
+}
+
+.astro-blog-badge__sparkle {
+  color: #c4842a;
+  animation: astroBlogSparkle 3s ease-in-out infinite;
+}
+
+@keyframes astroBlogSparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.2) rotate(15deg);
+    opacity: 1;
+  }
+}
+
+.astro-blog-title {
+  margin: 0;
+  font-family: "Playfair Display SC", Georgia, serif;
+  font-size: clamp(1.85rem, 2.8vw, 2.6rem);
+  line-height: 1.2;
+  color: #064233;
+  letter-spacing: -0.01em;
+}
+
+.astro-blog-title span {
+  color: #c4842a;
+  background: linear-gradient(135deg, #c4842a 0%, #d4a853 50%, #9e6315 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.astro-blog-sub {
+  margin: 0.65rem 0 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: rgba(6, 66, 51, 0.72);
+}
+
+/* View All Link Button */
+.astro-blog-viewall {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(212, 168, 83, 0.38);
+  color: #064233 !important;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(6, 66, 51, 0.06);
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.astro-blog-viewall:hover {
+  background: #064233;
+  color: #ffffff !important;
+  border-color: #064233;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(6, 66, 51, 0.2);
+}
+
+.astro-blog-viewall__arrow {
+  transition: transform 0.25s ease;
+}
+
+.astro-blog-viewall:hover .astro-blog-viewall__arrow {
+  transform: translateX(4px);
+}
+
+/* Grid & Scroll-Triggered Reveal Animation */
+.astro-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.35rem;
+  width: 100%;
+}
+
+/* Card Initial State (Before Scrolled Into View) */
+.astro-blog-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 1.35rem;
+  background: linear-gradient(165deg, #ffffff 0%, #fdfbf7 70%, #faf5ec 100%);
+  border: 1px solid rgba(212, 168, 83, 0.26);
+  box-shadow:
+    0 8px 22px -4px rgba(6, 66, 51, 0.05),
+    0 1px 3px rgba(212, 168, 83, 0.06);
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  /* Scroll-reveal transform + opacity */
+  opacity: 0;
+  transform: translateY(45px) scale(0.96);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+  transition-delay: calc(var(--blog-index, 0) * 120ms);
+  will-change: opacity, transform;
+}
+
+/* When Scrolled Into View */
+.astro-blog-grid.is-visible .astro-blog-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Card Hover Elevation (Smooth and Premium) */
+.astro-blog-grid.is-visible .astro-blog-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  transition-delay: 0ms;
+  border-color: rgba(212, 168, 83, 0.55);
+  box-shadow:
+    0 22px 45px -10px rgba(6, 66, 51, 0.16),
+    0 6px 20px rgba(212, 168, 83, 0.2);
+}
+
+/* Golden top border highlight */
+.astro-blog-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4a853, transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 3;
+}
+
+.astro-blog-card:hover::before {
+  opacity: 1;
+}
+
+/* Media Wrap */
+.astro-blog-card__media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: #064233;
+}
+
+.astro-blog-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.astro-blog-card:hover .astro-blog-card__media img {
+  transform: scale(1.08);
+}
+
+/* Subtle Dark Vignette Scrim on Image */
+.astro-blog-card__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 66, 51, 0.25) 0%,
+    transparent 45%,
+    rgba(6, 66, 51, 0.65) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Category Badge (Floating Glassmorphism Pill) */
+.astro-blog-card__category {
+  position: absolute;
+  left: 0.85rem;
+  bottom: 0.85rem;
+  z-index: 2;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(6, 66, 51, 0.82);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 168, 83, 0.45);
+  color: #f3d489;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.astro-blog-card:hover .astro-blog-card__category {
+  background: #d4a853;
+  color: #064233;
+  border-color: #d4a853;
+  transform: translateY(-2px);
+}
+
+/* Read Time Badge (Top Right) */
+.astro-blog-card__readtime {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(6, 66, 51, 0.1);
+  color: #064233;
+  font-size: 0.72rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Card Body */
+.astro-blog-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.65rem;
+  padding: 1.15rem 1.25rem 1.15rem;
+}
+
+.astro-blog-card h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #064233;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.25s ease;
+}
+
+.astro-blog-card:hover h3 {
+  color: #0c5c46;
+}
+
+.astro-blog-card__excerpt {
+  margin: 0;
+  font-size: 0.87rem;
+  line-height: 1.6;
+  color: #4a5d55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Card Foot */
+.astro-blog-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(212, 168, 83, 0.18);
+  font-size: 0.78rem;
+  color: #7a6a58;
+}
+
+.astro-blog-card__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 500;
+  color: #6b7a73;
+}
+
+.astro-blog-card__read-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  color: #064233;
+  transition: color 0.25s ease;
+}
+
+.astro-blog-card__read-cta svg {
+  transition: transform 0.25s ease;
+}
+
+.astro-blog-card:hover .astro-blog-card__read-cta {
+  color: #c4842a;
+}
+
+.astro-blog-card:hover .astro-blog-card__read-cta svg {
+  transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .astro-blog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .astro-blog-section {
+    padding: 3.5rem 1rem 4rem;
+  }
+
+  .astro-blog-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .astro-blog-viewall {
+    align-self: flex-start;
+  }
+
+  .astro-blog-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .astro-blog-card {
+    /* Slightly less intense Y shift on mobile */
+    transform: translateY(30px) scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .astro-blog-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .astro-blog-badge__sparkle {
+    animation: none !important;
+  }
+}

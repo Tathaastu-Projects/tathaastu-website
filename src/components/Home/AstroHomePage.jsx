@@ -25,14 +25,22 @@ import {
   Users,
   Wallet,
   ChevronDown,
+  Compass,
+  Sun,
+  Award,
+  CheckCircle2,
 } from "lucide-react";
 import { useConnectModal } from "../../contexts/ConnectModalContext";
 import AstroFaqSection from "./AstroFaqSection";
+import AstroBlogSection from "./AstroBlogSection";
+import DailyHoroscopeSection from "./DailyHoroscopeSection";
+import AstroServicesSection from "./AstroServicesSection";
 import blogsData from "../../data/blogsData";
 import AnkitImg from "../../assets/AnkitImg.svg";
 import MeeraImg from "../../assets/MeeraImg.svg";
 import NeerajImg from "../../assets/NeerajImg.svg";
 import RishikaImg from "../../assets/Srinita_testimonial.jpg";
+import drPriyankaImg from "../../assets/about/dr_priyanka_singh.jpg";
 import heroVideo from "../../assets/videos/short_video.mp4";
 import numerologyVideo from "../../assets/videos/video4.mp4";
 import matchVideo from "../../assets/videos/video9.mp4";
@@ -70,11 +78,71 @@ import PiscesLogo from "../../assets/logo/pisces_logo.svg";
 import CustomerVideosSection from "./CustomerVideosSection";
 import ServiceDeckSection from "./ServiceDeckSection";
 import ProductCard from "../Store/ProductCard";
+import ClientTestimonialCard from "./ClientTestimonialCard";
+import ankitCustomer from "../../assets/customers/ankit.jpg";
+import meeraCustomer from "../../assets/customers/meera.jpg";
+import neerajCustomer from "../../assets/customers/neeraj.jpg";
+import rishikaCustomer from "../../assets/customers/rishika.jpg";
 import { getProductBySlug } from "../../data/storeData";
 import capricornHover from "../../assets/products/capricorn-hover.jpg";
 import mukhiHover from "../../assets/products/mukhi-hover.jpg";
 import amethystHover from "../../assets/products/amethyst-hover.jpg";
 import pyramidHover from "../../assets/products/pyramid-hover.jpg";
+
+const CLIENT_TESTIMONIALS = [
+  {
+    id: "ankit",
+    name: "Ankit",
+    age: 34,
+    role: "Product Designer",
+    city: "Mumbai",
+    service: "AI Birth Chart",
+    rating: 5,
+    photo: ankitCustomer,
+    tagIcon: Sparkles,
+    quote:
+      "The AI birth chart was scary-accurate. It explained things about my personality and life patterns I hadn’t put into words.",
+  },
+  {
+    id: "meera",
+    name: "Meera",
+    age: 41,
+    role: "Homemaker",
+    city: "Jaipur",
+    service: "Vastu Consultation",
+    rating: 5,
+    photo: meeraCustomer,
+    tagIcon: Compass,
+    quote:
+      "We consulted Tathaastu for Vastu when we were renovating our home. The expert’s recommendations were simple yet powerful.",
+  },
+  {
+    id: "neeraj",
+    name: "Neeraj",
+    age: 55,
+    role: "Businessman",
+    city: "Udaipur",
+    service: "Expert Consultation",
+    rating: 5,
+    photo: neerajCustomer,
+    tagIcon: Sun,
+    quote:
+      "The expert’s guidance felt so personal and practical. Every suggestion had a clear sense of timing and purpose for my business.",
+  },
+  {
+    id: "rishika",
+    name: "Rishika",
+    age: 29,
+    role: "Software Engineer",
+    city: "Bengaluru",
+    service: "Kundli Astrology",
+    rating: 5,
+    photo: rishikaCustomer,
+    tagIcon: ShieldCheck,
+    quote:
+      "I tried Tathaastu’s astrology consultation out of curiosity, and it turned into one of the most grounded conversations I’ve had.",
+  },
+];
 
 const API_BASE =
   process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:9001/api";
@@ -91,6 +159,12 @@ const BEST_SELLERS = [
   "7-mukhi-rudraksha",
   "amethyst-crystal",
   "money-wealth-pyramid",
+  "libra-zodiac-bracelet",
+  "scorpio-zodiac-bracelet",
+  "tigers-eye-stone",
+  "green-aventurine",
+  "lapis-lazuli",
+  "clear-quartz-rudraksha-bracelet",
 ]
   .map((slug) => {
     const product = getProductBySlug(slug);
@@ -521,13 +595,11 @@ export default function AstroHomePage() {
                 Live now · Experts online
               </p>
               <h1>
-                India’s Most Trusted
+                <span className="astro-hero__brand-green">India’s Most Trusted</span>
                 <br />
-                <span>
-                  Astrology &amp; Healin
-                  <span className="astro-hero__g">g</span>
-                </span>{" "}
-                Platform
+                <span className="astro-hero__coral">Astrology &amp; Healing</span>
+                <br />
+                <span className="astro-hero__brand-green">Platform</span>
               </h1>
               <ul className="astro-hero__bullets">
                 <li>Personalised Kundli &amp; Life Guidance</li>
@@ -697,125 +769,24 @@ export default function AstroHomePage() {
             </div>
           </div>
 
-          <div className="astro-services-head">
-            <p className="astro-services-eyebrow">Our Services</p>
-            <h2>Guidance For Every Part Of Your Journey</h2>
-            <p className="astro-services-sub">
-              Personalised Guidance For Your Journey, From Kundli And Astrology To Tarot, Vastu,
-              And Healing.
-            </p>
-          </div>
-
-          <div className="astro-service-row">
-            {SERVICE_TILES.map((s) => (
-              <Link key={s.title} to={s.path} className="astro-service-card">
-                <span className="astro-service-card__icon">
-                  <img src={s.img} alt="" />
-                </span>
-                <strong className="astro-service-card__title">{s.title}</strong>
-                <em className="astro-service-card__desc">{s.desc}</em>
-                <span className="astro-service-card__arrow" aria-hidden="true">
-                  <ArrowRight className="h-4 w-4" />
-                </span>
-              </Link>
-            ))}
-          </div>
-
-          <div className="astro-services-cta">
-            <Link to="/services" className="astro-services-cta__btn">
-              View All Services <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <AstroServicesSection />
         </div>
       </section>
 
       <ServiceDeckSection />
 
-      {/* DAILY HOROSCOPE — Figma carousel */}
-      <section id="daily-horoscope" className="astro-horoscope-section">
-        <img
-          className="astro-horoscope-mandala astro-horoscope-mandala--left"
-          src={LeftMandala}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          className="astro-horoscope-mandala astro-horoscope-mandala--right"
-          src={RightMandala}
-          alt=""
-          aria-hidden="true"
-        />
-        <div className="astro-section">
-          <div className="astro-horoscope-head">
-            <p>Daily Horoscope</p>
-            <h2>Your Cosmic Guidance For Today</h2>
-          </div>
-
-          <div className="astro-horoscope-carousel">
-            <button
-              type="button"
-              className="astro-horoscope-nav"
-              onClick={goPrevZodiac}
-              aria-label="Previous zodiac"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-
-            <div className="astro-horoscope-track">
-              {visibleZodiac.map((z) => (
-                <article
-                  key={`${z.name}-${z.offset}`}
-                  className={`astro-horoscope-card is-offset-${Math.abs(z.offset)} ${
-                    z.offset === 0 ? "is-active" : ""
-                  } ${z.offset < 0 ? "is-left" : ""} ${z.offset > 0 ? "is-right" : ""}`}
-                  onClick={() => setActiveZodiac(z.index)}
-                >
-                  <div className="astro-horoscope-card__logo">
-                    <img src={z.logo} alt="" />
-                  </div>
-                  <h3>{z.name}</h3>
-                  <p>{z.blurb}</p>
-                  <div className="astro-horoscope-scores">
-                    {SCORE_META.map(({ key, label, icon: Icon }) => (
-                      <div key={key} className="astro-horoscope-score">
-                        <span className="astro-horoscope-score__label">
-                          <Icon className="h-3.5 w-3.5" />
-                          {label}
-                        </span>
-                        <span className="astro-horoscope-score__bar">
-                          <i style={{ width: `${z.scores[key]}%` }} />
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              className="astro-horoscope-nav"
-              onClick={goNextZodiac}
-              aria-label="Next zodiac"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
-
-          <div className="astro-horoscope-dots" role="tablist" aria-label="Zodiac signs">
-            {zodiacCards.map((z, idx) => (
-              <button
-                key={z.name}
-                type="button"
-                className={idx === activeZodiac ? "is-active" : ""}
-                aria-label={z.name}
-                aria-selected={idx === activeZodiac}
-                onClick={() => setActiveZodiac(idx)}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* DAILY HOROSCOPE */}
+      <DailyHoroscopeSection
+        zodiacCards={zodiacCards}
+        activeZodiac={activeZodiac}
+        setActiveZodiac={setActiveZodiac}
+        goPrevZodiac={goPrevZodiac}
+        goNextZodiac={goNextZodiac}
+        visibleZodiac={visibleZodiac}
+        scoreMeta={SCORE_META}
+        leftMandala={LeftMandala}
+        rightMandala={RightMandala}
+      />
 
       {/* FREE NUMEROLOGY REPORT — Figma banner */}
       <section className="astro-promo-banner astro-promo-banner--video">
@@ -1379,50 +1350,110 @@ export default function AstroHomePage() {
         <SectionHeading
           eyebrow="Store"
           title="Our Best Seller Products"
-          subtitle="Four pieces from the Abhimantrit store, ready to look at more closely."
+          subtitle="Sacred pieces from the Tathaastu store — hover to explore."
           action={
             <Link to="/store" className="astro-link">
               View all <ArrowRight className="h-4 w-4" />
             </Link>
           }
         />
-        <div className="store-grid">
+        <div className="astro-bs-scroll">
           {BEST_SELLERS.map((product) => (
-            <ProductCard key={product.id} product={product} imageSwap />
+            <ProductCard key={product.id} product={product} imageSwap hoverStrip />
           ))}
         </div>
       </section>
 
       <section className="astro-section astro-founder" aria-labelledby="founder-heading">
         <div className="astro-founder__panel">
+          <div className="astro-founder__watermark" aria-hidden="true" />
+
           <div className="astro-founder__copy">
-            <p className="astro-eyebrow">About Co-founder</p>
-            <p className="astro-founder__kicker">Meet Our Co-Founder</p>
+            <div className="astro-founder__badge">
+              <Award className="h-3.5 w-3.5" />
+              <span>Co-Founder & Chief Vedic Astrologer</span>
+            </div>
+
+            <p className="astro-founder__kicker">Vedic Wisdom · Modern Clarity</p>
             <h2 id="founder-heading">Dr. Priyanka Singh</h2>
-            <p>
-              With over 15 years of experience in astrology, Dr. Priyanka Singh has guided people
-              through important questions about life, relationships, career, and personal growth. Her
-              approach combines astrological knowledge with personalised guidance to help people
-              understand their Kundli and explore a clearer path forward.
+            <p className="astro-founder__credentials">
+              Ph.D. in Vedic Astrology · Gold Medalist · 15+ Years Practicing
             </p>
-            <p>
-              At Tathaastu, we aim to make astrology and spiritual guidance more accessible, personal,
-              and meaningful for everyone.
+
+            <blockquote className="astro-founder__quote">
+              “Astrology is not about predicting a fixed destiny — it is about illuminating your
+              innate strengths and navigating time with conscious awareness.”
+            </blockquote>
+
+            <p className="astro-founder__desc">
+              With over 15 years of experience in classical Vedic astrology, Dr. Priyanka Singh has
+              guided seekers through crucial life transitions, relationships, and career paths. Her
+              personalized consultations combine sacred astrological shastras with grounded,
+              compassionate modern clarity.
             </p>
+
+            <div className="astro-founder__pillars">
+              <span className="astro-founder__pillar">Vedic Kundli</span>
+              <span className="astro-founder__pillar">Vastu Shastra</span>
+              <span className="astro-founder__pillar">Numerology</span>
+              <span className="astro-founder__pillar">Chakra Healing</span>
+            </div>
+
             <div className="astro-founder__stats">
-              <div>
-                <strong>15+ Years</strong>
-                <span>Of Astrology Practice</span>
+              <div className="astro-founder__stat-card">
+                <div className="astro-founder__stat-icon">
+                  <Award size={22} />
+                </div>
+                <div>
+                  <strong>15+ Years</strong>
+                  <span>Of Vedic Mastery</span>
+                  <small>Guiding seekers worldwide</small>
+                </div>
               </div>
-              <div>
-                <strong>10,00,000+</strong>
-                <span>People Guided</span>
+
+              <div className="astro-founder__stat-card">
+                <div className="astro-founder__stat-icon">
+                  <Users size={22} />
+                </div>
+                <div>
+                  <strong>10 Lakh+</strong>
+                  <span>People Guided</span>
+                  <small>Across 45+ countries</small>
+                </div>
               </div>
             </div>
+
+            <div className="astro-founder__action">
+              <Link to="/talk-to-astrologers" className="astro-founder__btn">
+                <span>Book Consultation with Dr. Priyanka</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
-          <div className="astro-founder__photo" role="img" aria-label="Placeholder for Dr. Priyanka Singh’s photo">
-            <User strokeWidth={1.25} />
-            <span>Photo</span>
+
+          <div className="astro-founder__photo-card">
+            <div className="astro-founder__photo-frame">
+              <img
+                src={drPriyankaImg}
+                alt="Dr. Priyanka Singh - Co-Founder of Tathaastu"
+                className="astro-founder__photo-img"
+                loading="lazy"
+              />
+              <div className="astro-founder__photo-sheen" aria-hidden="true" />
+
+              <div className="astro-founder__floating-badge">
+                <Star className="h-3.5 w-3.5 fill-current" />
+                <span>Top Rated · 5.0 (12k+ Sessions)</span>
+              </div>
+
+              <div className="astro-founder__floating-card">
+                <div className="astro-founder__floating-name">
+                  <strong>Dr. Priyanka Singh</strong>
+                  <CheckCircle2 size={16} className="astro-founder__check-icon" />
+                </div>
+                <span>Co-Founder · Chief Astrologer, Tathaastu</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1430,119 +1461,30 @@ export default function AstroHomePage() {
       {/* CUSTOMER VIDEOS — horizontal strip above blogs */}
       <CustomerVideosSection />
 
-      <section className="astro-clients-banner">
+      <section className="astro-clients-banner" aria-labelledby="clients-heading">
         <div className="astro-section astro-clients-banner__inner">
           <div className="astro-clients-banner__header">
-            <p className="astro-promo-banner__eyebrow">Real Stories</p>
-            <h2>What Our Clients Say</h2>
+            <div className="astro-clients-banner__badge">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Real Stories · 10 Lakh+ People Guided</span>
+            </div>
+            <h2 id="clients-heading">What Our Clients Say</h2>
             <p>
-              Hear from people who found the guidance, clarity, and support they were looking for
-              with Tathaastu.
+              Hear authentic experiences from seekers who found clarity, alignment, and peace of mind
+              with Tathaastu’s personalised guidance.
             </p>
           </div>
 
           <div className="astro-clients-grid">
-            <article className="astro-client-card">
-              <span className="astro-client-card__mark" aria-hidden="true">
-                “
-              </span>
-              <p>
-                The AI birth chart was scary-accurate. It explained things about my personality I
-                hadn’t put into words.
-              </p>
-              <div className="astro-client-card__meta">
-                <span className="astro-client-card__avatar">A</span>
-                <div>
-                  <strong>Ankit, 34</strong>
-                  <small>Product Designer, Mumbai</small>
-                </div>
-              </div>
-            </article>
-
-            <article className="astro-client-card">
-              <span className="astro-client-card__mark" aria-hidden="true">
-                “
-              </span>
-              <p>
-                We consulted Tathaastu for Vastu when we were renovating our home. The expert’s
-                recommendations were simple yet powerful.
-              </p>
-              <div className="astro-client-card__meta">
-                <span className="astro-client-card__avatar astro-client-card__avatar--green">M</span>
-                <div>
-                  <strong>Meera, 41</strong>
-                  <small>Homemaker, Jaipur</small>
-                </div>
-              </div>
-            </article>
-
-            <article className="astro-client-card">
-              <span className="astro-client-card__mark" aria-hidden="true">
-                “
-              </span>
-              <p>
-                The expert’s guidance felt so personal and practical. Every suggestion had a clear
-                sense of timing and purpose.
-              </p>
-              <div className="astro-client-card__meta">
-                <span className="astro-client-card__avatar astro-client-card__avatar--gold">N</span>
-                <div>
-                  <strong>Neeraj, 55</strong>
-                  <small>Businessman, Udaipur</small>
-                </div>
-              </div>
-            </article>
-
-            <article className="astro-client-card">
-              <span className="astro-client-card__mark" aria-hidden="true">
-                “
-              </span>
-              <p>
-                I tried Tathaastu’s astrology consultation out of curiosity, and it turned into one of
-                the most grounded conversations I’ve had.
-              </p>
-              <div className="astro-client-card__meta">
-                <span className="astro-client-card__avatar astro-client-card__avatar--rose">R</span>
-                <div>
-                  <strong>Rishika, 29</strong>
-                  <small>Engineer, Bengaluru</small>
-                </div>
-              </div>
-            </article>
+            {CLIENT_TESTIMONIALS.map((testimonial) => (
+              <ClientTestimonialCard key={testimonial.id} testimonial={testimonial} />
+            ))}
           </div>
         </div>
       </section>
 
       {/* BLOG */}
-      <section className="astro-section astro-section--soft">
-        <SectionHeading
-          eyebrow="Learn"
-          title="Explore Our Latest Blogs"
-          action={
-            <Link to="/blog" className="astro-link">
-              View all blogs <ArrowRight className="h-4 w-4" />
-            </Link>
-          }
-        />
-        <div className="astro-blog-grid">
-          {blogs.map((b) => (
-            <Link key={b.id} to={`/blog/${b.slug}`} className="astro-blog-card">
-              <span className="astro-blog-card__media">
-                <img src={b.image} alt="" />
-                <span>{b.category}</span>
-              </span>
-              <span className="astro-blog-card__body">
-                <h3>{b.title}</h3>
-                <p>{b.excerpt}</p>
-                <span className="astro-blog-card__foot">
-                  <span>{b.date}</span>
-                  <span>{b.readTime}</span>
-                </span>
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <AstroBlogSection blogs={blogs} />
 
       <AstroFaqSection />
     </div>

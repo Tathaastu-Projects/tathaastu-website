@@ -6,6 +6,8 @@ import "../styles/global.css";
 import "../styles/motion.css";
 import "../components/Home/astro-home.css";
 import "../components/Home/astro-faq.css";
+import "../components/Home/astro-blog.css";
+import "../components/Home/astro-horoscope.css";
 import "../components/Home/solar-hero/tathaastu-solar-hero.css";
 import "../components/Home/solar-hero/tathaastu-solar-home7.css";
 import "../home7-solar-screen/home7-overrides.css";

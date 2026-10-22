@@ -1,210 +1,597 @@
+/* ==========================================================================
+   Astro FAQ Section — Luxury Centered Vedic Design & Animations
+   ========================================================================== */
+
 .astro-faq-section {
-  --astro-gutter: clamp(1rem, 3vw, 2.5rem);
+  position: relative;
   width: 100%;
-  max-width: none;
-  margin: 0;
-  padding-top: 1.5rem;
-  padding-bottom: 3.5rem;
-  padding-left: max(var(--astro-gutter), calc((100% - 1735px) / 2));
-  padding-right: max(var(--astro-gutter), calc((100% - 1735px) / 2));
+  padding: 5.5rem 1.5rem 6rem;
+  background:
+    radial-gradient(
+      ellipse 75% 45% at 50% 0%,
+      rgba(212, 168, 83, 0.14),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 50% 100%,
+      rgba(6, 66, 51, 0.05),
+      transparent 70%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #faf6ee 45%, #f6f0e4 100%);
+  border-top: 1px solid rgba(212, 168, 83, 0.22);
+  border-bottom: 1px solid rgba(212, 168, 83, 0.18);
   box-sizing: border-box;
+  overflow: hidden;
 }
 
+/* Ambient glows */
+.astro-faq-ambient {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+}
+
+.astro-faq-ambient--top {
+  width: 480px;
+  height: 240px;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(212, 168, 83, 0.22), transparent 70%);
+}
+
+.astro-faq-ambient--bottom {
+  width: 520px;
+  height: 260px;
+  bottom: -90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(6, 66, 51, 0.08), transparent 70%);
+}
+
+/* Centered Main Container */
+.astro-faq-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
 .astro-faq-head {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-bottom: 2rem;
+  max-width: 680px;
+  margin-bottom: 2.75rem;
 }
 
-.astro-faq-blogs-btn {
+.astro-faq-badge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  margin-bottom: 1.75rem;
-  padding: 0.85rem 1.5rem;
-  border-radius: 0.65rem;
-  background: #e74660;
-  color: #fff;
-  font-size: 0.95rem;
+  gap: 0.5rem;
+  padding: 0.4rem 1.05rem;
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.15);
+  border: 1px solid rgba(212, 168, 83, 0.38);
+  color: #8c631a;
+  font-size: 0.74rem;
   font-weight: 700;
-  text-decoration: none;
-  box-shadow: 0 10px 22px rgba(231, 70, 96, 0.25);
-  transition: background 0.2s ease, transform 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(212, 168, 83, 0.1);
+  backdrop-filter: blur(4px);
 }
 
-.astro-faq-blogs-btn:hover {
-  background: #d13a52;
-  transform: translateY(-1px);
-  color: #fff;
+.astro-faq-badge__sparkle {
+  color: #c4842a;
+  animation: astroSparklePulse 2.8s ease-in-out infinite;
+}
+
+@keyframes astroSparklePulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.2) rotate(15deg);
+    opacity: 1;
+  }
 }
 
 .astro-faq-title {
   margin: 0;
   font-family: "Playfair Display SC", Georgia, serif;
-  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
   line-height: 1.15;
-  color: #1a1a1a;
-  font-weight: 700;
+  color: #064233;
+  letter-spacing: -0.01em;
 }
 
 .astro-faq-title span {
-  color: #064233;
+  color: #c4842a;
+  background: linear-gradient(135deg, #c4842a 0%, #d4a853 50%, #9e6315 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .astro-faq-sub {
-  margin: 0.85rem 0 0;
-  max-width: 36rem;
-  font-size: 1rem;
-  line-height: 1.55;
-  color: #6b7a80;
+  margin: 0.9rem auto 0;
+  max-width: 38rem;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: rgba(6, 66, 51, 0.76);
 }
 
-.astro-faq {
-  display: grid;
-  gap: 0.9rem;
+/* Category Filter Tabs */
+.astro-faq-filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  margin-top: 1.75rem;
   width: 100%;
-  max-width: none;
-  margin: 0;
+}
+
+.astro-faq-filter-btn {
+  border: 1px solid rgba(212, 168, 83, 0.32);
+  background: rgba(255, 255, 255, 0.88);
+  color: #064233;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  backdrop-filter: blur(6px);
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.astro-faq-filter-btn:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+  border-color: #d4a853;
+  box-shadow: 0 4px 14px rgba(212, 168, 83, 0.18);
+}
+
+.astro-faq-filter-btn.is-active {
+  background: linear-gradient(135deg, #064233 0%, #0b5442 100%);
+  color: #ffffff;
+  border-color: #064233;
+  box-shadow:
+    0 6px 18px rgba(6, 66, 51, 0.28),
+    0 2px 6px rgba(212, 168, 83, 0.2);
+}
+
+/* Accordion List — Centered */
+.astro-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 }
 
 .astro-faq__item {
   width: 100%;
-  background: #fff;
-  border: 1px solid rgba(231, 70, 96, 0.18);
+  background: linear-gradient(165deg, #ffffff 0%, #fdfbf7 60%, #f9f4ea 100%);
+  border: 1px solid rgba(212, 168, 83, 0.26);
   border-radius: 1.35rem;
+  box-shadow:
+    0 4px 16px rgba(6, 66, 51, 0.04),
+    0 1px 3px rgba(212, 168, 83, 0.06);
+  transition:
+    transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.28s ease,
+    background 0.28s ease;
   overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.astro-faq__item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 168, 83, 0.5);
+  box-shadow:
+    0 14px 32px -6px rgba(6, 66, 51, 0.09),
+    0 4px 14px rgba(212, 168, 83, 0.12);
 }
 
 .astro-faq__item.is-open {
-  border-radius: 1.5rem;
-  border-color: rgba(231, 70, 96, 0.35);
-  box-shadow: 0 8px 24px rgba(7, 51, 73, 0.05);
+  border-color: #d4a853;
+  border-left: 4px solid #c4842a;
+  background: linear-gradient(165deg, #ffffff 0%, #faf5ea 100%);
+  box-shadow:
+    0 18px 40px -8px rgba(6, 66, 51, 0.12),
+    0 4px 18px rgba(212, 168, 83, 0.16);
 }
 
-.astro-faq__item button {
+/* Trigger Button */
+.astro-faq__trigger {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 1.15rem;
-  padding: 1.05rem 1.35rem;
+  gap: 1.25rem;
+  padding: 1.25rem 1.45rem;
   border: none;
   background: transparent;
   text-align: left;
   cursor: pointer;
+  outline: none;
+  transition: padding 0.2s ease;
 }
 
+/* Number Badge */
 .astro-faq__num {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.35rem;
-  height: 2.35rem;
-  border-radius: 999px;
-  background: rgba(231, 70, 96, 0.1);
-  color: #e74660;
-  font-size: 0.85rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(212, 168, 83, 0.14);
+  border: 1px solid rgba(212, 168, 83, 0.32);
+  color: #8c631a;
+  font-family: "Playfair Display SC", Georgia, serif;
+  font-size: 0.92rem;
   font-weight: 800;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s ease;
+}
+
+.astro-faq__item:hover .astro-faq__num {
+  transform: scale(1.08);
+}
+
+.astro-faq__item.is-open .astro-faq__num {
+  background: linear-gradient(135deg, #d4a853 0%, #b8862d 100%);
+  color: #ffffff;
+  border-color: #d4a853;
+  box-shadow: 0 4px 14px rgba(212, 168, 83, 0.38);
+}
+
+/* Question Title and Category Wrap */
+.astro-faq__q-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.astro-faq__category-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #a46d1c;
+  background: rgba(212, 168, 83, 0.12);
+  padding: 0.12rem 0.5rem;
+  border-radius: 4px;
 }
 
 .astro-faq__q {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
+  color: #064233;
+  line-height: 1.35;
+  transition: color 0.2s ease;
+}
+
+.astro-faq__item:hover .astro-faq__q {
+  color: #0d5c48;
+}
+
+.astro-faq__item.is-open .astro-faq__q {
   color: #064233;
 }
 
+/* Toggle Button Icon with 45deg rotation animation */
 .astro-faq__toggle {
   flex: 0 0 auto;
   margin-left: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.15rem;
-  height: 2.15rem;
-  border-radius: 999px;
-  background: rgba(231, 70, 96, 0.12);
-  color: #e74660;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  background: rgba(6, 66, 51, 0.06);
+  border: 1px solid rgba(6, 66, 51, 0.12);
+  color: #064233;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.astro-faq__toggle-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.astro-faq__item:hover .astro-faq__toggle {
+  background: rgba(212, 168, 83, 0.2);
+  border-color: rgba(212, 168, 83, 0.45);
+  color: #8c631a;
+  transform: scale(1.05);
 }
 
 .astro-faq__toggle.is-open {
-  background: #e74660;
-  color: #fff;
+  background: #064233;
+  border-color: #064233;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(6, 66, 51, 0.25);
+}
+
+.astro-faq__toggle.is-open .astro-faq__toggle-icon {
+  transform: rotate(45deg);
+}
+
+/* Animated Answer Content (CSS Grid height transition) */
+.astro-faq__content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 0.36s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.28s ease;
+  opacity: 0;
+}
+
+.astro-faq__item.is-open .astro-faq__content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.astro-faq__inner {
+  overflow: hidden;
 }
 
 .astro-faq__a {
   margin: 0;
-  padding: 0 1.15rem 1.25rem 4.5rem;
-  color: #6b7a80;
-  font-size: 0.95rem;
-  line-height: 1.65;
+  padding: 0 1.5rem 1.45rem 5.25rem;
+  color: #3b5047;
+  font-size: 0.98rem;
+  line-height: 1.7;
 }
 
-@media (max-width: 900px) {
-  .astro-faq-section {
-    padding-top: 1rem;
-    padding-bottom: 2.25rem;
-    padding-left: var(--astro-gutter);
-    padding-right: var(--astro-gutter);
-  }
+/* Support Help Card */
+.astro-faq-support {
+  margin-top: 3rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem 2.25rem;
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(212, 168, 83, 0.18),
+      transparent 50%
+    ),
+    linear-gradient(135deg, #064233 0%, #0d5442 100%);
+  color: #ffffff;
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  box-shadow:
+    0 18px 40px -10px rgba(6, 66, 51, 0.4),
+    0 4px 16px rgba(212, 168, 83, 0.15);
+  box-sizing: border-box;
+}
 
-  .astro-faq-head {
-    margin-bottom: 1.25rem;
-  }
+.astro-faq-support__left {
+  display: flex;
+  align-items: center;
+  gap: 1.35rem;
+  min-width: 0;
+}
 
-  .astro-faq-blogs-btn {
-    margin-bottom: 1.15rem;
-    padding: 0.75rem 1.2rem;
-    font-size: 0.88rem;
-  }
+/* Astrologer Avatars */
+.astro-faq-support__avatars {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
 
-  .astro-faq-title {
-    font-size: clamp(1.4rem, 6.5vw, 1.85rem);
-  }
+.astro-faq-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  overflow: hidden;
+  margin-left: -0.65rem;
+  background: rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
 
-  .astro-faq {
-    gap: 0.65rem;
+.astro-faq-avatar:first-child {
+  margin-left: 0;
+}
+
+.astro-faq-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.astro-faq-avatar--pulse {
+  background: rgba(212, 168, 83, 0.3);
+  color: #ffffff;
+}
+
+.astro-faq-live-dot {
+  position: absolute;
+  bottom: 0;
+  right: -0.2rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid #064233;
+  box-shadow: 0 0 8px #22c55e;
+  animation: astroLivePulse 2s infinite;
+}
+
+@keyframes astroLivePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
   }
 }
 
-@media (max-width: 700px) {
+.astro-faq-support__copy h4 {
+  margin: 0;
+  font-family: "Playfair Display SC", Georgia, serif;
+  font-size: 1.22rem;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.astro-faq-support__copy p {
+  margin: 0.3rem 0 0;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.5;
+}
+
+.astro-faq-support__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.45rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d4a853 0%, #e0b865 100%);
+  color: #064233 !important;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 6px 18px rgba(212, 168, 83, 0.35);
+  transition:
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.25s ease,
+    box-shadow 0.28s ease;
+}
+
+.astro-faq-support__btn:hover {
+  background: linear-gradient(135deg, #e3bd6d 0%, #ecd089 100%);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 26px rgba(212, 168, 83, 0.5);
+}
+
+.astro-faq-support__btn svg:last-child {
+  transition: transform 0.25s ease;
+}
+
+.astro-faq-support__btn:hover svg:last-child {
+  transform: translateX(3px);
+}
+
+/* Responsive */
+@media (max-width: 800px) {
   .astro-faq-section {
-    padding-left: var(--astro-gutter);
-    padding-right: var(--astro-gutter);
+    padding: 4rem 1rem 4.5rem;
   }
 
-  .astro-faq__item {
-    border-radius: 1.1rem;
-  }
-
-  .astro-faq__item button {
-    gap: 0.75rem;
-    padding: 0.85rem 0.9rem;
-  }
-
-  .astro-faq__q {
-    font-size: 0.92rem;
+  .astro-faq__trigger {
+    gap: 0.95rem;
+    padding: 1.1rem 1.15rem;
   }
 
   .astro-faq__a {
-    padding: 0 0.9rem 1.1rem 0.9rem;
+    padding: 0 1.15rem 1.25rem 4.6rem;
+  }
+
+  .astro-faq-support {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .astro-faq-support__left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
+  .astro-faq-support__btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 580px) {
   .astro-faq__num {
-    width: 2rem;
-    height: 2rem;
-    font-size: 0.75rem;
+    width: 2.15rem;
+    height: 2.15rem;
+    font-size: 0.8rem;
   }
 
   .astro-faq__q {
-    font-size: 0.88rem;
+    font-size: 0.94rem;
+  }
+
+  .astro-faq__a {
+    padding: 0 1.15rem 1.25rem 1.15rem;
+  }
+
+  .astro-faq__toggle {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .astro-faq-filters {
+    gap: 0.4rem;
+  }
+
+  .astro-faq-filter-btn {
+    padding: 0.35rem 0.85rem;
+    font-size: 0.76rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .astro-faq__item,
+  .astro-faq__content,
+  .astro-faq__toggle-icon,
+  .astro-faq-badge__sparkle,
+  .astro-faq-live-dot {
+    animation: none !important;
+    transition: none !important;
   }
 }
