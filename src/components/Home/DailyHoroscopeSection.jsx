@@ -141,7 +141,8 @@ export default function DailyHoroscopeSection({
 
   return (
     <section id="daily-horoscope" className="astro-horoscope-section" aria-labelledby="horoscope-heading">
-      {/* Slow Rotating Sacred Background Mandalas */}
+      {/* Slow Rotating Sacred Background Mandalas (Commented out per request) */}
+      {/*
       {leftMandala && (
         <img
           className="astro-horoscope-mandala astro-horoscope-mandala--left"
@@ -158,6 +159,7 @@ export default function DailyHoroscopeSection({
           aria-hidden="true"
         />
       )}
+      */}
 
       <div className="astro-section">
         {/* Header */}
@@ -304,7 +306,8 @@ export default function DailyHoroscopeSection({
           ))}
         </div>
 
-        {/* Indicator Cosmic Dots */}
+        {/* Indicator Cosmic Dots (Commented out per request) */}
+        {/*
         <div className="astro-horoscope-dots" role="tablist" aria-label="Horoscope slide dots">
           {zodiacCards.map((z, idx) => (
             <button
@@ -317,6 +320,7 @@ export default function DailyHoroscopeSection({
             />
           ))}
         </div>
+        */}
       </div>
     </section>
   );

@@ -157,8 +157,8 @@ export default function AstroFaqSection({ id = "faq" }) {
               <span className="astro-faq-live-dot" title="Astrologers Online Now" />
             </div>
             <div className="astro-faq-support__copy">
-              <h4>Still have questions or need personalized guidance?</h4>
-              <p>Our verified Vedic Gurus and Astrologers are available 24/7 for confidential consultations.</p>
+              <h4>Your planets are waiting for us</h4>
+              <p>Our verified Vedic Gurus and Astrologers are available for confidential consultations.</p>
             </div>
           </div>
           <Link to="/talk-to-astrologers" className="astro-faq-support__btn">

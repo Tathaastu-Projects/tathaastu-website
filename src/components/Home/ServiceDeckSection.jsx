@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useLayoutEffect, useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "@/lib/router";
+import "./astro-deck.css";
+
 import kundliImg from "../../assets/AStrology kundli.jpg";
 import vedicImg from "../../assets/Asstrology.jpeg";
 import horoscopeImg from "../../assets/Horoscope Guidance.jpg";
@@ -20,9 +22,9 @@ const PANELS = [
   {
     id: "kundli",
     tab: "Vedic Kundli",
-    eyebrow: "Birth chart",
+    eyebrow: "Birth Chart Guidance",
     title: "Kundli, Read For The Questions You Brought",
-    body: "Share your date, time, and place of birth. An expert walks through the chart with you, in plain language.",
+    body: "Share your date, time, and place of birth. An expert walks through the chart with you, in plain, compassionate language.",
     href: "/services/astrology-kundli",
     explore: "Explore Kundli",
     tiles: [
@@ -34,57 +36,57 @@ const PANELS = [
   {
     id: "pooja",
     tab: "Sacred Pooja",
-    eyebrow: "Home ritual",
+    eyebrow: "Home Ritual",
     title: "Pooja For The Day You Have In Mind",
     body: "Griha pravesh, a family pooja, or a havan. We help you arrange the ritual, the priest, and a time that suits you.",
     href: "/services/pooja-services",
     explore: "Explore Pooja",
     tiles: [
-      { src: ritualImg, badge: "Ritual", caption: "A home offering" },
-      { src: chakraImg, badge: "Space", caption: "A quiet corner" },
-      { src: auraImg, badge: "Blessing", caption: "A prepared ceremony" },
+      { src: ritualImg, badge: "Ritual", caption: "Home offerings" },
+      { src: chakraImg, badge: "Space", caption: "Altar and room" },
+      { src: auraImg, badge: "Blessing", caption: "Arranged ceremony" },
     ],
   },
   {
     id: "vastu",
     tab: "Vastu Shastra",
-    eyebrow: "Home",
+    eyebrow: "Living Space",
     title: "Vastu For The Home You Already Live In",
-    body: "We look at directions, rooms, and how you use the space, then suggest changes that do not mean tearing the house apart.",
+    body: "We look at the directions, the rooms, and how you use the space, then suggest straightforward changes that make sense for you.",
     href: "/services/vastu-shastra",
     explore: "Explore Vastu",
     tiles: [
-      { src: vastuImg, badge: "Layout", caption: "Rooms and directions" },
-      { src: plantsImg, badge: "Living", caption: "Plants for the home" },
-      { src: vastuTipsImg, badge: "Practice", caption: "Simple home shifts" },
+      { src: vastuImg, badge: "Layout", caption: "Directions and flow" },
+      { src: plantsImg, badge: "Plants", caption: "Greens for the home" },
+      { src: vastuTipsImg, badge: "Tips", caption: "Everyday adjustments" },
     ],
   },
   {
     id: "matching",
     tab: "Horoscope Matching",
-    eyebrow: "Two charts",
-    title: "Matching Two Birth Charts",
-    body: "A kundli comparison before marriage. You see where the charts sit well together, and where a conversation helps.",
+    eyebrow: "Compatibility",
+    title: "Two Charts, Read Side By Side",
+    body: "Bring both birth charts. We talk through what aligns naturally, where you might see friction, and what the years ahead suggest.",
     href: "/services/horoscope-matching",
     explore: "Explore Matching",
     tiles: [
-      { src: horoscopeImg, badge: "Pair", caption: "Two charts, one reading" },
-      { src: kundliImg, badge: "Kundli", caption: "The points we compare" },
-      { src: numerologyImg, badge: "Names", caption: "Numbers beside the chart" },
+      { src: horoscopeImg, badge: "Pair", caption: "Comparing charts" },
+      { src: kundliImg, badge: "Questions", caption: "What to ask" },
+      { src: numerologyImg, badge: "Outlook", caption: "Looking ahead" },
     ],
   },
   {
     id: "healing",
     tab: "Aura & Healing",
-    eyebrow: "Healing",
-    title: "Crystals, Aura, And A Calmer Practice",
-    body: "Crystal sessions, aura scanning, and ways to keep stones at home. These are supportive practices, not a medical treatment.",
+    eyebrow: "Wellbeing",
+    title: "When You Need Space To Breathe",
+    body: "Aura work, crystals, and quiet time with a practitioner who listens. A grounding session when everyday life feels heavy.",
     href: "/services/crystal-healing",
     explore: "Explore Healing",
     tiles: [
-      { src: auraImg, badge: "Aura", caption: "A scanning session" },
-      { src: chakraImg, badge: "Practice", caption: "A quiet sitting" },
-      { src: dowsingImg, badge: "Dowsing", caption: "A second way to look" },
+      { src: auraImg, badge: "Aura", caption: "Scanning the field" },
+      { src: chakraImg, badge: "Chakras", caption: "Gentle focus" },
+      { src: dowsingImg, badge: "Quiet", caption: "Time to reset" },
     ],
   },
   {
@@ -103,6 +105,8 @@ const PANELS = [
   },
 ];
 
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 export default function ServiceDeckSection() {
   const rootRef = useRef(null);
   const pinRef = useRef(null);
@@ -110,7 +114,7 @@ export default function ServiceDeckSection() {
   const [pinMode, setPinMode] = useState("top");
   const steps = Math.max(PANELS.length - 1, 1);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const root = rootRef.current;
     const pin = pinRef.current;
     if (!root || !pin) return undefined;
@@ -153,10 +157,12 @@ export default function ServiceDeckSection() {
       const cursor = Math.min(Math.max(passed / total, 0), 1) * steps;
       const stage = pin.querySelector(".vedic-stage");
       if (stage) stage.style.setProperty("--passed", cursor.toFixed(3));
+
       pin.querySelectorAll(".vedic-rims span").forEach((rim, index) => {
         const reveal = Math.min(Math.max(cursor - index, 0), 1);
         rim.style.opacity = String(reveal);
       });
+
       cards().forEach((card, index) => {
         const distance = index - cursor;
         if (distance > 0 && distance <= 1) {
@@ -208,13 +214,22 @@ export default function ServiceDeckSection() {
       style={{ "--vedic-steps": steps }}
       aria-labelledby="vedic-deck-heading"
     >
-      <div ref={pinRef} className={`vedic-deck-pin${pinMode === "fixed" ? " is-fixed" : ""}${pinMode === "bottom" ? " is-bottom" : ""}`}>
+      <div
+        ref={pinRef}
+        className={`vedic-deck-pin${pinMode === "fixed" ? " is-fixed" : ""}${pinMode === "bottom" ? " is-bottom" : ""}`}
+      >
         <div className="vedic-deck-section__inner">
+          {/* Section Header */}
           <header className="vedic-deck-head">
-            <p className="vedic-deck-pill">Practices under one roof</p>
+            <p className="vedic-deck-pill">
+              <span className="vedic-deck-pill__star">✦</span>
+              <span>Practices Under One Roof</span>
+              <span className="vedic-deck-pill__star">✦</span>
+            </p>
             <h2 id="vedic-deck-heading">Choose The Guidance You Came For</h2>
           </header>
 
+          {/* Navigation Toolbar */}
           <div className="vedic-deck-toolbar">
             <div className="vedic-tabs" role="tablist" aria-label="Practices">
               {PANELS.map((item, index) => {
@@ -231,18 +246,22 @@ export default function ServiceDeckSection() {
                     onClick={() => goTo(index)}
                   >
                     <span className="vedic-tab__mark" aria-hidden="true" />
-                    {item.tab}
+                    <span>{item.tab}</span>
                   </button>
                 );
               })}
             </div>
+
             <Link to="/talk-to-astrologers" className="vedic-consult">
-              Talk to an Expert <ArrowRight className="h-4 w-4" />
+              <span>Talk to an Expert</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
+          {/* 3D Stack Stage */}
           <div className="vedic-stack">
             <div className="vedic-stage">
+              {/* Opulent 3D Stacked Deck Rims */}
               <div className="vedic-rims" aria-hidden="true">
                 <span />
                 <span />
@@ -250,6 +269,8 @@ export default function ServiceDeckSection() {
                 <span />
                 <span />
               </div>
+
+              {/* Stacked Cards */}
               {PANELS.map((panel, index) => (
                 <div
                   key={panel.id}
@@ -257,20 +278,37 @@ export default function ServiceDeckSection() {
                   className="vedic-card"
                   aria-hidden={index === active ? undefined : true}
                 >
+                  {/* Top Gold Trim Bar & Celestial Star Sparkles */}
+                  <div className="vedic-card__trim" aria-hidden="true" />
+                  <span className="vedic-card__star vedic-card__star--tl" aria-hidden="true">✦</span>
+                  <span className="vedic-card__star vedic-card__star--tr" aria-hidden="true">✦</span>
+
+                  {/* Card Header */}
                   <div className="vedic-card__top">
                     <div>
-                      <p className="vedic-card__eyebrow">{panel.eyebrow}</p>
+                      <p className="vedic-card__eyebrow">
+                        <Sparkles className="h-3.5 w-3.5 text-[#d4a853]" aria-hidden="true" />
+                        <span>{panel.eyebrow}</span>
+                      </p>
                       <h3>{panel.title}</h3>
                       <p className="vedic-card__body">{panel.body}</p>
                     </div>
-                    <Link to={panel.href} className="vedic-card__explore" tabIndex={index === active ? 0 : -1}>
-                      {panel.explore} <ArrowRight className="h-4 w-4" />
+
+                    <Link
+                      to={panel.href}
+                      className="vedic-card__explore"
+                      tabIndex={index === active ? 0 : -1}
+                    >
+                      <span>{panel.explore}</span>
+                      <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
+
+                  {/* 3 Visual Practice Tiles */}
                   <div className="vedic-tiles">
                     {panel.tiles.map((tile) => (
                       <figure key={tile.caption} className="vedic-tile">
-                        <img src={tile.src} alt="" />
+                        <img src={tile.src} alt={tile.caption} loading="lazy" />
                         <span className="vedic-tile__badge">{tile.badge}</span>
                         <figcaption>{tile.caption}</figcaption>
                       </figure>

@@ -1,0 +1,813 @@
+/* ==========================================================================
+   TATHAASTU SACRED CONSULTATION PACKAGES — LUXURY VEDIC STYLING & ANIMATIONS
+   ========================================================================== */
+
+.pricing-page-wrapper {
+  background: #f7f3ec;
+  color: #073349;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background celestial radial glow */
+.pricing-page-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1000px, 95vw);
+  height: 600px;
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(212, 168, 83, 0.12) 0%,
+    rgba(6, 66, 51, 0.04) 50%,
+    transparent 75%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- Hero Header --- */
+.pricing-hero-section {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 1.25rem 1.5rem;
+  text-align: center;
+}
+
+.pricing-eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+  padding: 0.35rem 1.2rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 168, 83, 0.09) 0%,
+    rgba(212, 168, 83, 0.18) 50%,
+    rgba(212, 168, 83, 0.09) 100%
+  );
+  border: 1px solid rgba(212, 168, 83, 0.38);
+  box-shadow: 0 2px 10px rgba(196, 132, 42, 0.08);
+}
+
+.pricing-eyebrow-badge span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9c671e;
+}
+
+.pricing-hero-title {
+  margin: 0 auto;
+  max-width: 48rem;
+  font-family: "Playfair Display SC", "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: 0.02em;
+  color: #064233;
+  text-transform: uppercase;
+}
+
+.pricing-hero-title span {
+  background: linear-gradient(135deg, #064233 0%, #15735b 50%, #064233 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pricing-hero-sub {
+  margin: 1.15rem auto 0;
+  max-width: 44rem;
+  font-size: clamp(0.94rem, 1.2vw, 1.08rem);
+  line-height: 1.65;
+  color: #55483b;
+}
+
+.pricing-stepper-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.35rem;
+  padding: 0.45rem 1.25rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(212, 168, 83, 0.3);
+  box-shadow: 0 8px 24px rgba(6, 66, 51, 0.06);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #064233;
+}
+
+.pricing-stepper-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #c4842a;
+  box-shadow: 0 0 8px rgba(196, 132, 42, 0.6);
+  animation: pricingPulse 2s infinite ease-in-out;
+}
+
+@keyframes pricingPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+/* --- Packages Section & Grid --- */
+.pricing-cards-section {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem 1.25rem 5rem;
+}
+
+.pricing-cards-container {
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.pricing-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.85rem;
+  perspective: 1200px;
+}
+
+/* --- The Luxury Package Card --- */
+.pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 1.6rem;
+  background: linear-gradient(180deg, #ffffff 0%, #fefcf9 52%, #f8f3e8 100%);
+  border: 1.5px solid rgba(212, 168, 83, 0.32);
+  padding: 2rem 1.85rem 1.85rem;
+  box-shadow: 0 14px 34px rgba(6, 66, 51, 0.05), 0 2px 8px rgba(196, 132, 42, 0.06);
+  transition: transform 0.4s cubic-bezier(0.2, 0.85, 0.25, 1),
+              box-shadow 0.4s ease,
+              border-color 0.4s ease;
+  overflow: hidden;
+
+  /* Scroll reveal initial state */
+  opacity: 0;
+  transform: translateY(45px) scale(0.95);
+  filter: blur(4px);
+}
+
+/* Top accent line on cards */
+.pricing-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #c4842a 20%,
+    #ffd585 50%,
+    #c4842a 80%,
+    transparent 100%
+  );
+  opacity: 0.6;
+  transition: left 0.4s ease, right 0.4s ease, opacity 0.4s ease;
+  z-index: 2;
+}
+
+/* Inner Radial Glow */
+.pricing-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(
+    circle at 80% 20%,
+    rgba(212, 168, 83, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* --- Scroll Animation Trigger --- */
+.pricing-cards-section.is-visible .pricing-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0px);
+  transition: opacity 0.82s cubic-bezier(0.2, 0.85, 0.25, 1),
+              transform 0.82s cubic-bezier(0.2, 0.85, 0.25, 1),
+              filter 0.82s cubic-bezier(0.2, 0.85, 0.25, 1),
+              box-shadow 0.35s ease,
+              border-color 0.35s ease;
+  transition-delay: calc(var(--plan-index, 0) * 125ms);
+}
+
+/* --- Hover State --- */
+.pricing-cards-section.is-visible .pricing-card:hover {
+  transform: translateY(-9px) scale(1.015);
+  border-color: rgba(212, 168, 83, 0.75);
+  box-shadow: 0 24px 50px rgba(6, 66, 51, 0.12), 0 8px 24px rgba(196, 132, 42, 0.16);
+  transition-delay: 0s !important;
+}
+
+.pricing-cards-section.is-visible .pricing-card:hover::before {
+  left: 8%;
+  right: 8%;
+  opacity: 1;
+}
+
+/* --- Most Popular Recommended Plan Variant --- */
+.pricing-card.is-popular {
+  border-color: rgba(212, 168, 83, 0.65);
+  box-shadow: 0 18px 42px rgba(196, 132, 42, 0.14), 0 4px 12px rgba(6, 66, 51, 0.08);
+}
+
+.pricing-popular-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #c4842a 0%, #e5b356 50%, #b8751e 100%);
+  color: #ffffff;
+  padding: 0.38rem 1.6rem 0.38rem 1.4rem;
+  border-bottom-left-radius: 1.25rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: -2px 4px 12px rgba(196, 132, 42, 0.32);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  z-index: 3;
+}
+
+.pricing-popular-ribbon svg {
+  width: 0.78rem;
+  height: 0.78rem;
+}
+
+/* --- Card Header Elements --- */
+.pricing-card__meta-bar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.pricing-card__num-token {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #fffbf2 70%, #f4e8d3 100%);
+  border: 1.5px solid rgba(212, 168, 83, 0.5);
+  box-shadow: 0 3px 8px rgba(196, 132, 42, 0.12), inset 0 1px 2px #fff;
+  font-family: "Playfair Display SC", "Playfair Display", Georgia, serif;
+  font-size: 0.94rem;
+  font-weight: 800;
+  color: #9c671e;
+}
+
+.pricing-card__duration-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(6, 66, 51, 0.05);
+  border: 1px solid rgba(6, 66, 51, 0.12);
+  color: #064233;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.pricing-card__duration-badge svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: #064233;
+}
+
+/* --- Price Header --- */
+.pricing-card__price-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-card__price {
+  margin: 0;
+  font-family: "Playfair Display SC", "Playfair Display", Georgia, serif;
+  font-size: clamp(2.4rem, 3.4vw, 2.95rem);
+  font-weight: 700;
+  line-height: 1;
+  color: #064233;
+  letter-spacing: -0.02em;
+}
+
+.pricing-card__price-sub {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #7d6e61;
+}
+
+/* --- Title & Description --- */
+.pricing-card__title {
+  position: relative;
+  z-index: 1;
+  margin: 0.45rem 0 0;
+  font-family: "Playfair Display SC", "Playfair Display", Georgia, serif;
+  font-size: 1.48rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #064233;
+}
+
+.pricing-card__desc {
+  position: relative;
+  z-index: 1;
+  margin: 0.65rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #55483b;
+  min-height: 2.8rem;
+}
+
+/* --- Divider --- */
+.pricing-card__divider {
+  position: relative;
+  z-index: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 168, 83, 0.5) 0%,
+    rgba(212, 168, 83, 0.18) 70%,
+    transparent 100%
+  );
+  margin: 1.4rem 0 1.2rem;
+}
+
+/* --- What's Included --- */
+.pricing-card__features-head {
+  position: relative;
+  z-index: 1;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9c671e;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pricing-card__features-list {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  flex: 1;
+}
+
+.pricing-card__feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.86rem;
+  line-height: 1.48;
+  color: #2b231a;
+}
+
+.pricing-card__check-disc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  background: rgba(212, 168, 83, 0.15);
+  border: 1px solid rgba(212, 168, 83, 0.4);
+  color: #9c671e;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.pricing-card__check-disc svg {
+  width: 0.72rem;
+  height: 0.72rem;
+  stroke-width: 2.5;
+}
+
+/* --- Card Action Button --- */
+.pricing-card__btn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  margin-top: 1.75rem;
+  padding: 0.92rem 1.5rem;
+  border-radius: 1rem;
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  border: 1px solid rgba(212, 168, 83, 0.4);
+  text-decoration: none;
+  overflow: hidden;
+
+  /* Deep Emerald Luxury Gradient */
+  background: linear-gradient(135deg, #064233 0%, #0c5643 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(6, 66, 51, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Most Popular card CTA button: Coral/Ruby with Gold Trim */
+.pricing-card.is-popular .pricing-card__btn {
+  background: linear-gradient(135deg, #c4384d 0%, #dd485f 50%, #b82d41 100%);
+  border-color: rgba(255, 212, 130, 0.6);
+  box-shadow: 0 10px 24px rgba(221, 72, 95, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.pricing-card__btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  transform: skewX(-22deg);
+  transition: left 0.7s ease;
+}
+
+.pricing-card__btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 212, 130, 0.9);
+  box-shadow: 0 14px 30px rgba(6, 66, 51, 0.3);
+}
+
+.pricing-card.is-popular .pricing-card__btn:hover {
+  box-shadow: 0 14px 30px rgba(221, 72, 95, 0.42);
+}
+
+.pricing-card__btn:hover::after {
+  left: 140%;
+}
+
+.pricing-card__btn svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  transition: transform 0.3s ease;
+}
+
+.pricing-card__btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   EXCLUSIVE PRIYANKA SINGH VIP CONSULTATION CARD
+   ========================================================================== */
+
+.pricing-exclusive-card {
+  position: relative;
+  margin-top: 2.25rem;
+  border-radius: 1.75rem;
+  background: linear-gradient(145deg, #042e23 0%, #064233 55%, #0a4f3e 100%);
+  border: 1.5px solid rgba(212, 168, 83, 0.45);
+  box-shadow: 0 24px 55px rgba(6, 66, 51, 0.22), 0 4px 16px rgba(196, 132, 42, 0.12);
+  color: #ffffff;
+  overflow: hidden;
+
+  /* Scroll entrance */
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(4px);
+  transition: opacity 0.85s cubic-bezier(0.2, 0.85, 0.25, 1),
+              transform 0.85s cubic-bezier(0.2, 0.85, 0.25, 1),
+              filter 0.85s cubic-bezier(0.2, 0.85, 0.25, 1);
+  transition-delay: 520ms;
+}
+
+.pricing-cards-section.is-visible .pricing-exclusive-card {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Background watermark star */
+.pricing-exclusive-card::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(
+    circle,
+    rgba(212, 168, 83, 0.18) 0%,
+    rgba(212, 168, 83, 0.04) 55%,
+    transparent 75%
+  );
+  pointer-events: none;
+}
+
+.pricing-exclusive-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.72fr);
+  gap: 2.25rem;
+  padding: 2.75rem 2.5rem;
+  align-items: center;
+}
+
+.pricing-exclusive-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffd88a;
+  background: rgba(212, 168, 83, 0.14);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  padding: 0.28rem 0.85rem;
+  border-radius: 999px;
+  margin-bottom: 1.15rem;
+}
+
+.pricing-exclusive-header-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.pricing-exclusive-portrait-wrap {
+  position: relative;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid #ffd482;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 12px rgba(212, 168, 83, 0.4);
+  overflow: hidden;
+  background: #042e23;
+}
+
+.pricing-exclusive-portrait-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pricing-exclusive-title {
+  margin: 0;
+  font-family: "Playfair Display SC", "Playfair Display", Georgia, serif;
+  font-size: clamp(1.6rem, 2.4vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.22;
+  color: #ffffff;
+}
+
+.pricing-exclusive-desc {
+  margin: 0.85rem 0 1.5rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #dbe8e3;
+  max-width: 42rem;
+}
+
+.pricing-exclusive-features-head {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffd88a;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pricing-exclusive-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.pricing-exclusive-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.86rem;
+  line-height: 1.48;
+  color: #f3f7f5;
+}
+
+.pricing-exclusive-feature-item svg {
+  color: #ffd88a;
+  width: 0.9rem;
+  height: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+/* Exclusive Right Price Box */
+.pricing-exclusive-price-box {
+  background: linear-gradient(180deg, #ffffff 0%, #fefcf8 60%, #f6f0e3 100%);
+  border: 1.5px solid rgba(212, 168, 83, 0.5);
+  border-radius: 1.5rem;
+  padding: 1.85rem 1.65rem;
+  color: #073349;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-exclusive-price-note {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9c671e;
+  margin-bottom: 0.25rem;
+}
+
+.pricing-exclusive-price-val {
+  margin: 0;
+  font-family: "Playfair Display SC", "Playfair Display", Georgia, serif;
+  font-size: clamp(2.6rem, 3.8vw, 3.2rem);
+  font-weight: 700;
+  color: #064233;
+  line-height: 1;
+}
+
+.pricing-exclusive-specs {
+  margin: 1.4rem 0 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid rgba(212, 168, 83, 0.25);
+}
+
+.pricing-exclusive-spec-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.pricing-exclusive-spec-row svg {
+  color: #9c671e;
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.pricing-exclusive-spec-row dt {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #887462;
+}
+
+.pricing-exclusive-spec-row dd {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1b2622;
+}
+
+.pricing-exclusive-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  border-radius: 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  border: 1px solid rgba(255, 212, 130, 0.6);
+  background: linear-gradient(135deg, #064233 0%, #0d5d48 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(6, 66, 51, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-exclusive-cta-btn:hover {
+  transform: translateY(-2px);
+  border-color: #ffd482;
+  box-shadow: 0 14px 30px rgba(6, 66, 51, 0.38), 0 0 14px rgba(212, 168, 83, 0.28);
+}
+
+.pricing-exclusive-cta-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.pricing-exclusive-cta-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 992px) {
+  .pricing-exclusive-inner {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.75rem;
+  }
+
+  .pricing-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .pricing-hero-section {
+    padding-top: 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .pricing-card {
+    padding: 1.6rem 1.25rem 1.5rem;
+    border-radius: 1.35rem;
+  }
+
+  .pricing-exclusive-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .pricing-card__title {
+    font-size: 1.28rem;
+  }
+
+  .pricing-exclusive-title {
+    font-size: 1.45rem;
+  }
+
+  .pricing-card__desc {
+    min-height: 0;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .pricing-card,
+  .pricing-exclusive-card {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .pricing-stepper-dot {
+    animation: none !important;
+  }
+}

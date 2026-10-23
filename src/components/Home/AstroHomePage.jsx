@@ -36,11 +36,15 @@ import AstroBlogSection from "./AstroBlogSection";
 import DailyHoroscopeSection from "./DailyHoroscopeSection";
 import AstroServicesSection from "./AstroServicesSection";
 import blogsData from "../../data/blogsData";
-import AnkitImg from "../../assets/AnkitImg.svg";
-import MeeraImg from "../../assets/MeeraImg.svg";
-import NeerajImg from "../../assets/NeerajImg.svg";
-import RishikaImg from "../../assets/Srinita_testimonial.jpg";
-import drPriyankaImg from "../../assets/about/dr_priyanka_singh.jpg";
+import harishankarImg from "../../assets/astrologer/harishnkar.jpg";
+import anuradhaImg from "../../assets/astrologer/anuradha.jpg";
+import hosalImg from "../../assets/astrologer/hosal.jpg";
+import vibhutiImg from "../../assets/astrologer/vibhuti.jpg";
+import upendraImg from "../../assets/astrologer/upendra.jpg";
+import deepakImg from "../../assets/astrologer/deepak.jpg";
+import drPriyankaImg from "../../assets/home/Priyanka Mam.svg";
+import "./astro-experts.css";
+import "./astro-guidance.css";
 import heroVideo from "../../assets/videos/short_video.mp4";
 import numerologyVideo from "../../assets/videos/video4.mp4";
 import matchVideo from "../../assets/videos/video9.mp4";
@@ -174,66 +178,158 @@ const BEST_SELLERS = [
 
 const ASTROLOGERS = [
   {
-    name: "Acharya Prem",
-    expertise: ["Vedic", "Numerology"],
-    languages: "English · Hindi",
-    exp: "18 yrs",
-    rating: "5.0",
-    reviews: "12k+",
-    price: "₹499",
-    session: "30 min",
-    about: "A birth-chart and numerology reading, talked through in plain language.",
-    badge: "Celebrity",
-    img: AnkitImg,
-  },
-  {
-    name: "Meera Sharma",
-    expertise: ["Tarot", "Psychic"],
-    languages: "English · Hindi",
-    exp: "14 yrs",
-    rating: "4.9",
-    reviews: "9k+",
-    price: "₹399",
-    session: "30 min",
-    about: "A tarot session when you want another way to look at a decision.",
-    badge: "Top Choice",
-    img: MeeraImg,
-  },
-  {
-    name: "Pt. Raghav",
-    expertise: ["Vedic", "Vastu"],
+    id: "harishankar",
+    name: "Pt. Harishankar",
+    phone: "8707748378",
+    expertise: ["Vedic Astrology", "Face Reading"],
     languages: "Hindi · English",
-    exp: "22 yrs",
+    exp: "18+ yrs",
     rating: "5.0",
-    reviews: "20k+",
-    price: "₹599",
-    session: "30 min",
-    about: "Vedic chart reading and vastu for the home you already live in.",
-    badge: "Celebrity",
-    img: NeerajImg,
+    reviews: "19.4k+",
+    price: "₹30/min",
+    origPrice: "₹45/min",
+    sessionPrice: "₹549 / 30 min",
+    about: "Combining nearly two decades of Vedic mastery with the rare art of Face Reading for pinpoint life predictions and wealth remedies.",
+    badge: "Face Reading Master",
+    badgeType: "celebrity",
+    online: true,
+    repeatRate: "99%",
+    img: harishankarImg,
   },
   {
-    name: "Rishika Sen",
-    expertise: ["Tarot", "Life Coach"],
+    id: "anuradha",
+    name: "Acharya Anuradha",
+    phone: "9044257411",
+    expertise: ["Vedic", "Numerology", "Lo Shu Grid"],
     languages: "English · Hindi",
-    exp: "11 yrs",
+    exp: "12+ yrs",
+    rating: "5.0",
+    reviews: "14.6k+",
+    price: "₹28/min",
+    origPrice: "₹38/min",
+    sessionPrice: "₹499 / 30 min",
+    about: "Blending Vedic wisdom, lucky number vibrations & Lo Shu Grid to align your destiny with success, career and marriage.",
+    badge: "Celebrity Numerologist",
+    badgeType: "gold",
+    online: true,
+    repeatRate: "98%",
+    img: anuradhaImg,
+  },
+  {
+    id: "hosal",
+    name: "Pt. Hosal",
+    phone: "9950421929",
+    expertise: ["Vedic Astrology", "Dasha Predictions"],
+    languages: "Hindi · English",
+    exp: "10+ yrs",
+    rating: "5.0",
+    reviews: "12.2k+",
+    price: "₹25/min",
+    origPrice: "₹35/min",
+    sessionPrice: "₹449 / 30 min",
+    about: "Illuminating your path with deep Kundli analysis, Dasha timing & authentic remedies for obstacles in career and business.",
+    badge: "Gold Verified",
+    badgeType: "top",
+    online: true,
+    repeatRate: "97%",
+    img: hosalImg,
+  },
+  {
+    id: "vibhuti",
+    name: "Dr. Vibhuti",
+    phone: "7078473994",
+    expertise: ["Vedic", "Face Reading", "Tarot"],
+    languages: "English · Hindi",
+    exp: "10+ yrs",
     rating: "4.9",
-    reviews: "7k+",
-    price: "₹349",
-    session: "30 min",
-    about: "Tarot and a conversation about the next step you are considering.",
-    badge: "Rising Star",
-    img: RishikaImg,
+    reviews: "11.5k+",
+    price: "₹24/min",
+    origPrice: "₹32/min",
+    sessionPrice: "₹449 / 30 min",
+    about: "Uniting Vedic astrology, intuitive Tarot & Face Reading to deliver 360-degree holistic life clarity and emotional healing.",
+    badge: "Tarot & Face Reading",
+    badgeType: "star",
+    online: true,
+    repeatRate: "96%",
+    img: vibhutiImg,
+  },
+  {
+    id: "upendra",
+    name: "Acharya Upendra",
+    phone: "8173807057",
+    expertise: ["Vedic Astrology", "Kundli Analysis"],
+    languages: "Hindi · English",
+    exp: "8+ yrs",
+    rating: "4.9",
+    reviews: "8.5k+",
+    price: "₹21/min",
+    origPrice: "₹29/min",
+    sessionPrice: "₹399 / 30 min",
+    about: "Decoding your cosmic blueprint with accurate Kundli analysis, transit impacts, and practical Vedic remedies for career & marriage.",
+    badge: "Vedic Specialist",
+    badgeType: "scholar",
+    online: true,
+    repeatRate: "97%",
+    img: upendraImg,
+  },
+  {
+    id: "deepak",
+    name: "Pt. Deepak",
+    phone: "9120329906",
+    expertise: ["Vedic Astrology", "Kundli Milan"],
+    languages: "Hindi · English",
+    exp: "7+ yrs",
+    rating: "4.9",
+    reviews: "7.8k+",
+    price: "₹19/min",
+    origPrice: "₹28/min",
+    sessionPrice: "₹349 / 30 min",
+    about: "Guiding you through turning points with precise Janam Kundli reading, match-making & effective planetary dosha remedies.",
+    badge: "Kundli Expert",
+    badgeType: "specialist",
+    online: true,
+    repeatRate: "95%",
+    img: deepakImg,
   },
 ];
 
 const CATEGORIES = [
-  { title: "Love & Relationships", count: "120+ experts", img: LoveCategoryIcon },
-  { title: "Marriage & Compatibility", count: "95+ experts", img: MarriageCategoryIcon },
-  { title: "Career Decisions", count: "80+ experts", img: CareerCategoryIcon },
-  { title: "Money & Wellbeing", count: "70+ experts", img: MoneyCategoryIcon },
-  { title: "Education & Growth", count: "45+ experts", img: EducationCategoryIcon },
-  { title: "Family & Personal Life", count: "60+ experts", img: FamilyCategoryIcon },
+  {
+    title: "Love & Relationships",
+    count: "120+ experts",
+    img: LoveCategoryIcon,
+    focus: "Breakups · Soulmates · Rekindling",
+  },
+  {
+    title: "Marriage & Compatibility",
+    count: "95+ experts",
+    img: MarriageCategoryIcon,
+    focus: "Kundli Milan · Delay · Manglik Dosha",
+  },
+  {
+    title: "Career Decisions",
+    count: "80+ experts",
+    img: CareerCategoryIcon,
+    focus: "Job Switch · Promotion · Business Timing",
+  },
+  {
+    title: "Money & Wellbeing",
+    count: "70+ experts",
+    img: MoneyCategoryIcon,
+    focus: "Wealth Flow · Debt Remedies · Growth",
+  },
+  {
+    title: "Education & Growth",
+    count: "45+ experts",
+    img: EducationCategoryIcon,
+    focus: "Exams · Higher Studies · Focus & Memory",
+  },
+  {
+    title: "Family & Personal Life",
+    count: "60+ experts",
+    img: FamilyCategoryIcon,
+    focus: "Home Peace · Children · Harmony",
+  },
 ];
 
 const TRUST_BADGES = [
@@ -669,24 +765,84 @@ export default function AstroHomePage() {
           </div>
 
           <div className="astro-guidance-block">
-            <SectionHeading
-              eyebrow="Guidance"
-              title="Consult The Right Astrologer For You"
-              subtitle="Browse by the life area you want clarity on."
-            />
+            {/* Top Gold Trim Bar */}
+            <div className="astro-guidance-block__trim" aria-hidden="true" />
+
+            {/* Corner Star Accents */}
+            <span className="astro-guidance-block__star astro-guidance-block__star--tl" aria-hidden="true">✦</span>
+            <span className="astro-guidance-block__star astro-guidance-block__star--tr" aria-hidden="true">✦</span>
+
+            {/* Section Header */}
+            <div className="astro-guidance-header">
+              <div className="astro-guidance-header__left">
+                <div className="astro-guidance-eyebrow">
+                  <span className="astro-guidance-eyebrow__star">✦</span>
+                  <span>VEDIC LIFE DOMAINS</span>
+                  <span className="astro-guidance-eyebrow__star">✦</span>
+                </div>
+                <h2 className="astro-guidance-title">Consult The Right Astrologer For You</h2>
+                <p className="astro-guidance-subtitle">
+                  Browse by the life realm you want clarity on. Connect instantly with verified Vedic masters, numerologists & tarot intuitives.
+                </p>
+              </div>
+
+              <div className="astro-guidance-header__right">
+                <div className="astro-guidance-badge">
+                  <span className="astro-guidance-badge__pulse" aria-hidden="true" />
+                  <div>
+                    <strong>470+ Verified Masters</strong>
+                    <span>Live & Available 24×7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Category Cards Grid */}
             <div className="astro-category-grid">
-              {CATEGORIES.map(({ title, count, img }) => (
-                <button key={title} type="button" className="astro-category" onClick={openModal}>
-                  <span className="astro-category__icon">
-                    <img src={img} alt="" />
-                  </span>
-                  <span className="astro-category__text">
-                    <strong>{title}</strong>
-                    <em>{count}</em>
-                  </span>
-                  <ChevronRight className="astro-category__chevron" aria-hidden="true" />
+              {CATEGORIES.map(({ title, count, img, focus }) => (
+                <button
+                  key={title}
+                  type="button"
+                  className="astro-category"
+                  onClick={openModal}
+                  aria-label={`${title} - ${count}`}
+                >
+                  <div className="astro-category__medallion">
+                    <img src={img} alt="" className="astro-category__icon" />
+                  </div>
+                  <div className="astro-category__text">
+                    <div className="astro-category__top">
+                      <strong className="astro-category__title">{title}</strong>
+                      <span className="astro-category__experts">
+                        <span className="astro-category__dot" aria-hidden="true" />
+                        {count}
+                      </span>
+                    </div>
+                    {focus && <span className="astro-category__focus">{focus}</span>}
+                  </div>
+                  <div className="astro-category__arrow" aria-hidden="true">
+                    <ChevronRight className="h-4 w-4" />
+                  </div>
                 </button>
               ))}
+            </div>
+
+            {/* Bottom Reassurance Strip */}
+            <div className="astro-guidance-footer">
+              <div className="astro-guidance-footer__item">
+                <ShieldCheck className="h-4 w-4 text-[#064233]" aria-hidden="true" />
+                <span>100% Confidential & Private</span>
+              </div>
+              <div className="astro-guidance-footer__divider" aria-hidden="true" />
+              <div className="astro-guidance-footer__item">
+                <Lock className="h-4 w-4 text-[#064233]" aria-hidden="true" />
+                <span>End-to-End Encrypted Sessions</span>
+              </div>
+              <div className="astro-guidance-footer__divider" aria-hidden="true" />
+              <div className="astro-guidance-footer__item">
+                <Sparkles className="h-4 w-4 text-[#c4842a]" aria-hidden="true" />
+                <span>First 5 Mins Satisfaction Guarantee</span>
+              </div>
             </div>
           </div>
 
@@ -702,70 +858,130 @@ export default function AstroHomePage() {
               }
             />
             <div className="astro-astro-grid">
-              {ASTROLOGERS.map((a) => (
-                <div key={a.name} className="astro-flip" tabIndex={0} aria-label={`${a.name}, ${a.expertise.join(", ")}`}>
-                  <div className="astro-flip__inner">
-                    <div className="astro-flip__face astro-flip__front">
-                      <img src={a.img} alt="" />
-                      <div className="astro-flip__marks">
-                        {a.expertise.map((tag) => (
-                          <span key={tag}>{tag}</span>
-                        ))}
+              {ASTROLOGERS.map((a) => {
+                const imgSrc = a.img?.src || a.img;
+                return (
+                  <article
+                    key={a.id || a.name}
+                    className="astro-expert-card"
+                    aria-label={`${a.name}, ${a.expertise.join(", ")}`}
+                  >
+                    {/* Top Gold Trim Accent */}
+                    <div className="astro-expert-card__trim" aria-hidden="true" />
+
+                    {/* Corner Star Accents */}
+                    <span className="astro-expert-card__star astro-expert-card__star--tl" aria-hidden="true">✦</span>
+                    <span className="astro-expert-card__star astro-expert-card__star--tr" aria-hidden="true">✦</span>
+
+                    {/* Portrait Frame */}
+                    <div className="astro-expert-card__media">
+                      <img
+                        src={imgSrc}
+                        alt={`${a.name} - Astrologer`}
+                        className="astro-expert-card__photo"
+                        loading="lazy"
+                      />
+
+                      {/* Photo Overlays: Status Pill (Left) & Prestige Badge (Right) */}
+                      <div className="astro-expert-card__badges">
+                        <span className="astro-expert-pill astro-expert-pill--online">
+                          <span className="astro-expert-pill__pulse" aria-hidden="true" />
+                          Online
+                        </span>
+                        <span className={`astro-expert-pill astro-expert-pill--${a.badgeType || "gold"}`}>
+                          ★ {a.rating} · {a.badge}
+                        </span>
                       </div>
                     </div>
-                    <div className="astro-flip__face astro-flip__back">
-                      <div className="astro-flip__head">
-                        <img src={a.img} alt="" />
-                        <div>
-                          <div className="astro-card__name">
+
+                    {/* Card Content */}
+                    <div className="astro-expert-card__body">
+                      {/* Name & Experience Row */}
+                      <div className="astro-expert-card__header">
+                        <div className="astro-expert-card__identity">
+                          <h3 className="astro-expert-card__name">
                             {a.name}
-                            <BadgeCheck className="h-4 w-4 text-[#2D7351]" />
+                            <BadgeCheck className="h-4 w-4 text-[#064233] fill-[#d4a853]" aria-label="Verified Expert" />
+                          </h3>
+                          <div className="astro-expert-card__lang">
+                            <Globe className="h-3 w-3 text-[#c4842a]" aria-hidden="true" />
+                            <span>{a.languages}</span>
                           </div>
-                          <span className="astro-badge">{a.badge}</span>
                         </div>
+                        <span className="astro-expert-card__exp-badge">
+                          <Clock className="h-3 w-3" aria-hidden="true" />
+                          {a.exp}
+                        </span>
                       </div>
-                      <p className="astro-flip__about">{a.about}</p>
-                      <div className="astro-flip__stats">
-                        <div>
-                          <strong>{a.exp}</strong>
-                          <span>Experience</span>
-                        </div>
-                        <div>
-                          <strong>★ {a.rating}</strong>
-                          <span>Rating</span>
-                        </div>
-                        <div>
-                          <strong>{a.reviews}</strong>
-                          <span>Reviews</span>
-                        </div>
-                      </div>
-                      <p className="astro-flip__line">
-                        <span>Languages</span>
-                        {a.languages}
-                      </p>
-                      <div className="astro-tags">
+
+                      {/* Expertise Badges */}
+                      <div className="astro-expert-card__tags">
                         {a.expertise.map((tag) => (
-                          <span key={tag}>{tag}</span>
+                          <span key={tag} className="astro-expert-tag">
+                            {tag}
+                          </span>
                         ))}
                       </div>
-                      <div className="astro-card__footer">
-                        <div className="astro-flip__price">
-                          <strong>{a.price}</strong>
-                          <span>/ {a.session}</span>
+
+                      {/* Short Bio Promise */}
+                      <p className="astro-expert-card__about">"{a.about}"</p>
+
+                      {/* Stats Micro-Bar */}
+                      <div className="astro-expert-card__stats">
+                        <div className="astro-expert-stat">
+                          <strong className="astro-expert-stat__val">{a.reviews}</strong>
+                          <span className="astro-expert-stat__lbl">Consults</span>
                         </div>
-                        <div className="astro-card__btns">
-                          <button type="button" onClick={openModal}>
-                            <MessageCircle className="h-4 w-4" /> Chat
+                        <div className="astro-expert-stat-divider" aria-hidden="true" />
+                        <div className="astro-expert-stat">
+                          <strong className="astro-expert-stat__val">★ {a.rating}</strong>
+                          <span className="astro-expert-stat__lbl">Rating</span>
+                        </div>
+                        <div className="astro-expert-stat-divider" aria-hidden="true" />
+                        <div className="astro-expert-stat">
+                          <strong className="astro-expert-stat__val">{a.repeatRate || "98%"}</strong>
+                          <span className="astro-expert-stat__lbl">Satisfied</span>
+                        </div>
+                      </div>
+
+                      {/* Footer: Transparent Pricing & Dual Jewel CTA */}
+                      <div className="astro-expert-card__footer">
+                        <div className="astro-expert-card__price-box">
+                          <span className="astro-expert-card__price-from">Starting</span>
+                          <div className="astro-expert-card__price-row">
+                            <strong className="astro-expert-card__price-main">{a.price}</strong>
+                            {a.origPrice && (
+                              <del className="astro-expert-card__price-orig">{a.origPrice}</del>
+                            )}
+                          </div>
+                          <span className="astro-expert-card__price-session">{a.sessionPrice}</span>
+                        </div>
+
+                        <div className="astro-expert-card__actions">
+                          <button
+                            type="button"
+                            className="astro-expert-btn astro-expert-btn--chat"
+                            onClick={openModal}
+                            aria-label={`Chat with ${a.name}`}
+                          >
+                            <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                            <span>Chat</span>
                           </button>
-                          <button type="button" className="is-call" onClick={openModal}>
-                            <Phone className="h-4 w-4" /> Call
+                          <button
+                            type="button"
+                            className="astro-expert-btn astro-expert-btn--call"
+                            onClick={openModal}
+                            aria-label={`Call ${a.name}`}
+                          >
+                            <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+                            <span>Call</span>
                           </button>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  </article>
+                );
+              })}
             </div>
           </div>
 
@@ -1375,7 +1591,7 @@ export default function AstroHomePage() {
             </div>
 
             <p className="astro-founder__kicker">Vedic Wisdom · Modern Clarity</p>
-            <h2 id="founder-heading">Dr. Priyanka Singh</h2>
+            <h2 id="founder-heading">Priyanka Singh</h2>
             <p className="astro-founder__credentials">
               Ph.D. in Vedic Astrology · Gold Medalist · 15+ Years Practicing
             </p>
@@ -1386,7 +1602,7 @@ export default function AstroHomePage() {
             </blockquote>
 
             <p className="astro-founder__desc">
-              With over 15 years of experience in classical Vedic astrology, Dr. Priyanka Singh has
+              With over 15 years of experience in classical Vedic astrology, Priyanka Singh has
               guided seekers through crucial life transitions, relationships, and career paths. Her
               personalized consultations combine sacred astrological shastras with grounded,
               compassionate modern clarity.
@@ -1425,7 +1641,7 @@ export default function AstroHomePage() {
 
             <div className="astro-founder__action">
               <Link to="/talk-to-astrologers" className="astro-founder__btn">
-                <span>Book Consultation with Dr. Priyanka</span>
+                <span>Book Consultation with Priyanka</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -1434,8 +1650,8 @@ export default function AstroHomePage() {
           <div className="astro-founder__photo-card">
             <div className="astro-founder__photo-frame">
               <img
-                src={drPriyankaImg}
-                alt="Dr. Priyanka Singh - Co-Founder of Tathaastu"
+                src={drPriyankaImg?.src || drPriyankaImg}
+                alt="Priyanka Singh - Co-Founder of Tathaastu"
                 className="astro-founder__photo-img"
                 loading="lazy"
               />
@@ -1448,7 +1664,7 @@ export default function AstroHomePage() {
 
               <div className="astro-founder__floating-card">
                 <div className="astro-founder__floating-name">
-                  <strong>Dr. Priyanka Singh</strong>
+                  <strong>Priyanka Singh</strong>
                   <CheckCircle2 size={16} className="astro-founder__check-icon" />
                 </div>
                 <span>Co-Founder · Chief Astrologer, Tathaastu</span>

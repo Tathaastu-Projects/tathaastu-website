@@ -20,29 +20,8 @@ export default function Footer() {
 
   return (
     <footer className="w-full">
-      {/* CTA band */}
-      <section className="bg-[#064233] py-6 sm:py-7">
-        <div className="mx-auto max-w-[1680px] px-4 sm:px-6 md:px-8 lg:px-10 text-center text-white">
-          <div className="text-lg sm:text-xl md:text-2xl font-extrabold leading-snug">
-            Ready to Know Your Future?
-          </div>
-          <div className="mt-1.5 text-xs sm:text-sm text-white/85 max-w-xl mx-auto">
-            Talk to an expert and get guidance that feels personal and accurate.
-          </div>
-          <div className="mt-3.5 flex justify-center">
-            <button
-              type="button"
-              onClick={scrollToTop}
-              className="rounded-full bg-[#E74660] px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-extrabold text-white shadow-md hover:bg-[#d13a52] w-full sm:w-auto max-w-xs"
-            >
-              Book Your Consultation
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* Footer links */}
-      <section className="bg-[#064233] text-white border-t border-white/10">
+      <section className="bg-[#064233] text-white">
         <div className="mx-auto max-w-[1680px] px-4 py-5 sm:py-6 md:py-7 sm:px-6 md:px-8 lg:px-10">
           <div className="grid grid-cols-1 gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-2.5">

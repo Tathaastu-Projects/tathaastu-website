@@ -1,0 +1,527 @@
+/* ==========================================================================
+   TATHAASTU — SACRED 3D GUIDANCE DECK (CHOOSE THE GUIDANCE YOU CAME FOR)
+   3D Scroll-Driven Stacking Slider with Royal Vedic Luxury Aesthetics
+   ========================================================================== */
+
+section.vedic-deck-section {
+  position: relative;
+  width: 100%;
+  height: calc(100vh + (var(--vedic-steps, 5) * 78vh));
+  background: radial-gradient(140% 120% at 50% 0%, #fffdfa 0%, #f9f4e8 50%, #f3e6cf 100%);
+  animation: none;
+  transform: none;
+}
+
+/* Atmospheric Celestial Glow */
+section.vedic-deck-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(212, 168, 83, 0.12) 0%, rgba(6, 66, 51, 0.04) 50%, transparent 75%);
+  pointer-events: none;
+  filter: blur(55px);
+}
+
+.vedic-deck-pin {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  background: transparent;
+}
+
+.vedic-deck-pin.is-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.vedic-deck-pin.is-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Static fallback for reduced motion */
+.vedic-deck-section.is-static {
+  height: auto;
+  padding: 3.4rem 0 3.8rem;
+}
+
+.vedic-deck-section.is-static .vedic-deck-pin {
+  height: auto;
+}
+
+.vedic-deck-section.is-static .vedic-card:not([aria-hidden="true"]) {
+  position: relative;
+  top: 0;
+  transform: none !important;
+}
+
+.vedic-deck-section.is-static .vedic-card[aria-hidden="true"] {
+  display: none;
+}
+
+.vedic-deck-section.is-static .vedic-rims {
+  display: none;
+}
+
+.vedic-deck-section__inner {
+  position: relative;
+  width: min(1180px, calc(100% - (var(--astro-gutter, 1.5rem) * 2)));
+  margin: 0 auto;
+  z-index: 2;
+}
+
+/* Section Header */
+.vedic-deck-head {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.vedic-deck-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.65rem;
+  padding: 0.32rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(6, 66, 51, 0.06);
+  border: 1px solid rgba(212, 168, 83, 0.45);
+  color: #064233;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(30, 20, 8, 0.04);
+}
+
+.vedic-deck-pill__star {
+  color: #d4a853;
+  font-size: 0.75rem;
+}
+
+.vedic-deck-head h2 {
+  margin: 0;
+  font-family: "Playfair Display SC", Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 3.8vw, 3.15rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #064233;
+  letter-spacing: -0.015em;
+}
+
+/* Navigation Toolbar & Tabs */
+.vedic-deck-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.vedic-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 1;
+  min-width: 0;
+  padding: 0.35rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(212, 168, 83, 0.36);
+  box-shadow: 0 8px 24px rgba(6, 66, 51, 0.08);
+  backdrop-filter: blur(10px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.vedic-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.vedic-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 0 0 auto;
+  border: none;
+  background: transparent;
+  color: #3d4a44;
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vedic-tab:hover {
+  color: #064233;
+  background: rgba(6, 66, 51, 0.05);
+}
+
+.vedic-tab__mark {
+  width: 0.82rem;
+  height: 0.82rem;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 3.5px currentColor;
+  transition: all 0.25s ease;
+}
+
+.vedic-tab.is-on {
+  background: #064233;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(6, 66, 51, 0.22);
+}
+
+.vedic-tab.is-on .vedic-tab__mark {
+  box-shadow: inset 0 0 0 2px #064233, inset 0 0 0 3.5px #d4a853;
+  border-color: #d4a853;
+}
+
+.vedic-consult {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d4a853 0%, #b88628 100%);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 18px rgba(180, 110, 20, 0.22);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vedic-consult:hover {
+  background: linear-gradient(135deg, #e2b963 0%, #c49232 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(180, 110, 20, 0.3);
+  color: #ffffff;
+}
+
+/* 3D Stack Stage */
+.vedic-stack {
+  position: relative;
+  perspective: 1600px;
+}
+
+.vedic-stage {
+  --step: 18px;
+  --passed: 0;
+  --stack: calc(var(--passed) * var(--step));
+  position: relative;
+  height: min(620px, calc(100vh - 200px));
+  overflow: hidden;
+  border-radius: 1.75rem;
+  background: transparent;
+}
+
+/* Opulent 3D Stacked Deck Rims (Gold Manuscript Edges) */
+.vedic-rims {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.vedic-rims span {
+  --n: 1;
+  position: absolute;
+  top: calc(var(--stack) - (var(--n) * var(--step)));
+  height: var(--step);
+  border-radius: 1.25rem 1.25rem 0 0;
+  background: linear-gradient(180deg, #ffffff 0%, #faf6ec 60%, #f4ede0 100%);
+  border: 1px solid rgba(212, 168, 83, 0.42);
+  border-bottom: 0;
+  box-shadow:
+    0 -2px 6px rgba(212, 168, 83, 0.15),
+    0 4px 12px rgba(40, 30, 10, 0.08);
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
+}
+
+.vedic-rims span:nth-child(1) { --n: 1; left: 28px; right: 28px; }
+.vedic-rims span:nth-child(2) { --n: 2; left: 56px; right: 56px; }
+.vedic-rims span:nth-child(3) { --n: 3; left: 84px; right: 84px; }
+.vedic-rims span:nth-child(4) { --n: 4; left: 112px; right: 112px; }
+.vedic-rims span:nth-child(5) { --n: 5; left: 140px; right: 140px; }
+
+/* The Sliding 3D Cards */
+.vedic-card {
+  position: absolute;
+  top: var(--stack);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.55rem 1.85rem 1.35rem;
+  border-radius: 1.75rem;
+  background: linear-gradient(145deg, #ffffff 0%, #fdfbf7 55%, #fbf5ea 100%);
+  border: 1.5px solid rgba(212, 168, 83, 0.45);
+  box-shadow:
+    0 -10px 25px rgba(212, 168, 83, 0.1),
+    0 20px 48px -12px rgba(6, 66, 51, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset;
+  transform-origin: center top;
+  will-change: transform;
+  transform: translate3d(0, 100%, 0);
+  transition: none;
+  overflow: hidden;
+}
+
+.vedic-card:first-of-type {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Card Top Gold Radiance Trim */
+.vedic-card__trim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212, 168, 83, 0.3) 15%,
+    #d4a853 45%,
+    #fff2c2 50%,
+    #d4a853 55%,
+    rgba(212, 168, 83, 0.3) 85%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Corner Celestial Star Accents */
+.vedic-card__star {
+  position: absolute;
+  font-size: 0.85rem;
+  line-height: 1;
+  color: rgba(212, 168, 83, 0.6);
+  pointer-events: none;
+  user-select: none;
+}
+.vedic-card__star--tl { top: 0.85rem; left: 1rem; }
+.vedic-card__star--tr { top: 0.85rem; right: 1rem; }
+
+/* Card Top Row */
+.vedic-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.vedic-card__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.45rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.14);
+  border: 1px solid rgba(212, 168, 83, 0.4);
+  color: #064233;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.vedic-card__top h3 {
+  margin: 0 0 0.4rem;
+  font-family: "Playfair Display SC", Georgia, "Times New Roman", serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.95rem);
+  font-weight: 700;
+  line-height: 1.22;
+  color: #064233;
+  letter-spacing: -0.01em;
+}
+
+.vedic-card__body {
+  margin: 0;
+  color: #6d5b49;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  max-width: 44rem;
+}
+
+.vedic-card__explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+  margin-top: 1rem;
+  padding: 0.62rem 1.15rem;
+  border-radius: 999px;
+  background: rgba(6, 66, 51, 0.05);
+  border: 1px solid rgba(212, 168, 83, 0.45);
+  color: #064233;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vedic-card__explore:hover {
+  background: #064233;
+  color: #ffffff;
+  border-color: #064233;
+  transform: translateX(3px);
+  box-shadow: 0 4px 14px rgba(6, 66, 51, 0.2);
+}
+
+/* 3 Visual Practice Gallery Tiles */
+.vedic-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.95rem;
+  flex: 1;
+  min-height: 0;
+  margin-top: 1.15rem;
+}
+
+.vedic-tile {
+  position: relative;
+  margin: 0;
+  min-height: 0;
+  height: 100%;
+  border-radius: 1.15rem;
+  overflow: hidden;
+  background: #ece7df;
+  border: 1px solid rgba(212, 168, 83, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.vedic-tile:hover {
+  transform: translateY(-3px);
+  border-color: #d4a853;
+  box-shadow: 0 10px 24px rgba(212, 168, 83, 0.22);
+}
+
+.vedic-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vedic-tile:hover img {
+  transform: scale(1.05);
+}
+
+.vedic-tile__badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.26rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(6, 66, 51, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 168, 83, 0.45);
+  color: #fcf9f2;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+}
+
+.vedic-tile figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.5rem 0.85rem 0.75rem;
+  background: linear-gradient(to top, rgba(6, 66, 51, 0.92) 0%, rgba(6, 66, 51, 0.5) 60%, transparent 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+  section.vedic-deck-section {
+    height: calc(100vh + (var(--vedic-steps, 5) * 66vh));
+  }
+
+  .vedic-stage {
+    height: min(640px, calc(100vh - 180px));
+  }
+
+  .vedic-card {
+    padding: 1.25rem 1.35rem 1.15rem;
+  }
+
+  .vedic-card__top {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .vedic-card__explore {
+    margin-top: 0;
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  section.vedic-deck-section {
+    height: calc(100vh + (var(--vedic-steps, 5) * 58vh));
+  }
+
+  .vedic-deck-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .vedic-consult {
+    justify-content: center;
+  }
+
+  .vedic-stage {
+    --step: 12px;
+    border-radius: 1.25rem;
+  }
+
+  .vedic-rims span:nth-child(1) { left: 14px; right: 14px; }
+  .vedic-rims span:nth-child(2) { left: 28px; right: 28px; }
+  .vedic-rims span:nth-child(3) { left: 42px; right: 42px; }
+  .vedic-rims span:nth-child(4) { left: 56px; right: 56px; }
+  .vedic-rims span:nth-child(5) { left: 70px; right: 70px; }
+
+  .vedic-card {
+    border-radius: 1.25rem;
+  }
+
+  .vedic-tiles {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .vedic-tile:nth-child(n + 2) {
+    display: none;
+  }
+}
