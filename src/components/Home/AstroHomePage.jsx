@@ -42,6 +42,7 @@ import hosalImg from "../../assets/astrologer/hosal.jpg";
 import vibhutiImg from "../../assets/astrologer/vibhuti.jpg";
 import upendraImg from "../../assets/astrologer/upendra.jpg";
 import deepakImg from "../../assets/astrologer/deepak.jpg";
+import duttImg from "../../assets/astrologer/dutt.jpg";
 import drPriyankaImg from "../../assets/home/Priyanka Mam.svg";
 import "./astro-experts.css";
 import "./astro-guidance.css";
@@ -178,61 +179,20 @@ const BEST_SELLERS = [
 
 const ASTROLOGERS = [
   {
-    id: "harishankar",
-    name: "Pt. Harishankar",
-    phone: "8707748378",
-    expertise: ["Vedic Astrology", "Face Reading"],
+    id: "pameshwar-dutt",
+    name: "Pameshwar Dutt",
+    phone: "9120329906",
+    expertise: ["Vedic", "Numerology", "Face Reading"],
     languages: "Hindi · English",
-    exp: "18+ yrs",
+    exp: "11+ yrs",
     rating: "5.0",
-    reviews: "19.4k+",
-    price: "₹30/min",
-    origPrice: "₹45/min",
-    sessionPrice: "₹549 / 30 min",
-    about: "Combining nearly two decades of Vedic mastery with the rare art of Face Reading for pinpoint life predictions and wealth remedies.",
-    badge: "Face Reading Master",
-    badgeType: "celebrity",
-    online: true,
-    repeatRate: "99%",
-    img: harishankarImg,
-  },
-  {
-    id: "anuradha",
-    name: "Acharya Anuradha",
-    phone: "9044257411",
-    expertise: ["Vedic", "Numerology", "Lo Shu Grid"],
-    languages: "English · Hindi",
-    exp: "12+ yrs",
-    rating: "5.0",
-    reviews: "14.6k+",
-    price: "₹28/min",
-    origPrice: "₹38/min",
-    sessionPrice: "₹499 / 30 min",
-    about: "Blending Vedic wisdom, lucky number vibrations & Lo Shu Grid to align your destiny with success, career and marriage.",
-    badge: "Celebrity Numerologist",
+    reviews: "10.2k+",
+    about: "Harmonizing Vedic birth chart alignment with occult numerology to provide breakthrough solutions for wealth, health & relationships.",
+    badge: "Vedic Numerologist",
     badgeType: "gold",
     online: true,
     repeatRate: "98%",
-    img: anuradhaImg,
-  },
-  {
-    id: "hosal",
-    name: "Pt. Hosal",
-    phone: "9950421929",
-    expertise: ["Vedic Astrology", "Dasha Predictions"],
-    languages: "Hindi · English",
-    exp: "10+ yrs",
-    rating: "5.0",
-    reviews: "12.2k+",
-    price: "₹25/min",
-    origPrice: "₹35/min",
-    sessionPrice: "₹449 / 30 min",
-    about: "Illuminating your path with deep Kundli analysis, Dasha timing & authentic remedies for obstacles in career and business.",
-    badge: "Gold Verified",
-    badgeType: "top",
-    online: true,
-    repeatRate: "97%",
-    img: hosalImg,
+    img: duttImg,
   },
   {
     id: "vibhuti",
@@ -243,9 +203,6 @@ const ASTROLOGERS = [
     exp: "10+ yrs",
     rating: "4.9",
     reviews: "11.5k+",
-    price: "₹24/min",
-    origPrice: "₹32/min",
-    sessionPrice: "₹449 / 30 min",
     about: "Uniting Vedic astrology, intuitive Tarot & Face Reading to deliver 360-degree holistic life clarity and emotional healing.",
     badge: "Tarot & Face Reading",
     badgeType: "star",
@@ -262,9 +219,6 @@ const ASTROLOGERS = [
     exp: "8+ yrs",
     rating: "4.9",
     reviews: "8.5k+",
-    price: "₹21/min",
-    origPrice: "₹29/min",
-    sessionPrice: "₹399 / 30 min",
     about: "Decoding your cosmic blueprint with accurate Kundli analysis, transit impacts, and practical Vedic remedies for career & marriage.",
     badge: "Vedic Specialist",
     badgeType: "scholar",
@@ -281,15 +235,60 @@ const ASTROLOGERS = [
     exp: "7+ yrs",
     rating: "4.9",
     reviews: "7.8k+",
-    price: "₹19/min",
-    origPrice: "₹28/min",
-    sessionPrice: "₹349 / 30 min",
     about: "Guiding you through turning points with precise Janam Kundli reading, match-making & effective planetary dosha remedies.",
     badge: "Kundli Expert",
     badgeType: "specialist",
     online: true,
     repeatRate: "95%",
     img: deepakImg,
+  },
+  {
+    id: "harishankar",
+    name: "Pt. Harishankar",
+    phone: "8707748378",
+    expertise: ["Vedic Astrology", "Face Reading"],
+    languages: "Hindi · English",
+    exp: "18+ yrs",
+    rating: "5.0",
+    reviews: "19.4k+",
+    about: "Combining nearly two decades of Vedic mastery with the rare art of Face Reading for pinpoint life predictions and wealth remedies.",
+    badge: "Face Reading Master",
+    badgeType: "celebrity",
+    online: true,
+    repeatRate: "99%",
+    img: harishankarImg,
+  },
+  {
+    id: "hosal",
+    name: "Pt. Hosal",
+    phone: "9950421929",
+    expertise: ["Vedic Astrology", "Dasha Predictions"],
+    languages: "Hindi · English",
+    exp: "10+ yrs",
+    rating: "5.0",
+    reviews: "12.2k+",
+    about: "Illuminating your path with deep Kundli analysis, Dasha timing & authentic remedies for obstacles in career and business.",
+    badge: "Gold Verified",
+    badgeType: "top",
+    online: true,
+    repeatRate: "97%",
+    img: hosalImg,
+  },
+  {
+    id: "anuradha",
+    name: "Acharya Anuradha",
+    phone: "9044257411",
+    expertise: ["Vedic", "Numerology", "Lo Shu Grid"],
+    languages: "English · Hindi",
+    exp: "12+ yrs",
+    rating: "5.0",
+    reviews: "14.6k+",
+    about: "Blending Vedic wisdom, lucky number vibrations & Lo Shu Grid to align your destiny with success, career and marriage.",
+    badge: "Celebrity Numerologist",
+    badgeType: "gold",
+    online: true,
+    repeatRate: "98%",
+    img: anuradhaImg,
   },
 ];
 
@@ -484,6 +483,18 @@ function SectionHeading({ eyebrow, title, subtitle, action }) {
 export default function AstroHomePage() {
   const { openModal } = useConnectModal();
   const heroVideoRef = useRef(null);
+  const astrologersTrackRef = useRef(null);
+
+  const scrollAstrologers = (direction) => {
+    if (!astrologersTrackRef.current) return;
+    const container = astrologersTrackRef.current;
+    const card = container.querySelector(".astro-expert-card");
+    const scrollAmount = card ? (card.offsetWidth + 18) * 2 : 480;
+    container.scrollBy({
+      left: direction === "next" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
+  };
   const [activeZodiac, setActiveZodiac] = useState(0);
   const [zodiacCards, setZodiacCards] = useState(ZODIAC);
   const [activityIdx, setActivityIdx] = useState(0);
@@ -852,12 +863,32 @@ export default function AstroHomePage() {
               title="Connect with India’s Trusted Astrologers"
               subtitle="Get personalised guidance from verified Astrologers who bring experience, clarity, and a caring approach to every consultation."
               action={
-                <Link to="/talk-to-astrologers" className="astro-link">
-                  View all <ArrowRight className="h-4 w-4" />
-                </Link>
+                <div className="astro-experts-nav-wrap">
+                  <div className="astro-experts-arrows" aria-label="Scroll astrologers">
+                    <button
+                      type="button"
+                      className="astro-nav-arrow astro-nav-arrow--prev"
+                      onClick={() => scrollAstrologers("prev")}
+                      aria-label="Previous Astrologers"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      className="astro-nav-arrow astro-nav-arrow--next"
+                      onClick={() => scrollAstrologers("next")}
+                      aria-label="Next Astrologers"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <Link to="/talk-to-astrologers" className="astro-link">
+                    View all <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
               }
             />
-            <div className="astro-astro-grid">
+            <div className="astro-astro-grid" ref={astrologersTrackRef}>
               {ASTROLOGERS.map((a) => {
                 const imgSrc = a.img?.src || a.img;
                 return (
@@ -944,19 +975,8 @@ export default function AstroHomePage() {
                         </div>
                       </div>
 
-                      {/* Footer: Transparent Pricing & Dual Jewel CTA */}
+                      {/* Footer: Dual Prominent Action Buttons (Pricing Removed) */}
                       <div className="astro-expert-card__footer">
-                        <div className="astro-expert-card__price-box">
-                          <span className="astro-expert-card__price-from">Starting</span>
-                          <div className="astro-expert-card__price-row">
-                            <strong className="astro-expert-card__price-main">{a.price}</strong>
-                            {a.origPrice && (
-                              <del className="astro-expert-card__price-orig">{a.origPrice}</del>
-                            )}
-                          </div>
-                          <span className="astro-expert-card__price-session">{a.sessionPrice}</span>
-                        </div>
-
                         <div className="astro-expert-card__actions">
                           <button
                             type="button"

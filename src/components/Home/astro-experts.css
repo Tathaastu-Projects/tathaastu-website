@@ -1,40 +1,109 @@
 /* ==========================================================================
-   Tathaastu — Ultra-Premium Vedic Astrologers Grid & Luxury Cards
+   Tathaastu — 5-in-a-Row Vedic Astrologers Luxury Carousel & Cards
    ========================================================================== */
 
 .astro-experts {
   margin-top: 3.5rem;
+  position: relative;
 }
 
+/* Header Navigation (Scroll Arrows + View All Link) */
+.astro-experts-nav-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.astro-experts-arrows {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.astro-nav-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid rgba(212, 168, 83, 0.38);
+  color: #064233;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(6, 66, 51, 0.06);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.astro-nav-arrow:hover {
+  background: #064233;
+  color: #ffd585;
+  border-color: #064233;
+  transform: scale(1.06);
+  box-shadow: 0 4px 12px rgba(6, 66, 51, 0.2);
+}
+
+.astro-nav-arrow:active {
+  transform: scale(0.94);
+}
+
+/* 5-in-a-Row Single Horizontal Row Slider (Strictly NO two rows) */
 .astro-astro-grid {
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 1.85rem !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  gap: 1.15rem !important;
   margin-top: 1.75rem;
+  padding: 0.5rem 0.25rem 1.4rem 0.25rem !important;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 168, 83, 0.45) rgba(6, 66, 51, 0.05);
 }
 
+.astro-astro-grid::-webkit-scrollbar {
+  height: 6px;
+}
+.astro-astro-grid::-webkit-scrollbar-track {
+  background: rgba(6, 66, 51, 0.05);
+  border-radius: 999px;
+  margin: 0 1rem;
+}
+.astro-astro-grid::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #d4a853, #c4842a);
+  border-radius: 999px;
+}
+
+/* Astrologer Card Sizing — Exactly 5 in One Row on Desktop */
 .astro-expert-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: 1.4rem;
+  flex: 0 0 calc((100% - 4 * 1.15rem) / 5) !important;
+  min-width: calc((100% - 4 * 1.15rem) / 5) !important;
+  max-width: calc((100% - 4 * 1.15rem) / 5) !important;
+  scroll-snap-align: start;
+  border-radius: 1.25rem;
   background: linear-gradient(180deg, #ffffff 0%, #fdfbf7 55%, #fbf5e8 100%);
   border: 1.5px solid rgba(212, 168, 83, 0.32);
   box-shadow:
-    0 10px 28px -10px rgba(6, 66, 51, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04);
+    0 8px 22px -8px rgba(6, 66, 51, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.04);
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.4s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
 }
 
 .astro-expert-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   border-color: rgba(196, 132, 42, 0.65);
   box-shadow:
-    0 24px 48px -12px rgba(6, 66, 51, 0.18),
-    0 0 24px rgba(212, 168, 83, 0.22);
+    0 18px 36px -10px rgba(6, 66, 51, 0.16),
+    0 0 20px rgba(212, 168, 83, 0.2);
 }
 
 /* Top Accent Trim (Vedic Emerald & Gold) */
@@ -51,19 +120,19 @@
 /* Corner Star Accents */
 .astro-expert-card__star {
   position: absolute;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   color: rgba(212, 168, 83, 0.45);
   pointer-events: none;
   z-index: 4;
 }
-.astro-expert-card__star--tl { top: 0.65rem; left: 0.8rem; }
-.astro-expert-card__star--tr { top: 0.65rem; right: 0.8rem; }
+.astro-expert-card__star--tl { top: 0.6rem; left: 0.7rem; }
+.astro-expert-card__star--tr { top: 0.6rem; right: 0.7rem; }
 
 /* Media / Portrait */
 .astro-expert-card__media {
   position: relative;
   width: 100%;
-  aspect-ratio: 1.2 / 1;
+  aspect-ratio: 1.02 / 1;
   overflow: hidden;
   background: radial-gradient(circle at 50% 35%, #ffffff 40%, #fbf8f2 80%, #f1e7d8 100%);
   border-bottom: 1px solid rgba(212, 168, 83, 0.22);
@@ -98,39 +167,40 @@
 /* Badges on Top of Photo */
 .astro-expert-card__badges {
   position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  right: 0.75rem;
+  top: 0.6rem;
+  left: 0.6rem;
+  right: 0.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.35rem;
   z-index: 3;
 }
 
 .astro-expert-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.32rem;
-  padding: 0.24rem 0.58rem;
+  gap: 0.28rem;
+  padding: 0.2rem 0.48rem;
   border-radius: 999px;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  white-space: nowrap;
 }
 
 .astro-expert-pill--online {
-  background: rgba(6, 66, 51, 0.88);
+  background: rgba(6, 66, 51, 0.9);
   border: 1px solid rgba(74, 222, 128, 0.45);
   color: #86efac;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .astro-expert-pill__pulse {
-  width: 0.42rem;
-  height: 0.42rem;
+  width: 0.38rem;
+  height: 0.38rem;
   border-radius: 50%;
   background: #22c55e;
   box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
@@ -139,7 +209,7 @@
 
 @keyframes astroPulseGreen {
   0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-  70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  70% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
   100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 
@@ -149,43 +219,18 @@
 .astro-expert-pill--star,
 .astro-expert-pill--scholar,
 .astro-expert-pill--specialist {
-  background: rgba(30, 20, 8, 0.88);
+  background: rgba(30, 20, 8, 0.9);
   border: 1px solid rgba(255, 213, 133, 0.6);
   color: #ffd585;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
-}
-
-/* Expertise Tags in Card Body */
-.astro-expert-card__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin: 0.6rem 0 0.7rem 0;
-}
-
-.astro-expert-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.22rem 0.6rem;
-  border-radius: 999px;
-  background: #f7f2e7;
-  border: 1px solid rgba(212, 168, 83, 0.32);
-  color: #064233;
-  font-size: 0.69rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  transition: all 0.25s ease;
-}
-
-.astro-expert-card:hover .astro-expert-tag {
-  background: #f2e9d7;
-  border-color: rgba(212, 168, 83, 0.55);
-  color: #064233;
+  max-width: 62%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Card Body */
 .astro-expert-card__body {
-  padding: 1.25rem 1.25rem 1.25rem;
+  padding: 0.95rem 0.85rem 1rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -195,56 +240,100 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.35rem;
+}
+
+.astro-expert-card__identity {
+  min-width: 0;
+  flex: 1;
 }
 
 .astro-expert-card__name {
   margin: 0;
   font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
-  font-size: 1.22rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #064233;
-  line-height: 1.25;
+  line-height: 1.22;
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.28rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .astro-expert-card__lang {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.25rem;
-  font-size: 0.76rem;
+  gap: 0.28rem;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
   color: #5c6560;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .astro-expert-card__exp-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.55rem;
+  gap: 0.22rem;
+  padding: 0.2rem 0.45rem;
   border-radius: 999px;
   background: rgba(212, 168, 83, 0.12);
   border: 1px solid rgba(212, 168, 83, 0.32);
   color: #8c631a;
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Expertise Tags in Card Body */
+.astro-expert-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  margin: 0.5rem 0 0.55rem 0;
+  height: 1.55rem;
+  overflow: hidden;
+}
+
+.astro-expert-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.45rem;
+  border-radius: 999px;
+  background: #f7f2e7;
+  border: 1px solid rgba(212, 168, 83, 0.32);
+  color: #064233;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: all 0.25s ease;
   white-space: nowrap;
 }
 
+.astro-expert-card:hover .astro-expert-tag {
+  background: #f2e9d7;
+  border-color: rgba(212, 168, 83, 0.55);
+  color: #064233;
+}
+
+/* Short Bio Promise */
 .astro-expert-card__about {
-  margin: 0.75rem 0 0.85rem;
-  font-size: 0.82rem;
-  line-height: 1.45;
+  margin: 0.4rem 0 0.65rem;
+  font-size: 0.76rem;
+  line-height: 1.38;
   color: #43524b;
   font-style: italic;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 2.4rem;
+  min-height: 2.1rem;
 }
 
 /* Stats Micro-Bar */
@@ -252,12 +341,12 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 0.55rem 0.4rem;
-  border-radius: 0.75rem;
+  padding: 0.45rem 0.2rem;
+  border-radius: 0.65rem;
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(212, 168, 83, 0.22);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
-  margin-bottom: 0.95rem;
+  margin-bottom: 0.85rem;
 }
 
 .astro-expert-stat {
@@ -268,82 +357,42 @@
 }
 
 .astro-expert-stat__val {
-  font-size: 0.84rem;
+  font-size: 0.78rem;
   font-weight: 800;
   color: #064233;
   line-height: 1.1;
 }
 
 .astro-expert-stat__lbl {
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: #7b8882;
-  margin-top: 0.15rem;
+  margin-top: 0.12rem;
 }
 
 .astro-expert-stat-divider {
   width: 1px;
-  height: 1.6rem;
+  height: 1.4rem;
   background: rgba(212, 168, 83, 0.25);
 }
 
-/* Footer: Pricing & Dual CTA */
+/* Footer: Dual Prominent Action Buttons (Pricing Removed) */
 .astro-expert-card__footer {
   margin-top: auto;
-  padding-top: 0.95rem;
+  padding-top: 0.85rem;
   border-top: 1px dashed rgba(212, 168, 83, 0.3);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
+  width: 100%;
 }
 
-.astro-expert-card__price-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.astro-expert-card__price-from {
-  font-size: 0.62rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #8c631a;
-}
-
-.astro-expert-card__price-row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  line-height: 1;
-  margin: 0.15rem 0;
-}
-
-.astro-expert-card__price-main {
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: #064233;
-}
-
-.astro-expert-card__price-orig {
-  font-size: 0.75rem;
-  color: #9ca3af;
-  font-weight: 600;
-}
-
-.astro-expert-card__price-session {
-  font-size: 0.66rem;
-  font-weight: 600;
-  color: #64748b;
-}
-
-/* Actions: Chat & Call Buttons */
 .astro-expert-card__actions {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.45rem;
+  width: 100%;
 }
 
 .astro-expert-btn {
@@ -351,14 +400,15 @@
   align-items: center;
   justify-content: center;
   gap: 0.3rem;
-  padding: 0.55rem 0.95rem;
+  padding: 0.52rem 0.5rem;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 800;
   cursor: pointer;
   letter-spacing: 0.02em;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
+  width: 100%;
 }
 
 .astro-expert-btn--chat {
@@ -412,17 +462,41 @@
   left: 140%;
 }
 
-/* Responsive Grids */
-@media (max-width: 1080px) {
-  .astro-astro-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 1.4rem !important;
+/* Responsive Single-Row Scroll (Never Wraps Into Two Rows) */
+@media (max-width: 1240px) {
+  .astro-expert-card {
+    flex: 0 0 calc((100% - 3 * 1.15rem) / 4) !important;
+    min-width: calc((100% - 3 * 1.15rem) / 4) !important;
+    max-width: calc((100% - 3 * 1.15rem) / 4) !important;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 980px) {
+  .astro-expert-card {
+    flex: 0 0 calc((100% - 2 * 1rem) / 3) !important;
+    min-width: calc((100% - 2 * 1rem) / 3) !important;
+    max-width: calc((100% - 2 * 1rem) / 3) !important;
+  }
   .astro-astro-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.35rem !important;
+    gap: 1rem !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .astro-expert-card {
+    flex: 0 0 calc((100% - 0.9rem) / 2) !important;
+    min-width: calc((100% - 0.9rem) / 2) !important;
+    max-width: calc((100% - 0.9rem) / 2) !important;
+  }
+  .astro-astro-grid {
+    gap: 0.9rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .astro-expert-card {
+    flex: 0 0 82% !important;
+    min-width: 82% !important;
+    max-width: 82% !important;
   }
 }
