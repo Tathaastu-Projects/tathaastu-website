@@ -8,7 +8,6 @@ const SELECTOR = [
   ".astro-category",
   ".astro-trust-item",
   ".store-card",
-  "article",
 ].join(", ");
 
 export default function CardTilt() {

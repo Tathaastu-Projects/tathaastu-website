@@ -211,9 +211,23 @@ export default function Contact() {
       <SiteNavbar />
 
       {/* HERO SECTION WITH BANNER IMAGE */}
-      <section className="bg-[#F8FFF6] px-4 py-14 text-center text-[#073349]">
-        <h1 className="text-4xl font-bold">Contact</h1>
-        <p className="mx-auto mt-3 max-w-xl text-[#325d72]">Write to us about a consultation, a course, or an order.</p>
+      <section className="bg-[#F8FFF6] px-4 py-12 text-center text-[#073349]">
+        <h1 className="text-4xl font-bold font-playfair">Contact Us</h1>
+        <p className="mx-auto mt-2 max-w-xl text-[#325d72] text-sm">Write to us about a consultation, a course, or an order.</p>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-4 text-sm">
+          <a
+            href="mailto:care@tathasstu.com"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#d4a853]/40 text-[#064233] font-semibold hover:border-[#064233] shadow-sm transition-all"
+          >
+            <span>✉️ care@tathasstu.com</span>
+          </a>
+          <a
+            href="tel:+919756303737"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#d4a853]/40 text-[#064233] font-semibold hover:border-[#064233] shadow-sm transition-all"
+          >
+            <span>📞 +91-9756303737</span>
+          </a>
+        </div>
       </section>
       <Seperator />
 

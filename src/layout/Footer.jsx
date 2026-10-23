@@ -106,14 +106,27 @@ export default function Footer() {
             </div>
 
             <div className="space-y-2.5">
-              <div className="text-xs font-extrabold tracking-wide text-white/95 uppercase">Contact</div>
+              <div className="text-xs font-extrabold tracking-wide text-white/95 uppercase">Support & Legal</div>
               <div className="grid gap-1.5 text-xs text-white/80">
                 <Link to="/about" className="hover:text-white">About Us</Link>
-                <a href="#" className="hover:text-white">Contact Us</a>
-                <a href="#" className="hover:text-white">Classes</a>
-                <a href="#" className="hover:text-white">FAQs</a>
-                <a href="#" className="hover:text-white">Privacy Policy</a>
-                <a href="#" className="hover:text-white">Terms &amp; Conditions</a>
+                <Link to="/contact" className="hover:text-white">Contact Us</Link>
+                <Link to="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
+                <Link to="/terms-and-conditions" className="hover:text-white">Terms &amp; Conditions</Link>
+                <Link to="/cancellation-refund-policy" className="hover:text-white">Cancellation &amp; Refund</Link>
+              </div>
+              <div className="pt-2 text-xs text-white/75 space-y-1">
+                <div>
+                  <span className="text-white/50">Email:</span>{" "}
+                  <a href="mailto:care@tathasstu.com" className="text-[#ecd599] hover:underline font-medium">
+                    care@tathasstu.com
+                  </a>
+                </div>
+                <div>
+                  <span className="text-white/50">Mobile:</span>{" "}
+                  <a href="tel:+919756303737" className="text-[#ecd599] hover:underline font-medium">
+                    +91-9756303737
+                  </a>
+                </div>
               </div>
             </div>
           </div>
