@@ -21,15 +21,27 @@ import "./pricing.css";
 
 export default function Pricing() {
   const navigate = useNavigate();
-  const [consult, setConsult] = useState({ active: false, service: "" });
+  const [consult, setConsult] = useState({
+    active: false,
+    service: "consult",
+    astrologerId: "",
+    expertName: "",
+    expertSlug: "",
+    expertImg: "",
+  });
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const astro = params.get("astrologer") || params.get("astrologerId") || "";
     setConsult({
-      active: params.get("flow") === "consult",
+      active: params.get("flow") === "consult" || Boolean(astro),
       service: params.get("service") || "consult",
+      astrologerId: astro,
+      expertName: params.get("expertName") || params.get("astrologerName") || "",
+      expertSlug: params.get("expertSlug") || "",
+      expertImg: params.get("expertImg") || "",
     });
   }, []);
 
@@ -71,16 +83,19 @@ export default function Pricing() {
   }, []);
 
   const handleGetStarted = (plan) => {
-    if (consult.active) {
-      const params = new URLSearchParams({
-        flow: "consult",
-        service: consult.service,
-        package: plan.name,
-      });
-      navigate(`/talk-to-astrologers?${params.toString()}`);
-      return;
-    }
-    navigate("/consultation-booking", { state: { plan } });
+    const params = new URLSearchParams({
+      flow: "consult",
+      service: consult.service || "consult",
+      package: plan.name,
+      price: plan.price,
+      duration: plan.duration,
+    });
+    if (consult.astrologerId) params.set("astrologer", consult.astrologerId);
+    if (consult.expertName) params.set("expertName", consult.expertName);
+    if (consult.expertSlug) params.set("expertSlug", consult.expertSlug);
+    if (consult.expertImg) params.set("expertImg", consult.expertImg);
+
+    navigate(`/talk-to-astrologers?${params.toString()}`);
   };
 
   const pricingPlans = [
@@ -201,12 +216,17 @@ export default function Pricing() {
             Find the right level of guidance for your questions, your Kundli, and the clarity you seek.
           </p>
 
-          {consult.active && (
+          {consult.expertName ? (
             <div className="pricing-stepper-pill">
               <span className="pricing-stepper-dot" />
-              <span>Step 1: Choose a package · Next: Select your verified expert & share birth details</span>
+              <span>Step 1: Choose a package for your session with <strong>{consult.expertName}</strong></span>
             </div>
-          )}
+          ) : consult.active ? (
+            <div className="pricing-stepper-pill">
+              <span className="pricing-stepper-dot" />
+              <span>Step 1: Choose a package · Next: Select your verified expert & proceed to payment</span>
+            </div>
+          ) : null}
         </section>
 
         {/* CONSULTATION PACKAGES GRID */}

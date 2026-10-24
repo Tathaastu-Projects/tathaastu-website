@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Link } from "@/lib/router";
+import { Link, useNavigate } from "@/lib/router";
 import {
   BadgeCheck,
   ChevronDown,
@@ -21,8 +21,6 @@ import {
   fetchAstrologers,
   fetchTrendingAstrologers,
   formatLanguages,
-  formatPerMinPrice,
-  formatSessionPrice,
 } from "../services/astrologersApi";
 import AstroFaqSection from "../components/Home/AstroFaqSection";
 import ConsultationRequestDialog from "../components/Consult/ConsultationRequestDialog";
@@ -85,51 +83,19 @@ const USE_DUMMY_ASTROLOGERS = process.env.NEXT_PUBLIC_USE_DUMMY_ASTROLOGERS === 
 
 const FALLBACK_EXPERTS = [
   {
-    id: "harishankar",
-    slug: "harishankar",
-    name: "Pt. Harishankar",
-    phone: "8707748378",
-    imageUrl: harishankarImg,
+    id: "pameshwar-dutt",
+    slug: "pameshwar-dutt",
+    name: "Pameshwar Dutt",
+    phone: "9120329906",
+    imageUrl: duttImg,
     online: true,
     verified: true,
-    expertise: ["Vedic", "Face Reading"],
+    expertise: ["Vedic", "Numerology", "Face Reading"],
     languages: ["Hindi", "English"],
-    expYears: 18,
+    expYears: 11,
     rating: "5.0",
-    consultations: "19.4k+",
-    price: 549,
-    priceDuration: 30,
-  },
-  {
-    id: "anuradha",
-    slug: "anuradha",
-    name: "Acharya Anuradha",
-    phone: "9044257411",
-    imageUrl: anuradhaImg,
-    online: true,
-    verified: true,
-    expertise: ["Vedic", "Numerology", "Lo Shu Grid"],
-    languages: ["English", "Hindi"],
-    expYears: 12,
-    rating: "5.0",
-    consultations: "14.6k+",
+    consultations: "10.2k+",
     price: 499,
-    priceDuration: 30,
-  },
-  {
-    id: "hosal",
-    slug: "hosal",
-    name: "Pt. Hosal",
-    phone: "9950421929",
-    imageUrl: hosalImg,
-    online: true,
-    verified: true,
-    expertise: ["Vedic", "Dasha Predictions"],
-    languages: ["Hindi", "English"],
-    expYears: 10,
-    rating: "5.0",
-    consultations: "12.2k+",
-    price: 449,
     priceDuration: 30,
   },
   {
@@ -181,49 +147,106 @@ const FALLBACK_EXPERTS = [
     priceDuration: 30,
   },
   {
-    id: "pameshwar-dutt",
-    slug: "pameshwar-dutt",
-    name: "Pameshwar Dutt",
-    phone: "9120329906",
-    imageUrl: duttImg,
+    id: "harishankar",
+    slug: "harishankar",
+    name: "Pt. Harishankar",
+    phone: "8707748378",
+    imageUrl: harishankarImg,
     online: true,
     verified: true,
-    expertise: ["Vedic", "Numerology", "Face Reading"],
+    expertise: ["Vedic", "Face Reading"],
     languages: ["Hindi", "English"],
-    expYears: 11,
+    expYears: 18,
     rating: "5.0",
-    consultations: "10.2k+",
+    consultations: "19.4k+",
+    price: 549,
+    priceDuration: 30,
+  },
+  {
+    id: "hosal",
+    slug: "hosal",
+    name: "Pt. Hosal",
+    phone: "9950421929",
+    imageUrl: hosalImg,
+    online: true,
+    verified: true,
+    expertise: ["Vedic", "Dasha Predictions"],
+    languages: ["Hindi", "English"],
+    expYears: 10,
+    rating: "5.0",
+    consultations: "12.2k+",
+    price: 449,
+    priceDuration: 30,
+  },
+  {
+    id: "anuradha",
+    slug: "anuradha",
+    name: "Acharya Anuradha",
+    phone: "9044257411",
+    imageUrl: anuradhaImg,
+    online: true,
+    verified: true,
+    expertise: ["Vedic", "Numerology", "Lo Shu Grid"],
+    languages: ["English", "Hindi"],
+    expYears: 12,
+    rating: "5.0",
+    consultations: "14.6k+",
     price: 499,
     priceDuration: 30,
   },
 ];
 
-function AstrologerCard({ expert, onCall, onSelect }) {
-  const price = formatSessionPrice(expert);
+function AstrologerCard({ expert, isChosen, onCall, onSelect }) {
   const profile = (
     <>
-      <div
-        className={`talk-card__avatar-wrap${expert.online ? " is-online" : ""}`}
-      >
-        <img
-          src={expert.imageUrl}
-          alt={expert.name}
-          className="talk-card__avatar"
-        />
+      <div className="talk-card__top-trim" aria-hidden="true" />
+      <div className={`talk-card__avatar-wrap${expert.online ? " is-online" : ""}`}>
+        <div className="talk-card__avatar-frame">
+          <img
+            src={expert.imageUrl}
+            alt={expert.name}
+            className="talk-card__avatar"
+          />
+          {expert.online && (
+            <span className="talk-card__live-badge">
+              <span className="talk-card__live-dot" /> Online
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="talk-card__name-row">
         <h3 className="talk-card__name">{expert.name}</h3>
         {expert.verified ? (
-          <span className="talk-card__verified" aria-label="Verified">
+          <span className="talk-card__verified" title="Verified Astrologer" aria-label="Verified">
             <BadgeCheck className="h-4 w-4" fill="currentColor" stroke="#fff" />
           </span>
         ) : null}
       </div>
 
+      {isChosen && (
+        <div style={{ textAlign: "center", marginTop: "0.2rem" }}>
+          <span
+            style={{
+              fontSize: "0.68rem",
+              fontWeight: 800,
+              textTransform: "uppercase",
+              letterSpacing: "0.04em",
+              color: "#8c5d12",
+              background: "rgba(197, 151, 62, 0.15)",
+              border: "1px solid rgba(197, 151, 62, 0.35)",
+              padding: "0.15rem 0.55rem",
+              borderRadius: "999px",
+            }}
+          >
+            ★ Selected Guru
+          </span>
+        </div>
+      )}
+
       <div className="talk-card__tags">
         {(expert.expertise || []).map((tag) => (
-          <span key={tag}>{tag}</span>
+          <span key={tag} className="talk-card__tag">{tag}</span>
         ))}
       </div>
 
@@ -232,28 +255,25 @@ function AstrologerCard({ expert, onCall, onSelect }) {
 
       <div className="talk-card__footer-row">
         <div className="talk-card__rating">
-          <Star className="h-3.5 w-3.5 fill-[#F5B301] text-[#F5B301]" />
+          <Star className="h-3.5 w-3.5 fill-[#d4a853] text-[#d4a853]" />
           <span>
             {expert.rating} <span className="talk-card__sep">•</span>{" "}
             {expert.consultations}
           </span>
         </div>
-        <div className="talk-card__price"><strong>{price.amount}</strong><span>{price.suffix}</span></div>
       </div>
     </>
   );
 
   return (
-    <article className="talk-card">
-      {onSelect ? (
-        <button type="button" className="talk-card__body talk-card__pick" onClick={() => onSelect(expert)}>
-          {profile}
-        </button>
-      ) : (
-        <Link to={`/talk-to-astrologers/${expert.slug}`} className="talk-card__body">
-          {profile}
-        </Link>
-      )}
+    <article className={`talk-card ${isChosen ? "is-chosen" : ""}`}>
+      <button
+        type="button"
+        className="talk-card__body talk-card__pick"
+        onClick={() => onSelect(expert)}
+      >
+        {profile}
+      </button>
 
       <button
         type="button"
@@ -261,13 +281,14 @@ function AstrologerCard({ expert, onCall, onSelect }) {
         onClick={() => onCall(expert)}
       >
         <Phone className="h-4 w-4" />
-        Call now
+        <span>Call now</span>
       </button>
     </article>
   );
 }
 
 export default function TalkToAstrologers() {
+  const navigate = useNavigate();
   const { openModal } = useConnectModal();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
@@ -286,17 +307,65 @@ export default function TalkToAstrologers() {
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [consult, setConsult] = useState({ active: false, service: "", packageName: "" });
+  const [consult, setConsult] = useState({
+    active: false,
+    service: "",
+    packageName: "",
+    price: "",
+    duration: "",
+    astrologerId: "",
+    expertName: "",
+  });
   const [selectedExpert, setSelectedExpert] = useState(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const pkg = params.get("package") || "";
     setConsult({
-      active: params.get("flow") === "consult",
+      active: params.get("flow") === "consult" || Boolean(pkg),
       service: params.get("service") || "",
-      packageName: params.get("package") || "",
+      packageName: pkg,
+      price: params.get("price") || "₹499",
+      duration: params.get("duration") || "30 Minutes",
+      astrologerId: params.get("astrologer") || params.get("astrologerId") || "",
+      expertName: params.get("expertName") || "",
     });
   }, []);
+
+  const handleCallExpert = (expert) => {
+    if (consult.packageName) {
+      // Step 3: Package already selected -> Redirect to Payment Screen!
+      const params = new URLSearchParams({
+        package: consult.packageName,
+        price: consult.price || "₹499",
+        duration: consult.duration || "30 Minutes",
+        astrologer: expert.name,
+        astrologerId: expert.id || "",
+        astrologerSlug: expert.slug || "",
+        astrologerImg: expert.imageUrl || "",
+        expertRating: expert.rating || "5.0",
+        expertExp: expert.expYears || "10",
+        expertExpertise: (expert.expertise || []).join(", "),
+        expertLanguages: formatLanguages(expert.languages) || "",
+      });
+      navigate(`/consultation-booking?${params.toString()}`);
+      return;
+    }
+
+    // Step 1: No package selected yet -> Redirect to Packages Screen!
+    const params = new URLSearchParams({
+      flow: "consult",
+      astrologer: expert.id || "",
+      expertName: expert.name || "",
+      expertSlug: expert.slug || "",
+      expertImg: expert.imageUrl || "",
+    });
+    navigate(`/pricing?${params.toString()}`);
+  };
+
+  const handleCardClick = (expert) => {
+    handleCallExpert(expert);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -320,7 +389,33 @@ export default function TalkToAstrologers() {
     const timer = setTimeout(async () => {
       setLoading(true);
       setError("");
+
+      const applyFiltersAndSort = (baseList) => {
+        let filtered = (baseList || []).filter((expert) => {
+          const haystack = `${expert.name} ${(expert.expertise || []).join(" ")}`.toLowerCase();
+          const matchesQuery = !query.trim() || haystack.includes(query.trim().toLowerCase());
+          const matchesCategory =
+            category === "All" ||
+            (expert.expertise || []).some((tag) => tag.toLowerCase() === category.toLowerCase());
+          return matchesQuery && matchesCategory;
+        });
+
+        if (sort === "rating") {
+          filtered = [...filtered].sort((a, b) => Number(b.rating) - Number(a.rating));
+        } else if (sort === "experience") {
+          filtered = [...filtered].sort((a, b) => Number(b.expYears || 0) - Number(a.expYears || 0));
+        }
+        return filtered;
+      };
+
       try {
+        if (USE_DUMMY_ASTROLOGERS) {
+          const filtered = applyFiltersAndSort(FALLBACK_EXPERTS);
+          setExperts(filtered);
+          setTrending(FALLBACK_EXPERTS.slice(0, 4));
+          return;
+        }
+
         const [list, trend] = await Promise.all([
           fetchAstrologers({ q: query, category, sort }),
           fetchTrendingAstrologers(5),
@@ -330,20 +425,7 @@ export default function TalkToAstrologers() {
         setTrending(Array.isArray(trend) ? trend : []);
       } catch (err) {
         if (cancelled) return;
-        if (!USE_DUMMY_ASTROLOGERS) {
-          setExperts([]);
-          setTrending([]);
-          setError(err.message || "Failed to load astrologers");
-          return;
-        }
-        const filtered = FALLBACK_EXPERTS.filter((expert) => {
-          const haystack = `${expert.name} ${(expert.expertise || []).join(" ")}`.toLowerCase();
-          const matchesQuery = !query.trim() || haystack.includes(query.trim().toLowerCase());
-          const matchesCategory =
-            category === "All" ||
-            (expert.expertise || []).some((tag) => tag.toLowerCase() === category.toLowerCase());
-          return matchesQuery && matchesCategory;
-        });
+        const filtered = applyFiltersAndSort(FALLBACK_EXPERTS);
         setExperts(filtered);
         setTrending(FALLBACK_EXPERTS.slice(0, 4));
         setError(filtered.length ? "" : err.message || "Failed to load astrologers");
@@ -416,8 +498,7 @@ export default function TalkToAstrologers() {
             >
               <option value="popular">Popular</option>
               <option value="rating">Top rated</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
+              <option value="experience">Most Experienced</option>
             </select>
             <ChevronDown className="h-4 w-4" aria-hidden="true" />
           </label>
@@ -440,14 +521,24 @@ export default function TalkToAstrologers() {
       </section>
 
       <section className="talk-wrap talk-main">
-        {consult.active ? (
-          <p className="talk-flow-note">
-            {consult.packageName ? `You selected the ${consult.packageName} package. ` : ""}
-            Choose an expert
-            {SERVICE_LABELS[consult.service] ? ` for ${SERVICE_LABELS[consult.service]}` : ""}.
-            Their profile opens a form for your birth details and a time that suits you.
+        <div className="talk-flow-banner" role="status">
+          <div className="talk-flow-banner__icon-wrap">
+            <ShieldCheck className="h-4 w-4" />
+          </div>
+          <p className="talk-flow-banner__text">
+            {consult.packageName ? (
+              <>
+                <strong>Step 2 of 3: Selected Package: {consult.packageName} ({consult.price} • {consult.duration}). </strong>
+                Click <strong>&quot;Call now&quot;</strong> on {consult.expertName ? <strong>{consult.expertName}</strong> : "your preferred verified expert"} to proceed to secure PayU payment.
+              </>
+            ) : (
+              <>
+                <strong>Step 1: Choose Your Expert. </strong>
+                Select any verified Vedic master or click <strong>&quot;Call now&quot;</strong> to choose your consultation package.
+              </>
+            )}
           </p>
-        ) : null}
+        </div>
         <div className="talk-layout">
           <div className="talk-grid">
             {loading ? (
@@ -455,14 +546,24 @@ export default function TalkToAstrologers() {
             ) : error ? (
               <div className="talk-empty">{error}</div>
             ) : experts.length ? (
-              experts.map((expert) => (
-                <AstrologerCard
-                  key={expert.id}
-                  expert={expert}
-                  onCall={() => openModal()}
-                  onSelect={consult.active ? setSelectedExpert : undefined}
-                />
-              ))
+              experts.map((expert) => {
+                const isChosen =
+                  consult.astrologerId &&
+                  (expert.id === consult.astrologerId ||
+                    expert.slug === consult.astrologerId ||
+                    expert.name
+                      .toLowerCase()
+                      .includes(consult.astrologerId.toLowerCase()));
+                return (
+                  <AstrologerCard
+                    key={expert.id}
+                    expert={expert}
+                    isChosen={Boolean(isChosen)}
+                    onCall={handleCallExpert}
+                    onSelect={handleCardClick}
+                  />
+                );
+              })
             ) : (
               <div className="talk-empty">
                 No experts match your search. Try another skill or category.
@@ -479,14 +580,10 @@ export default function TalkToAstrologers() {
             <div className="talk-side__list">
               {trending.map((expert) => (
                 <div key={expert.id} className="talk-side__item">
-                  <Link
-                    to={consult.active ? "#experts" : `/talk-to-astrologers/${expert.slug}`}
+                  <div
                     className="talk-side__link"
-                    onClick={(event) => {
-                      if (!consult.active) return;
-                      event.preventDefault();
-                      setSelectedExpert(expert);
-                    }}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleCardClick(expert)}
                   >
                     <img src={expert.imageUrl} alt="" />
                     <span className="talk-side__meta">
@@ -504,14 +601,14 @@ export default function TalkToAstrologers() {
                       <p className="talk-side__rating">
                         ★ {expert.rating}
                         <span className="talk-card__sep">•</span>
-                        {formatPerMinPrice(expert)}
+                        {expert.consultations}
                       </p>
                     </span>
-                  </Link>
+                  </div>
                   <button
                     type="button"
                     className="talk-side__call"
-                    onClick={() => openModal()}
+                    onClick={() => handleCallExpert(expert)}
                   >
                     Call
                   </button>
