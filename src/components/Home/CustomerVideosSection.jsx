@@ -141,9 +141,9 @@ function VideoCard({ item, shouldLoad, shouldPlay, registerVideo }) {
                 <i />
               </span>
             </div>
-            <Link to={`/store/product/${product.slug}`} className="astro-video-card__buy">
+            <a href="https://www.abhimantritstore.com/" target="_blank" rel="noopener noreferrer" className="astro-video-card__buy">
               Shop
-            </Link>
+            </a>
           </div>
         ) : null}
       </div>

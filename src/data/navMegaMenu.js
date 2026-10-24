@@ -71,7 +71,8 @@ export const NAV_MEGA_MENUS = [
     label: "Abhimantrit Store",
     accent: "#C45C7A",
     tint: "#FBEFF2",
-    path: "/store",
+    path: "https://www.abhimantritstore.com/",
+    external: true,
     items: [],
   },
 ];

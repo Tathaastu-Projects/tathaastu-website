@@ -5,18 +5,35 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "@/lib/router";
 import "./astro-deck.css";
 
-import kundliImg from "../../assets/AStrology kundli.jpg";
-import vedicImg from "../../assets/Asstrology.jpeg";
-import horoscopeImg from "../../assets/Horoscope Guidance.jpg";
-import ritualImg from "../../assets/Crystal Healing.jpg";
-import chakraImg from "../../assets/chakra.jpg";
-import auraImg from "../../assets/Aura Healing & Scanning.jpg";
-import vastuImg from "../../assets/Vastu Astrology.jpg";
-import plantsImg from "../../assets/Vastu plants for positive energy.webp";
-import vastuTipsImg from "../../assets/10 Vastu Tips for Home to Attract Positive Energy.webp";
-import numerologyImg from "../../assets/Numerology.jpg";
-import tarotImg from "../../assets/Tarot Reading.jpg";
-import dowsingImg from "../../assets/dowsing.jpg";
+// Vedic Kundli SVGs
+import kundliBirthChartSvg from "../../assets/home/Guidance/Vedic Kundli/Birth chart.svg";
+import kundliGuidedReadingSvg from "../../assets/home/Guidance/Vedic Kundli/Guided reading.svg";
+import kundliDailyHoroscopeSvg from "../../assets/home/Guidance/Vedic Kundli/Daily Horoscope.svg";
+
+// Sacred Pooja SVGs
+import poojaHomeOfferingSvg from "../../assets/home/Guidance/Scared Pooja/Home Offering.svg";
+import poojaQuietCornerSvg from "../../assets/home/Guidance/Scared Pooja/Quite corner.svg";
+import poojaPreparedCeremonySvg from "../../assets/home/Guidance/Scared Pooja/Prepared ceremony.svg";
+
+// Vastu Shastra SVGs
+import vastuRoomsDirectionsSvg from "../../assets/home/Guidance/Vastu Shastra/Rooms & Directions.svg";
+import vastuPlantForHomeSvg from "../../assets/home/Guidance/Vastu Shastra/Plant for home.svg";
+import vastuSimpleShiftsSvg from "../../assets/home/Guidance/Vastu Shastra/Simple home shifts.svg";
+
+// Horoscope Matching SVGs
+import matchingPairSvg from "../../assets/home/Guidance/Horoscope Matching/Two charts one reading(Pair).svg";
+import matchingPointsSvg from "../../assets/home/Guidance/Horoscope Matching/The points we compare(Kundli).svg";
+import matchingNumerologistSvg from "../../assets/home/Guidance/Horoscope Matching/Numerologist.svg";
+
+// Aura & Healing SVGs
+import healingScanningSvg from "../../assets/home/Guidance/Aura & Healing/Scannig session.svg";
+import healingPractiseSvg from "../../assets/home/Guidance/Aura & Healing/Practise.svg";
+import healingDowsingSvg from "../../assets/home/Guidance/Aura & Healing/Dowsing.svg";
+
+// Courses SVGs
+import courseTarotSvg from "../../assets/home/Guidance/Courses/Tarot.svg";
+import courseNumerologySvg from "../../assets/home/Guidance/Courses/Numerology.svg";
+import courseVastuSvg from "../../assets/home/Guidance/Courses/Vastu.svg";
 
 const PANELS = [
   {
@@ -28,9 +45,9 @@ const PANELS = [
     href: "/services/astrology-kundli",
     explore: "Explore Kundli",
     tiles: [
-      { src: kundliImg, badge: "Chart", caption: "Your birth chart" },
-      { src: vedicImg, badge: "Session", caption: "A guided reading" },
-      { src: horoscopeImg, badge: "Today", caption: "Daily horoscope" },
+      { src: kundliBirthChartSvg, badge: "Chart", caption: "Your birth chart" },
+      { src: kundliGuidedReadingSvg, badge: "Session", caption: "A guided reading" },
+      { src: kundliDailyHoroscopeSvg, badge: "Today", caption: "Daily horoscope" },
     ],
   },
   {
@@ -42,9 +59,9 @@ const PANELS = [
     href: "/services/pooja-services",
     explore: "Explore Pooja",
     tiles: [
-      { src: ritualImg, badge: "Ritual", caption: "Home offerings" },
-      { src: chakraImg, badge: "Space", caption: "Altar and room" },
-      { src: auraImg, badge: "Blessing", caption: "Arranged ceremony" },
+      { src: poojaHomeOfferingSvg, badge: "Ritual", caption: "Home offerings" },
+      { src: poojaQuietCornerSvg, badge: "Space", caption: "Quiet corner & altar" },
+      { src: poojaPreparedCeremonySvg, badge: "Blessing", caption: "Prepared ceremony" },
     ],
   },
   {
@@ -56,9 +73,9 @@ const PANELS = [
     href: "/services/vastu-shastra",
     explore: "Explore Vastu",
     tiles: [
-      { src: vastuImg, badge: "Layout", caption: "Directions and flow" },
-      { src: plantsImg, badge: "Plants", caption: "Greens for the home" },
-      { src: vastuTipsImg, badge: "Tips", caption: "Everyday adjustments" },
+      { src: vastuRoomsDirectionsSvg, badge: "Layout", caption: "Rooms & directions" },
+      { src: vastuPlantForHomeSvg, badge: "Plants", caption: "Plant for home" },
+      { src: vastuSimpleShiftsSvg, badge: "Tips", caption: "Simple home shifts" },
     ],
   },
   {
@@ -70,9 +87,9 @@ const PANELS = [
     href: "/services/horoscope-matching",
     explore: "Explore Matching",
     tiles: [
-      { src: horoscopeImg, badge: "Pair", caption: "Comparing charts" },
-      { src: kundliImg, badge: "Questions", caption: "What to ask" },
-      { src: numerologyImg, badge: "Outlook", caption: "Looking ahead" },
+      { src: matchingPairSvg, badge: "Pair", caption: "Two charts, one reading" },
+      { src: matchingPointsSvg, badge: "Points", caption: "The points we compare" },
+      { src: matchingNumerologistSvg, badge: "Outlook", caption: "Numerologist guidance" },
     ],
   },
   {
@@ -84,9 +101,9 @@ const PANELS = [
     href: "/services/crystal-healing",
     explore: "Explore Healing",
     tiles: [
-      { src: auraImg, badge: "Aura", caption: "Scanning the field" },
-      { src: chakraImg, badge: "Chakras", caption: "Gentle focus" },
-      { src: dowsingImg, badge: "Quiet", caption: "Time to reset" },
+      { src: healingScanningSvg, badge: "Aura", caption: "Scanning session" },
+      { src: healingPractiseSvg, badge: "Practice", caption: "Gentle energy practice" },
+      { src: healingDowsingSvg, badge: "Quiet", caption: "Dowsing & reset" },
     ],
   },
   {
@@ -98,9 +115,9 @@ const PANELS = [
     href: "/courses",
     explore: "Explore Courses",
     tiles: [
-      { src: tarotImg, badge: "Tarot", caption: "Reading the cards" },
-      { src: numerologyImg, badge: "Numbers", caption: "Name and date" },
-      { src: plantsImg, badge: "Vastu", caption: "Study the home" },
+      { src: courseTarotSvg, badge: "Tarot", caption: "Tarot reading course" },
+      { src: courseNumerologySvg, badge: "Numbers", caption: "Numerology course" },
+      { src: courseVastuSvg, badge: "Vastu", caption: "Vastu shastra course" },
     ],
   },
 ];
@@ -308,7 +325,7 @@ export default function ServiceDeckSection() {
                   <div className="vedic-tiles">
                     {panel.tiles.map((tile) => (
                       <figure key={tile.caption} className="vedic-tile">
-                        <img src={tile.src} alt={tile.caption} loading="lazy" />
+                        <img src={tile.src?.src || tile.src} alt={tile.caption} loading="lazy" />
                         <span className="vedic-tile__badge">{tile.badge}</span>
                         <figcaption>{tile.caption}</figcaption>
                       </figure>

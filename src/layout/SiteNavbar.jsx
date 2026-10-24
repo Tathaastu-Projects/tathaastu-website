@@ -119,6 +119,15 @@ export default function SiteNavbar({ endSlot = null }) {
                       className={`h-3.5 w-3.5 transition-transform ${isOpen ? "rotate-180" : ""}`}
                     />
                   </button>
+                ) : menu.external || (typeof menu.path === "string" && menu.path.startsWith("http")) ? (
+                  <a
+                    href={menu.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={itemClass}
+                  >
+                    {menu.label}
+                  </a>
                 ) : (
                   <Link to={menu.path} className={itemClass}>
                     {menu.label}

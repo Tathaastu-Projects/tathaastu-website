@@ -419,6 +419,7 @@
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
   background: linear-gradient(135deg, #f0d080 0%, #d6b35c 50%, #c49a38 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

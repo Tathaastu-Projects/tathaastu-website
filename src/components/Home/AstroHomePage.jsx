@@ -82,6 +82,7 @@ import AquariusLogo from "../../assets/logo/aquarius_logo.svg";
 import PiscesLogo from "../../assets/logo/pisces_logo.svg";
 import CustomerVideosSection from "./CustomerVideosSection";
 import ServiceDeckSection from "./ServiceDeckSection";
+import FreeTarotSection from "./FreeTarotSection";
 import ProductCard from "../Store/ProductCard";
 import ClientTestimonialCard from "./ClientTestimonialCard";
 import ankitCustomer from "../../assets/customers/ankit.jpg";
@@ -295,37 +296,37 @@ const ASTROLOGERS = [
 const CATEGORIES = [
   {
     title: "Love & Relationships",
-    count: "120+ experts",
+    count: "280+ experts",
     img: LoveCategoryIcon,
     focus: "Breakups · Soulmates · Rekindling",
   },
   {
     title: "Marriage & Compatibility",
-    count: "95+ experts",
+    count: "240+ experts",
     img: MarriageCategoryIcon,
     focus: "Kundli Milan · Delay · Manglik Dosha",
   },
   {
     title: "Career Decisions",
-    count: "80+ experts",
+    count: "190+ experts",
     img: CareerCategoryIcon,
     focus: "Job Switch · Promotion · Business Timing",
   },
   {
     title: "Money & Wellbeing",
-    count: "70+ experts",
+    count: "150+ experts",
     img: MoneyCategoryIcon,
     focus: "Wealth Flow · Debt Remedies · Growth",
   },
   {
     title: "Education & Growth",
-    count: "45+ experts",
+    count: "90+ experts",
     img: EducationCategoryIcon,
     focus: "Exams · Higher Studies · Focus & Memory",
   },
   {
     title: "Family & Personal Life",
-    count: "60+ experts",
+    count: "120+ experts",
     img: FamilyCategoryIcon,
     focus: "Home Peace · Children · Harmony",
   },
@@ -478,6 +479,92 @@ function SectionHeading({ eyebrow, title, subtitle, action }) {
       {action}
     </div>
   );
+}
+
+function RunningCounter({
+  end,
+  decimals = 0,
+  suffix = "",
+  duration = 2000,
+  delay = 150,
+  formatNumber = true,
+}) {
+  const [count, setCount] = useState(0);
+  const nodeRef = useRef(null);
+  const startedRef = useRef(false);
+
+  useEffect(() => {
+    const el = nodeRef.current;
+    if (!el) return;
+
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setCount(end);
+      return;
+    }
+
+    let frameId;
+    let timeoutId;
+
+    const run = () => {
+      if (startedRef.current) return;
+      startedRef.current = true;
+
+      timeoutId = setTimeout(() => {
+        const startTime = performance.now();
+
+        const tick = (now) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease-out expo for dramatic, energetic running numbers that decelerate smoothly to destination
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          const current = ease * end;
+          setCount(current);
+
+          if (progress < 1) {
+            frameId = requestAnimationFrame(tick);
+          } else {
+            setCount(end);
+          }
+        };
+
+        frameId = requestAnimationFrame(tick);
+      }, delay);
+    };
+
+    if (typeof IntersectionObserver !== "undefined") {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            run();
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(el);
+      return () => {
+        observer.disconnect();
+        clearTimeout(timeoutId);
+        cancelAnimationFrame(frameId);
+      };
+    } else {
+      run();
+      return () => {
+        clearTimeout(timeoutId);
+        cancelAnimationFrame(frameId);
+      };
+    }
+  }, [end, duration, delay]);
+
+  const formatted = useMemo(() => {
+    if (decimals > 0) {
+      return count.toFixed(decimals) + suffix;
+    }
+    const val = Math.round(count);
+    return (formatNumber ? val.toLocaleString() : val) + suffix;
+  }, [count, decimals, suffix, formatNumber]);
+
+  return <span ref={nodeRef}>{formatted}</span>;
 }
 
 export default function AstroHomePage() {
@@ -731,29 +818,37 @@ export default function AstroHomePage() {
         </div>
       </section>
 
-      {/* STATS STRIP — premium floating card */}
+      {/* STATS STRIP — premium floating card with animated running numbers */}
       <div className="astro-stats" aria-label="Platform highlights">
         <div className="astro-stat">
           <span className="astro-stat__icon"><BadgeCheck className="h-5 w-5" /></span>
-          <strong className="astro-stat__number">1,000+</strong>
+          <strong className="astro-stat__number">
+            <RunningCounter end={1000} suffix="+" duration={2000} delay={100} />
+          </strong>
           <span className="astro-stat__label">Verified Astrologers</span>
         </div>
         <div className="astro-stat__divider" aria-hidden="true" />
         <div className="astro-stat">
           <span className="astro-stat__icon"><Globe className="h-5 w-5" /></span>
-          <strong className="astro-stat__number">10+</strong>
+          <strong className="astro-stat__number">
+            <RunningCounter end={10} suffix="+" duration={1500} delay={250} />
+          </strong>
           <span className="astro-stat__label">Countries</span>
         </div>
         <div className="astro-stat__divider" aria-hidden="true" />
         <div className="astro-stat">
           <span className="astro-stat__icon"><Users className="h-5 w-5" /></span>
-          <strong className="astro-stat__number">10,000+</strong>
+          <strong className="astro-stat__number">
+            <RunningCounter end={10000} suffix="+" duration={2200} delay={180} />
+          </strong>
           <span className="astro-stat__label">Users Guided</span>
         </div>
         <div className="astro-stat__divider" aria-hidden="true" />
         <div className="astro-stat">
           <span className="astro-stat__icon"><Star className="h-5 w-5" /></span>
-          <strong className="astro-stat__number">4.8 ★</strong>
+          <strong className="astro-stat__number">
+            <RunningCounter end={4.8} decimals={1} suffix=" ★" duration={1700} delay={320} />
+          </strong>
           <span className="astro-stat__label">Average Rating</span>
         </div>
       </div>
@@ -801,7 +896,7 @@ export default function AstroHomePage() {
                 <div className="astro-guidance-badge">
                   <span className="astro-guidance-badge__pulse" aria-hidden="true" />
                   <div>
-                    <strong>470+ Verified Masters</strong>
+                    <strong>1,000+ Verified Masters</strong>
                     <span>Live & Available 24×7</span>
                   </div>
                 </div>
@@ -1427,112 +1522,8 @@ export default function AstroHomePage() {
         </div>
       </section>
 
-      {/* CHECK WHAT TAROT SAYS — right-aligned banner */}
-      <section className="astro-promo-banner astro-promo-banner--video">
-        <video
-          className="astro-promo-banner__video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden="true"
-        >
-          <source src={tarotVideo} type="video/mp4" />
-        </video>
-        <div className="astro-promo-banner__scrim astro-promo-banner__scrim--right" aria-hidden="true" />
-        <div className="astro-section astro-promo-banner__inner astro-promo-banner__inner--right">
-          <div className="astro-promo-banner__copy">
-            <p className="astro-promo-banner__eyebrow">Free Tarot Reading</p>
-            <h2>
-              Check What Tarot
-              <br />
-              Says About You
-            </h2>
-            <p className="astro-promo-banner__sub">
-              Ask the cards a question and receive a free personalised tarot
-              reading — guidance from the universe, just for you.
-            </p>
-
-            <form className="astro-promo-banner__form" onSubmit={submitTarot}>
-              <label className="astro-promo-field">
-                <User className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  value={tarotForm.name}
-                  onChange={(e) =>
-                    setTarotForm((prev) => ({ ...prev, name: e.target.value }))
-                  }
-                  required
-                />
-              </label>
-              <label className="astro-promo-field astro-promo-field--wide">
-                <Sparkles className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="text"
-                  name="question"
-                  placeholder="What is your question for the cards?"
-                  value={tarotForm.question}
-                  onChange={(e) =>
-                    setTarotForm((prev) => ({ ...prev, question: e.target.value }))
-                  }
-                  required
-                />
-              </label>
-              <button
-                type="submit"
-                className="astro-promo-banner__btn"
-                disabled={tarotLoading}
-              >
-                {tarotLoading ? "Reading the Cards..." : "Reveal My Tarot Reading"}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
-            {tarotError ? (
-              <p className="astro-promo-banner__status is-error">{tarotError}</p>
-            ) : null}
-            {tarotResult ? (
-              <div className="astro-promo-banner__status is-success astro-ai-brief">
-                {tarotResult.card ? (
-                  <p className="astro-ai-brief__eyebrow">
-                    <strong>{tarotResult.card}</strong>
-                    {tarotResult.archetype ? ` · ${tarotResult.archetype}` : ""}
-                  </p>
-                ) : null}
-                {tarotResult.message ? <p>{tarotResult.message}</p> : null}
-                {tarotResult.guidance ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Guidance</h4>
-                    <p>{tarotResult.guidance}</p>
-                  </div>
-                ) : null}
-                {tarotResult.energy ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Energy around you</h4>
-                    <p>{tarotResult.energy}</p>
-                  </div>
-                ) : null}
-                {tarotResult.action ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Suggested action</h4>
-                    <p>{tarotResult.action}</p>
-                  </div>
-                ) : null}
-                {tarotResult.affirmation ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Affirmation</h4>
-                    <p>{tarotResult.affirmation}</p>
-                  </div>
-                ) : null}
-                <button type="button" className="astro-promo-banner__link" onClick={openModal}>
-                  Talk to a Tarot Expert
-                </button>
-              </div>
-            ) : null}
-          </div>
-        </div>
-      </section>
+      {/* 6-CARD FREE SACRED TAROT READING EXPERIENCE */}
+      <FreeTarotSection onConsult={openModal} />
 
       {/* DOWNLOAD TATHAASTU APP — Figma promo banner */}
       <section className="astro-app-download-banner">
@@ -1588,9 +1579,9 @@ export default function AstroHomePage() {
           title="Our Best Seller Products"
           subtitle="Sacred pieces from the Tathaastu store — hover to explore."
           action={
-            <Link to="/store" className="astro-link">
+            <a href="https://www.abhimantritstore.com/" target="_blank" rel="noopener noreferrer" className="astro-link">
               View all <ArrowRight className="h-4 w-4" />
-            </Link>
+            </a>
           }
         />
         <div className="astro-bs-scroll">
@@ -1607,13 +1598,13 @@ export default function AstroHomePage() {
           <div className="astro-founder__copy">
             <div className="astro-founder__badge">
               <Award className="h-3.5 w-3.5" />
-              <span>Co-Founder & Chief Vedic Astrologer</span>
+              <span>Co-Founder & Occult Healer</span>
             </div>
 
             <p className="astro-founder__kicker">Vedic Wisdom · Modern Clarity</p>
             <h2 id="founder-heading">Priyanka Singh</h2>
             <p className="astro-founder__credentials">
-              Ph.D. in Vedic Astrology · Gold Medalist · 15+ Years Practicing
+              Vedic Astrology · Gold Medalist · 15+ Years Consulting
             </p>
 
             <blockquote className="astro-founder__quote">
@@ -1687,7 +1678,7 @@ export default function AstroHomePage() {
                   <strong>Priyanka Singh</strong>
                   <CheckCircle2 size={16} className="astro-founder__check-icon" />
                 </div>
-                <span>Co-Founder · Chief Astrologer, Tathaastu</span>
+                <span>Co-Founder · Occult Healer, Tathaastu</span>
               </div>
             </div>
           </div>

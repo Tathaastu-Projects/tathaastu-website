@@ -1,5 +1,42 @@
 "use client";
 
+import React, { useEffect } from "react";
+
+const ABHIMANTRIT_STORE_URL = "https://www.abhimantritstore.com/";
+
+export default function StoreProduct() {
+  useEffect(() => {
+    window.location.replace(ABHIMANTRIT_STORE_URL);
+  }, []);
+
+  return (
+    <div style={{ minHeight: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "system-ui, sans-serif", gap: "1rem" }}>
+      <p style={{ fontSize: "1.1rem", color: "#064233" }}>
+        Redirecting you to <strong>Abhimantrit Store</strong>...
+      </p>
+      <a
+        href={ABHIMANTRIT_STORE_URL}
+        style={{
+          padding: "0.6rem 1.4rem",
+          background: "#064233",
+          color: "#fff",
+          borderRadius: "999px",
+          textDecoration: "none",
+          fontWeight: "bold"
+        }}
+      >
+        Click here if not redirected
+      </a>
+    </div>
+  );
+}
+
+/*
+=============================================================================
+  PREVIOUS STOREPRODUCT CODE COMMENTED OUT AS PER REQUIREMENT
+=============================================================================
+"use client";
+
 import React, { useMemo, useState } from "react";
 import { Link, Navigate, useParams } from "@/lib/router";
 import { Star } from "lucide-react";
@@ -143,3 +180,5 @@ export default function StoreProduct() {
     </div>
   );
 }
+
+*/

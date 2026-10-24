@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { Link } from "@/lib/router";
-import { ArrowRight, Plus, Sparkles, MessageCircle, ShieldCheck } from "lucide-react";
+import { ArrowRight, Plus, Sparkles, MessageCircle } from "lucide-react";
 import "./astro-faq.css";
 
 export const FAQ_CATEGORIES = [
@@ -144,21 +144,8 @@ export default function AstroFaqSection({ id = "faq" }) {
         {/* Support Help Banner */}
         <div className="astro-faq-support">
           <div className="astro-faq-support__left">
-            <div className="astro-faq-support__avatars" aria-hidden="true">
-              <span className="astro-faq-avatar">
-                <img src="/assets/panditji.png" alt="Astrologer" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-              </span>
-              <span className="astro-faq-avatar">
-                <img src="/assets/experts/tarot.png" alt="Tarot Expert" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-              </span>
-              <span className="astro-faq-avatar astro-faq-avatar--pulse">
-                <ShieldCheck className="h-5 w-5 text-emerald-300" />
-              </span>
-              <span className="astro-faq-live-dot" title="Astrologers Online Now" />
-            </div>
             <div className="astro-faq-support__copy">
               <h4>Your planets are waiting for us</h4>
-              <p>Our verified Vedic Gurus and Astrologers are available for confidential consultations.</p>
             </div>
           </div>
           <Link to="/talk-to-astrologers" className="astro-faq-support__btn">

@@ -15,9 +15,13 @@ export default function SliderOpener({ variant = "light" }) {
 
   const closeSlider = () => setIsOpen(false);
 
-  const handleNavigation = (path) => {
+  const handleNavigation = (path, external = false) => {
     closeSlider();
-    navigate(path);
+    if (external || (typeof path === "string" && path.startsWith("http"))) {
+      window.open(path, "_blank", "noopener,noreferrer");
+    } else {
+      navigate(path);
+    }
   };
 
   return (
@@ -68,7 +72,7 @@ export default function SliderOpener({ variant = "light" }) {
                   <li key={menu.id}>
                     <button
                       type="button"
-                      onClick={() => handleNavigation(menu.path)}
+                      onClick={() => handleNavigation(menu.path, menu.external)}
                       className="w-full rounded-xl px-4 py-3 text-left text-sm font-bold uppercase tracking-wide"
                       style={{ background: menu.tint, color: menu.accent }}
                     >

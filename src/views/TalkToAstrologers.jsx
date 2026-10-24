@@ -376,7 +376,7 @@ export default function TalkToAstrologers() {
           </span>
           <h1 className="talk-hero__title">Talk to Astrologers Online</h1>
           <p className="talk-hero__sub">
-            Connect with 500+ verified experts for love, career, marriage, health,
+            Connect with 1,000+ verified experts for love, career, marriage, health,
             and wealth guidance — via chat, call, or video, whenever you need
             clarity.
           </p>

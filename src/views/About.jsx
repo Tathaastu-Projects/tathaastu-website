@@ -60,7 +60,7 @@ const SERVICES = [
 const STATS = [
   {
     icon: Users,
-    title: "500+ astrologers",
+    title: "1,000+ astrologers",
     text: "Verified experts",
   },
   {
@@ -97,7 +97,7 @@ export default function About() {
             Astrologers Online
           </h1>
           <p>
-            Connect with 500+ verified experts on Tathaastu for personalised
+            Connect with 1,000+ verified experts on Tathaastu for personalised
             guidance on love, marriage, career, finance, and other important
             areas of life. Explore your questions, understand your kundli, and
             get insights through online consultations from the comfort of your

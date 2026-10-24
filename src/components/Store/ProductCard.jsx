@@ -81,7 +81,7 @@ export default function ProductCard({ product, imageSwap = false, hoverStrip = f
 
   return (
     <article className={`store-card ${imageSwap ? "store-card--has-bag" : ""}`}>
-      <Link to={`/store/product/${product.slug}`} className="store-card__media">
+      <a href="https://www.abhimantritstore.com/" target="_blank" rel="noopener noreferrer" className="store-card__media">
         <img
           className={imageSwap ? "store-card__shot" : undefined}
           src={product.image}
@@ -117,24 +117,26 @@ export default function ProductCard({ product, imageSwap = false, hoverStrip = f
         ) : null}
 
         {/* ── Add to Bag (always on top of vertical strip, full-width at bottom) ── */}
-        {imageSwap ? <span className="store-card__bag">Add to Bag</span> : null}
-      </Link>
+        {imageSwap ? <span className="store-card__bag">Shop on Abhimantrit Store</span> : null}
+      </a>
 
       <div className="store-card__body">
-        <Link to={`/store/product/${product.slug}`} className="store-card__title">
+        <a href="https://www.abhimantritstore.com/" target="_blank" rel="noopener noreferrer" className="store-card__title">
           {product.name}
-        </Link>
+        </a>
         <div className="store-card__price">
           <strong>{formatInr(product.price)}</strong>
           {product.mrp ? <s>{formatInr(product.mrp)}</s> : null}
         </div>
         {imageSwap ? null : (
-          <Link
-            to={`/store/product/${product.slug}`}
+          <a
+            href="https://www.abhimantritstore.com/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="store-btn store-btn--primary store-btn--block"
           >
-            Add to Cart
-          </Link>
+            Shop Now
+          </a>
         )}
       </div>
     </article>
