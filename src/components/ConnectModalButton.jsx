@@ -2,6 +2,14 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useConnectModal } from "../contexts/ConnectModalContext";
+import { Phone, Radio, Sparkles, Video } from "lucide-react";
+import { createHmsSession } from "../services/hmsApi";
+import dynamic from "next/dynamic";
+
+const HmsConsultationModal = dynamic(
+  () => import("./Consult/HmsConsultationModal"),
+  { ssr: false }
+);
 
 const DEFAULT_ENQUIRY_OPTIONS = [
   "Career & Business",
@@ -46,6 +54,23 @@ export default function ConnectModalButton() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState(null);
   const optionsFetchedRef = useRef(false);
+  const [activeHmsSession, setActiveHmsSession] = useState(null);
+  const [isHmsModalOpen, setIsHmsModalOpen] = useState(false);
+  const [hmsStarting, setHmsStarting] = useState(false);
+
+  const handleStartInstantHms = async (mode = "video") => {
+    setHmsStarting(true);
+    try {
+      const data = await createHmsSession({ mode });
+      setActiveHmsSession(data);
+      setIsHmsModalOpen(true);
+      closeModal();
+    } catch (err) {
+      console.warn("Could not start HMS session:", err);
+    } finally {
+      setHmsStarting(false);
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -212,6 +237,43 @@ export default function ConnectModalButton() {
             </div>
 
             <div className="px-6 py-6 overflow-y-auto max-h-[75vh]">
+              {/* Quick Instant Consultation Options */}
+              <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-[#faf3e2] to-[#f4ede0] border border-[#c5973e]/40 shadow-sm">
+                <div className="flex items-center gap-2 mb-2 text-[#0a3428] font-bold text-sm">
+                  <Sparkles className="h-4 w-4 text-[#d97706]" />
+                  <span>Instant 100ms Live Consultation</span>
+                </div>
+                <p className="text-xs text-[#4b5563] mb-3">
+                  Connect immediately with an available Vedic guru over HD Video or Audio:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleStartInstantHms("video")}
+                    disabled={hmsStarting}
+                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#0a3428] hover:bg-[#124d3d] text-white font-semibold text-xs transition-transform active:scale-95 shadow-sm"
+                  >
+                    <Video className="h-4 w-4 text-amber-400" />
+                    <span>{hmsStarting ? "Starting..." : "Instant Video Call"}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleStartInstantHms("audio")}
+                    disabled={hmsStarting}
+                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#f5b301] hover:bg-[#d97706] text-[#0f0d17] font-bold text-xs transition-transform active:scale-95 shadow-sm"
+                  >
+                    <Radio className="h-4 w-4" />
+                    <span>{hmsStarting ? "Starting..." : "Instant Audio Call"}</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="relative flex py-2 items-center mb-4">
+                <div className="flex-grow border-t border-gray-200"></div>
+                <span className="flex-shrink mx-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Or submit an enquiry</span>
+                <div className="flex-grow border-t border-gray-200"></div>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 {formStatus && (
                   <div
@@ -362,6 +424,13 @@ export default function ConnectModalButton() {
           </div>
         </div>
       )}
+
+      {/* 100ms Instant Consultation Modal */}
+      <HmsConsultationModal
+        isOpen={isHmsModalOpen}
+        onClose={() => setIsHmsModalOpen(false)}
+        session={activeHmsSession}
+      />
     </>
   );
 }

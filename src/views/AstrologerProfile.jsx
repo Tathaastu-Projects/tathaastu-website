@@ -14,6 +14,13 @@ import SiteNavbar from "../layout/SiteNavbar";
 import Footer from "../layout/Footer";
 import AstroFaqSection from "../components/Home/AstroFaqSection";
 import { useConnectModal } from "../contexts/ConnectModalContext";
+import { createHmsSession } from "../services/hmsApi";
+import dynamic from "next/dynamic";
+
+const HmsConsultationModal = dynamic(
+  () => import("../components/Consult/HmsConsultationModal"),
+  { ssr: false }
+);
 import {
   fetchAstrologerBySlug,
   formatSessionPrice,
@@ -35,6 +42,25 @@ export default function AstrologerProfile() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [tab, setTab] = useState("overview");
+  const [activeHmsSession, setActiveHmsSession] = useState(null);
+  const [isHmsModalOpen, setIsHmsModalOpen] = useState(false);
+  const [hmsLoading, setHmsLoading] = useState(false);
+
+  const startConsultation = async (mode = "video") => {
+    setHmsLoading(true);
+    try {
+      const data = await createHmsSession({
+        mode,
+        astrologerId: expert?._id || expert?.id || slug,
+      });
+      setActiveHmsSession(data);
+      setIsHmsModalOpen(true);
+    } catch (err) {
+      console.warn("Could not start HMS session:", err);
+    } finally {
+      setHmsLoading(false);
+    }
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -137,7 +163,7 @@ export default function AstrologerProfile() {
                     <button
                       type="button"
                       className="ap-pill"
-                      onClick={openModal}
+                      onClick={() => startConsultation("audio")}
                     >
                       <Phone className="h-4 w-4" />
                       Call now
@@ -145,7 +171,7 @@ export default function AstrologerProfile() {
                     <button
                       type="button"
                       className="ap-pill"
-                      onClick={openModal}
+                      onClick={() => startConsultation("video")}
                     >
                       <Video className="h-4 w-4" />
                       Video Call now
@@ -218,7 +244,7 @@ export default function AstrologerProfile() {
                 <button
                   type="button"
                   className="ap-consult__btn"
-                  onClick={openModal}
+                  onClick={() => startConsultation("audio")}
                 >
                   <Phone className="h-4 w-4" />
                   Call now
@@ -226,7 +252,7 @@ export default function AstrologerProfile() {
                 <button
                   type="button"
                   className="ap-consult__btn"
-                  onClick={openModal}
+                  onClick={() => startConsultation("video")}
                 >
                   <Video className="h-4 w-4" />
                   Video Call
@@ -288,6 +314,21 @@ export default function AstrologerProfile() {
 
       <AstroFaqSection id="profile-faq" />
       <Footer />
+      {/* 100ms In-App Audio/Video Consultation Modal */}
+      <HmsConsultationModal
+        isOpen={isHmsModalOpen}
+        onClose={() => setIsHmsModalOpen(false)}
+        session={activeHmsSession}
+        astrologer={{
+          name: expert?.name || "Vedic Guru",
+          title: formatList(expert?.expertise) || "Vedic Specialist",
+          imageUrl:
+            expert?.imageUrl ||
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+          rating: expert?.rating || 4.9,
+          experience: `${expert?.expYears || 15}+ yrs`,
+        }}
+      />
     </div>
   );
 }

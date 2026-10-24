@@ -352,7 +352,7 @@
   top: 50%;
 }
 
-.shadow {
+.planet .shadow {
   position: absolute;
   left: 0;
   right: 0;

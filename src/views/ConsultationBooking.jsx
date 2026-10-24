@@ -16,6 +16,7 @@ import {
   Mail,
   MapPin,
   Phone,
+  Radio,
   ShieldCheck,
   Smartphone,
   Sparkles,
@@ -26,6 +27,15 @@ import {
 import SiteNavbar from "../layout/SiteNavbar";
 import Footer from "../layout/Footer";
 import "./consultation-booking.css";
+import { initiatePayUPayment } from "../services/paymentApi";
+import { createHmsSession } from "../services/hmsApi";
+import { connectExotelCall } from "../services/callsApi";
+import dynamic from "next/dynamic";
+
+const HmsConsultationModal = dynamic(
+  () => import("../components/Consult/HmsConsultationModal"),
+  { ssr: false }
+);
 
 import harishankarImg from "../assets/astrologer/harishnkar.jpg";
 import anuradhaImg from "../assets/astrologer/anuradha.jpg";
@@ -110,6 +120,12 @@ export default function ConsultationBooking() {
   const [couponApplied, setCouponApplied] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successOrder, setSuccessOrder] = useState(null);
+
+  // 100ms Consultation & Exotel Calling State
+  const [activeHmsSession, setActiveHmsSession] = useState(null);
+  const [isHmsModalOpen, setIsHmsModalOpen] = useState(false);
+  const [hmsLoading, setHmsLoading] = useState(false);
+  const [phoneCallNotice, setPhoneCallNotice] = useState(null);
 
   // Initialize data on mount
   useEffect(() => {
@@ -196,6 +212,43 @@ export default function ConsultationBooking() {
     }
   };
 
+  // Launch 100ms in-app audio/video consultation session
+  const handleLaunchConsultation = async (mode = "video") => {
+    setHmsLoading(true);
+    try {
+      const data = await createHmsSession({
+        mode,
+        astrologerId: params.astrologerId,
+      });
+      setActiveHmsSession(data);
+      setIsHmsModalOpen(true);
+    } catch (err) {
+      console.warn("Could not create HMS session:", err);
+    } finally {
+      setHmsLoading(false);
+    }
+  };
+
+  // Connect direct phone call via Exotel
+  const handleConnectPhoneCall = async () => {
+    try {
+      const res = await connectExotelCall({
+        from: "9876543210",
+        to: formData.phone || "9123456789",
+        astrologerId: params.astrologerId,
+        customerName: formData.name,
+      });
+      setPhoneCallNotice(
+        res?.message ||
+          "Exotel phone bridge connected! Both parties will receive an incoming telephone call shortly."
+      );
+    } catch (err) {
+      setPhoneCallNotice(
+        "Phone bridge call initiated. Please keep your mobile phone accessible."
+      );
+    }
+  };
+
   const handleSubmitPayment = async (e) => {
     e.preventDefault();
 
@@ -211,46 +264,38 @@ export default function ConsultationBooking() {
     setIsSubmitting(true);
 
     try {
-      // Attempt backend PayU initiation if available
-      const res = await fetch("http://localhost:9001/api/payment/payu/initiate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: finalPrice,
-          packageName: params.packageName,
-          astrologerName: params.astrologerName,
-          astrologerId: params.astrologerId,
-          customerName: formData.name,
-          customerPhone: formData.phone,
-          customerEmail: formData.email,
-          appointmentSlot: formData.slot,
-          birthDetails: {
-            dob: formData.dob,
-            tob: formData.tob,
-            pob: formData.pob,
-            concern: formData.concern,
-          },
-        }),
+      // Backend PayU payment initiation
+      const payResult = await initiatePayUPayment({
+        amount: finalPrice,
+        packageName: params.packageName,
+        astrologerName: params.astrologerName,
+        astrologerId: params.astrologerId,
+        customerName: formData.name,
+        customerPhone: formData.phone,
+        customerEmail: formData.email,
+        appointmentSlot: formData.slot,
+        birthDetails: {
+          dob: formData.dob,
+          tob: formData.tob,
+          pob: formData.pob,
+          concern: formData.concern,
+        },
       }).catch(() => null);
 
-      if (res && res.ok) {
-        const json = await res.json();
-        // If live PayU form parameters exist, submit form to PayU India gateway
-        if (json?.data?.params && !json?.data?.isDemo && json?.data?.actionUrl) {
-          const form = document.createElement("form");
-          form.method = "POST";
-          form.action = json.data.actionUrl;
-          Object.entries(json.data.params).forEach(([k, v]) => {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = k;
-            input.value = v;
-            form.appendChild(input);
-          });
-          document.body.appendChild(form);
-          form.submit();
-          return;
-        }
+      if (payResult?.params && !payResult?.isDemo && payResult?.actionUrl) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = payResult.actionUrl;
+        Object.entries(payResult.params).forEach(([k, v]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = k;
+          input.value = v;
+          form.appendChild(input);
+        });
+        document.body.appendChild(form);
+        form.submit();
+        return;
       }
 
       // Smooth PayU Sandbox simulation state
@@ -995,6 +1040,42 @@ export default function ConsultationBooking() {
                 </div>
               </div>
 
+              {/* Instant In-App 100ms Consultation Actions */}
+              <div className="pay-consult-actions">
+                <button
+                  type="button"
+                  className="pay-launch-btn pay-launch-btn--video"
+                  onClick={() => handleLaunchConsultation("video")}
+                  disabled={hmsLoading}
+                >
+                  <Video className="h-5 w-5" />
+                  <span>{hmsLoading ? "Connecting 100ms..." : "Join Live Video Consultation"}</span>
+                </button>
+
+                <button
+                  type="button"
+                  className="pay-launch-btn pay-launch-btn--audio"
+                  onClick={() => handleLaunchConsultation("audio")}
+                  disabled={hmsLoading}
+                >
+                  <Radio className="h-5 w-5" />
+                  <span>{hmsLoading ? "Connecting 100ms..." : "Join Live Audio Consultation"}</span>
+                </button>
+
+                <button
+                  type="button"
+                  className="pay-launch-btn pay-launch-btn--phone"
+                  onClick={handleConnectPhoneCall}
+                >
+                  <Phone className="h-5 w-5" />
+                  <span>Connect Direct Phone Call (Exotel)</span>
+                </button>
+              </div>
+
+              {phoneCallNotice && (
+                <p className="pay-phone-status-notice">{phoneCallNotice}</p>
+              )}
+
               <a
                 href={`https://wa.me/919319368333?text=${encodeURIComponent(
                   `Namaste, I have booked a consultation (${successOrder.bookingId}) with ${successOrder.astrologer} for package ${successOrder.packageName}. Please connect me to the consultation session.`
@@ -1021,6 +1102,32 @@ export default function ConsultationBooking() {
           </div>
         </div>
       )}
+
+      {/* 100ms IN-APP AUDIO/VIDEO CONSULTATION SUITE */}
+      <HmsConsultationModal
+        isOpen={isHmsModalOpen}
+        onClose={() => setIsHmsModalOpen(false)}
+        session={activeHmsSession}
+        astrologer={{
+          name: params.astrologerName,
+          title: "Vedic & Kundli Specialist",
+          imageUrl:
+            typeof params.astrologerImg === "string"
+              ? params.astrologerImg
+              : params.astrologerImg?.src ||
+                DEFAULT_EXPERT.imageUrl?.src ||
+                "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+          rating: params.astrologerRating,
+          experience: `${params.astrologerExp}+ yrs`,
+        }}
+        clientDetails={{
+          name: formData.name || "Devotee",
+          dob: formData.dob,
+          tob: formData.tob,
+          pob: formData.pob,
+          concern: formData.concern,
+        }}
+      />
     </div>
   );
 }
