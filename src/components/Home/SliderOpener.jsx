@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "@/lib/router";
 import { ChevronDown } from "lucide-react";
 import { NAV_MEGA_MENUS } from "../../data/navMegaMenu";
+import { useAuth, dashboardPathForRole } from "../../contexts/AuthContext";
 
 /**
  * Mobile drawer with the same IA depth as desktop mega-menus.
@@ -12,6 +13,7 @@ export default function SliderOpener({ variant = "light" }) {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedId, setExpandedId] = useState("services");
   const navigate = useNavigate();
+  const { isAuthenticated, user, logout } = useAuth();
 
   const closeSlider = () => setIsOpen(false);
 
@@ -131,6 +133,48 @@ export default function SliderOpener({ variant = "light" }) {
               );
             })}
           </ul>
+
+          {/* Mobile Auth Actions */}
+          <div className="mt-6 pt-5 border-t border-[#073349]/10 space-y-2">
+            {isAuthenticated ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => handleNavigation(dashboardPathForRole(user?.role))}
+                  className="w-full rounded-xl bg-[#0B4B41] px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm"
+                >
+                  My Dashboard ({user?.name || user?.role || "Account"})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    closeSlider();
+                    logout();
+                  }}
+                  className="w-full rounded-xl border border-[#073349]/20 px-4 py-2 text-center text-sm font-semibold text-[#073349] hover:bg-gray-50"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleNavigation("/login")}
+                  className="rounded-xl border border-[#0B4B41] px-3 py-2.5 text-center text-xs font-bold text-[#0B4B41] hover:bg-[#0B4B41]/5"
+                >
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleNavigation("/signup")}
+                  className="rounded-xl bg-[#0B4B41] px-3 py-2.5 text-center text-xs font-bold text-white shadow-sm hover:bg-[#073831]"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
+          </div>
         </nav>
       </div>
     </>

@@ -8,193 +8,273 @@ import React, {
   useMemo,
   useState,
 } from "react";
-
-const API_BASE =
-  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:9001/api";
-
-const STORAGE_KEY = "tathaastu_auth";
+import {
+  getToken,
+  getStoredUser,
+  setSession,
+  clearSession,
+  login,
+  signup,
+  sendOtp,
+  verifyOtp,
+  forgotPassword,
+  resetPassword,
+  me,
+  logout as apiLogout,
+  authHealth,
+} from "../services/authApi";
 
 const AuthContext = createContext(null);
 
-function readStoredAuth() {
-  if (typeof window === "undefined") return { token: null, user: null };
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { token: null, user: null };
-    const parsed = JSON.parse(raw);
-    return {
-      token: parsed?.token || null,
-      user: parsed?.user || null,
-    };
-  } catch {
-    return { token: null, user: null };
-  }
-}
-
 export function AuthProvider({ children }) {
-  const [{ token, user }, setAuth] = useState({ token: null, user: null });
+  const [token, setTokenState] = useState(null);
+  const [user, setUserState] = useState(null);
   const [booting, setBooting] = useState(true);
+  const [health, setHealth] = useState(null);
 
   const persist = useCallback((nextToken, nextUser) => {
     if (!nextToken || !nextUser) {
-      localStorage.removeItem(STORAGE_KEY);
-      setAuth({ token: null, user: null });
+      clearSession();
+      setTokenState(null);
+      setUserState(null);
       return;
     }
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ token: nextToken, user: nextUser })
-    );
-    setAuth({ token: nextToken, user: nextUser });
+    setSession({ token: nextToken, user: nextUser });
+    setTokenState(nextToken);
+    setUserState(nextUser);
   }, []);
 
   const logout = useCallback(async () => {
-    const currentToken = token;
-    persist(null, null);
-    if (!currentToken) return;
     try {
-      await fetch(`${API_BASE}/auth/logout`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${currentToken}` },
-      });
+      await apiLogout();
     } catch {
       /* ignore */
+    } finally {
+      persist(null, null);
     }
-  }, [persist, token]);
+  }, [persist]);
 
   const refreshMe = useCallback(async () => {
-    if (!token) {
+    const currentToken = getToken();
+    if (!currentToken) {
       setBooting(false);
       return null;
     }
     try {
-      const res = await fetch(`${API_BASE}/auth/me`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const payload = await res.json().catch(() => null);
-      if (!res.ok || !payload?.data?.user) {
-        persist(null, null);
-        return null;
+      const res = await me();
+      if (res?.data?.user) {
+        persist(currentToken, res.data.user);
+        return res.data.user;
       }
-      persist(token, payload.data.user);
-      return payload.data.user;
+      persist(null, null);
+      return null;
     } catch {
-      return user;
+      persist(null, null);
+      return null;
     } finally {
       setBooting(false);
     }
-  }, [persist, token, user]);
+  }, [persist]);
 
+  // Initial bootstrap: check token and health
   useEffect(() => {
-    const stored = readStoredAuth();
-    if (stored.token) setAuth(stored);
-    else setBooting(false);
-  }, []);
+    const initialToken = getToken();
+    const initialUser = getStoredUser();
 
-  useEffect(() => {
-    if (!token) return undefined;
-    refreshMe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+    if (initialToken && initialUser) {
+      setTokenState(initialToken);
+      setUserState(initialUser);
+      refreshMe();
+    } else {
+      setBooting(false);
+    }
 
-  const applyAuthPayload = useCallback(
-    (payload) => {
-      const nextToken = payload?.data?.token;
-      const nextUser = payload?.data?.user;
+    authHealth()
+      .then((res) => {
+        if (res?.data) setHealth(res.data);
+      })
+      .catch(() => {
+        /* ignore network errors on health */
+      });
+  }, [refreshMe]);
+
+  const applyAuthSuccess = useCallback(
+    (res) => {
+      const nextToken = res?.data?.token;
+      const nextUser = res?.data?.user;
       if (!nextToken || !nextUser) {
-        throw new Error(payload?.message || "Login failed");
+        throw new Error(res?.message || "Authentication succeeded but no session received.");
       }
       persist(nextToken, nextUser);
-      return nextUser;
+      return { token: nextToken, user: nextUser, raw: res };
     },
     [persist]
   );
 
+  /**
+   * 1. Password Login
+   */
   const loginWithPassword = useCallback(
-    async ({ role, email, password }) => {
-      const res = await fetch(`${API_BASE}/auth/login/password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role, email, password }),
-      });
-      const payload = await res.json().catch(() => null);
-      if (!res.ok) {
-        throw new Error(payload?.message || "Invalid credentials");
-      }
-      return applyAuthPayload(payload);
+    async ({ email, password, role = "user" }) => {
+      const res = await login({ email, password, role });
+      return applyAuthSuccess(res);
     },
-    [applyAuthPayload]
+    [applyAuthSuccess]
   );
 
-  const sendOtp = useCallback(async ({ role, channel, email, phone }) => {
-    const res = await fetch(`${API_BASE}/auth/otp/send`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role, channel, email, phone, purpose: "login" }),
-    });
-    const payload = await res.json().catch(() => null);
-    if (!res.ok) {
-      throw new Error(payload?.message || "Could not send OTP");
-    }
-    return payload.data;
-  }, []);
-
-  const verifyOtp = useCallback(
-    async ({ role, channel, email, phone, otp, name }) => {
-      const res = await fetch(`${API_BASE}/auth/otp/verify`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role, channel, email, phone, otp, name }),
+  /**
+   * 2. Send OTP for Login
+   */
+  const loginWithEmailOtpSend = useCallback(
+    async ({ email, role = "user" }) => {
+      const res = await sendOtp({
+        channel: "email",
+        purpose: "login",
+        email,
+        role,
       });
-      const payload = await res.json().catch(() => null);
-      if (!res.ok) {
-        throw new Error(payload?.message || "OTP verification failed");
-      }
-      return applyAuthPayload(payload);
+      return res;
     },
-    [applyAuthPayload]
+    []
   );
 
-  const register = useCallback(
-    async ({ role, name, email, phone, password }) => {
-      const res = await fetch(`${API_BASE}/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role, name, email, phone, password }),
+  /**
+   * 3. Verify OTP for Login
+   */
+  const loginWithEmailOtpVerify = useCallback(
+    async ({ email, otp, role = "user" }) => {
+      const res = await verifyOtp({
+        channel: "email",
+        purpose: "login",
+        email,
+        otp,
+        role,
       });
-      const payload = await res.json().catch(() => null);
-      if (!res.ok) {
-        throw new Error(payload?.message || "Registration failed");
-      }
-      return applyAuthPayload(payload);
+      return applyAuthSuccess(res);
     },
-    [applyAuthPayload]
+    [applyAuthSuccess]
   );
+
+  /**
+   * 4. Password Signup
+   */
+  const signupWithPassword = useCallback(
+    async ({ name, email, phone, password, role = "user" }) => {
+      const res = await signup({
+        name,
+        email,
+        phone: phone || undefined,
+        password,
+        role,
+      });
+      return applyAuthSuccess(res);
+    },
+    [applyAuthSuccess]
+  );
+
+  /**
+   * 5. Send OTP for Signup/Register
+   */
+  const signupWithEmailOtpSend = useCallback(
+    async ({ name, email, role = "user" }) => {
+      const res = await sendOtp({
+        channel: "email",
+        purpose: "register",
+        email,
+        name,
+        role,
+      });
+      return res;
+    },
+    []
+  );
+
+  /**
+   * 6. Verify OTP for Signup/Register
+   */
+  const signupWithEmailOtpVerify = useCallback(
+    async ({ name, email, otp, password, role = "user" }) => {
+      const res = await verifyOtp({
+        channel: "email",
+        purpose: "register",
+        email,
+        otp,
+        name,
+        password: password || undefined,
+        role,
+      });
+      return applyAuthSuccess(res);
+    },
+    [applyAuthSuccess]
+  );
+
+  /**
+   * 7. Trigger Forgot Password Email OTP
+   */
+  const forgotPasswordSend = useCallback(
+    async ({ email, role = "user" }) => {
+      const res = await forgotPassword({ email, role });
+      return res;
+    },
+    []
+  );
+
+  /**
+   * 8. Submit Password Reset (OTP + newPassword)
+   */
+  const resetPasswordSubmit = useCallback(
+    async ({ email, otp, newPassword, role = "user" }) => {
+      const res = await resetPassword({ email, otp, newPassword, role });
+      return applyAuthSuccess(res);
+    },
+    [applyAuthSuccess]
+  );
+
+  // Backward compatibility aliases
+  const register = signupWithPassword;
+  const sendOtpLegacy = loginWithEmailOtpSend;
+  const verifyOtpLegacy = loginWithEmailOtpVerify;
 
   const value = useMemo(
     () => ({
-      apiBase: API_BASE,
       token,
       user,
       booting,
+      health,
       isAuthenticated: !!token && !!user,
       loginWithPassword,
-      sendOtp,
-      verifyOtp,
-      register,
+      loginWithEmailOtpSend,
+      loginWithEmailOtpVerify,
+      signupWithPassword,
+      signupWithEmailOtpSend,
+      signupWithEmailOtpVerify,
+      forgotPasswordSend,
+      resetPasswordSubmit,
       logout,
       refreshMe,
+      // legacy support
+      register,
+      sendOtp: sendOtpLegacy,
+      verifyOtp: verifyOtpLegacy,
     }),
     [
       token,
       user,
       booting,
+      health,
       loginWithPassword,
-      sendOtp,
-      verifyOtp,
-      register,
+      loginWithEmailOtpSend,
+      loginWithEmailOtpVerify,
+      signupWithPassword,
+      signupWithEmailOtpSend,
+      signupWithEmailOtpVerify,
+      forgotPasswordSend,
+      resetPasswordSubmit,
       logout,
       refreshMe,
+      register,
+      sendOtpLegacy,
+      verifyOtpLegacy,
     ]
   );
 
