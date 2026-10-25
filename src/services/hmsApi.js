@@ -3,31 +3,17 @@
  * Handles session creation, joining, token generation, and room lifecycle.
  */
 
+import { getToken, getUser } from "./authApi";
+
 const API_BASE =
-  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:9001/api";
+  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:3032/api";
 
 function getAuthToken() {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem("tathaastu_auth");
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    return parsed?.token || null;
-  } catch {
-    return null;
-  }
+  return getToken();
 }
 
 function getStoredUser() {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem("tathaastu_auth");
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    return parsed?.user || null;
-  } catch {
-    return null;
-  }
+  return getUser();
 }
 
 async function hmsRequest(path, options = {}) {

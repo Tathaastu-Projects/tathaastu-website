@@ -2,9 +2,9 @@ import View from "@/views/ConsultationBooking";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Secure PayU Checkout | Tathaastu Consultation",
+  title: "Secure Checkout | Tathaastu Consultation",
   description:
-    "Secure online booking and PayU payment gateway for Vedic astrology and tarot consultations.",
+    "Secure online booking and Easebuzz payment gateway for Vedic astrology and spiritual consultations.",
   path: "/payment",
   index: false,
   absolute: false,

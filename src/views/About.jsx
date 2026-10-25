@@ -137,7 +137,7 @@ export default function About() {
         <div className="about-wrap about-split">
           <div className="about-copy">
             <p className="about-kicker">
-              Tathaastu AI <span>Who We Are</span>
+              Tathaastu <span>Who We Are</span>
             </p>
             <h2>WHO WE ARE</h2>
             <p>
@@ -169,7 +169,7 @@ export default function About() {
           </div>
           <div className="about-copy">
             <p className="about-kicker">
-              Tathaastu AI <span>What We Do</span>
+              Tathaastu <span>What We Do</span>
             </p>
             <h2>What We Do</h2>
             <p>

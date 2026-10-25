@@ -492,7 +492,7 @@ export default function Services() {
                     <div className="svc-card__media-wrap">
                       <div className="svc-card__media">
                         <img
-                          src={service.image}
+                          src={service.image?.src || service.image}
                           alt={service.title}
                           loading="lazy"
                           decoding="async"

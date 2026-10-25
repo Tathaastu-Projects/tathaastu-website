@@ -5,7 +5,7 @@ export const SITE_URL = (
 ).replace(/\/$/, "");
 
 export const API_BASE =
-  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:9001/api";
+  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:3032/api";
 
 export const DEFAULT_DESCRIPTION =
   "Tathaastu connects you with verified experts for Kundli, horoscope, Vastu, tarot, numerology, and healing. Chat, call, or video — guidance for every part of life.";

@@ -1,10 +1,11 @@
 /**
- * Exotel Phone Calling Service
- * Connects real telephone calls via Exotel PSTN bridge.
+ * Exotel Phone Calling Service — DISABLED (Do not call /api/calls/*)
+ * Per backend docs (Oct 2025), all audio & video consultation is routed exclusively via 100ms.
+ * See services/hmsApi.js and services/bookingsApi.js
  */
 
 const API_BASE =
-  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:9001/api";
+  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:3032/api";
 
 function getAuthToken() {
   if (typeof window === "undefined") return null;

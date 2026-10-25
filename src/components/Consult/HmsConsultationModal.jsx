@@ -28,12 +28,20 @@ import {
   X,
 } from "lucide-react";
 import { endHmsSession } from "../../services/hmsApi";
+import { endBookingSession } from "../../services/bookingsApi";
+import { endExpertBooking } from "../../services/expertApi";
+import {
+  HMSReactiveStore,
+  selectPeers,
+  selectIsConnectedToRoom,
+} from "@100mslive/hms-video-store";
 import "./hms-consultation.css";
 
 export default function HmsConsultationModal({
   isOpen,
   onClose,
   session,
+  isExpert = false,
   astrologer = {
     name: "Acharya Pt. Harishankar Sharma",
     title: "Vedic & Kundli Specialist",
@@ -51,6 +59,7 @@ export default function HmsConsultationModal({
 }) {
   const mode = session?.mode || "video";
   const sessionId = session?.session?.id || session?.id || "tat_session";
+  const authToken = session?.authToken || session?.join?.authToken;
 
   // Controls state
   const [isMicMuted, setIsMicMuted] = useState(false);
@@ -76,61 +85,117 @@ export default function HmsConsultationModal({
   const [reviewNote, setReviewNote] = useState("");
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
-  // Video feed ref
+  // 100ms SDK refs & state
+  const hmsRef = useRef(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [remotePeer, setRemotePeer] = useState(null);
   const localVideoRef = useRef(null);
+  const remoteVideoRef = useRef(null);
   const streamRef = useRef(null);
 
-  // Timer loop
+  // Timer loop with countdown enforcement
   useEffect(() => {
     if (!isOpen || isEnded) return;
     const interval = setInterval(() => {
-      setElapsedSecs((prev) => prev + 1);
+      setElapsedSecs((prev) => {
+        const next = prev + 1;
+        if (session?.remainingSeconds !== undefined && session?.remainingSeconds !== null) {
+          if (session.remainingSeconds - next <= 0) {
+            handleEndCall("Consultation duration completed");
+          }
+        }
+        return next;
+      });
     }, 1000);
     return () => clearInterval(interval);
-  }, [isOpen, isEnded]);
+  }, [isOpen, isEnded, session?.remainingSeconds]);
 
-  // WebRTC Local Camera Stream handling
+  // 100ms SDK Room Connection & Peers Management
   useEffect(() => {
-    if (!isOpen || isEnded) {
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
-        streamRef.current = null;
-      }
-      return;
+    if (!isOpen || isEnded || typeof window === "undefined") return;
+
+    if (!hmsRef.current) {
+      const hmsStoreInstance = new HMSReactiveStore();
+      hmsRef.current = {
+        hms: hmsStoreInstance,
+        actions: hmsStoreInstance.getActions(),
+        store: hmsStoreInstance.getStore(),
+      };
     }
 
-    if (mode === "video" && !isVideoMuted) {
-      navigator.mediaDevices
-        ?.getUserMedia({ video: true, audio: true })
-        .then((stream) => {
-          streamRef.current = stream;
-          if (localVideoRef.current) {
-            localVideoRef.current.srcObject = stream;
-          }
+    const { actions, store } = hmsRef.current;
+    let unsubPeers = null;
+    let unsubConnected = null;
+
+    if (authToken) {
+      // Connect to official 100ms Room
+      actions
+        .join({
+          userName: session?.userName || clientDetails.name || "Devotee",
+          authToken,
+          settings: {
+            isAudioMuted: false,
+            isVideoMuted: mode === "audio",
+          },
+        })
+        .then(() => {
+          setIsConnected(true);
         })
         .catch((err) => {
-          console.warn("Camera preview fallback:", err.message);
+          console.warn("100ms SDK join notice:", err.message);
         });
+
+      unsubConnected = store.subscribe((connected) => {
+        setIsConnected(Boolean(connected));
+      }, selectIsConnectedToRoom);
+
+      unsubPeers = store.subscribe((peers) => {
+        const local = peers.find((p) => p.isLocal);
+        const remote = peers.find((p) => !p.isLocal);
+        setRemotePeer(remote || null);
+
+        if (local?.videoTrack && localVideoRef.current) {
+          actions.attachVideo(local.videoTrack, localVideoRef.current);
+        }
+        if (remote?.videoTrack && remoteVideoRef.current) {
+          actions.attachVideo(remote.videoTrack, remoteVideoRef.current);
+        }
+      }, selectPeers);
     } else {
-      if (streamRef.current) {
-        streamRef.current.getVideoTracks().forEach((track) => {
-          track.enabled = false;
-        });
+      // WebRTC Preview fallback when testing without live room token
+      if (mode === "video" && !isVideoMuted) {
+        navigator.mediaDevices
+          ?.getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+            streamRef.current = stream;
+            if (localVideoRef.current) {
+              localVideoRef.current.srcObject = stream;
+            }
+          })
+          .catch((err) => {
+            console.warn("Camera preview fallback:", err.message);
+          });
       }
     }
 
     return () => {
+      unsubPeers?.();
+      unsubConnected?.();
+      actions.leave().catch(() => {});
       if (streamRef.current) {
         streamRef.current.getTracks().forEach((track) => track.stop());
         streamRef.current = null;
       }
     };
-  }, [isOpen, isVideoMuted, mode, isEnded]);
+  }, [isOpen, isEnded, authToken, mode]);
 
   // Handle Mute Mic toggle
   const toggleMic = () => {
     setIsMicMuted((prev) => {
       const next = !prev;
+      if (hmsRef.current?.actions) {
+        hmsRef.current.actions.setLocalAudioEnabled(!next).catch(() => {});
+      }
       if (streamRef.current) {
         streamRef.current.getAudioTracks().forEach((track) => {
           track.enabled = !next;
@@ -145,6 +210,9 @@ export default function HmsConsultationModal({
     if (mode === "audio") return;
     setIsVideoMuted((prev) => {
       const next = !prev;
+      if (hmsRef.current?.actions) {
+        hmsRef.current.actions.setLocalVideoEnabled(!next).catch(() => {});
+      }
       if (streamRef.current) {
         streamRef.current.getVideoTracks().forEach((track) => {
           track.enabled = !next;
@@ -155,11 +223,23 @@ export default function HmsConsultationModal({
   };
 
   // Handle End Call
-  const handleEndCall = async () => {
+  const handleEndCall = async (reason = "Consultation concluded") => {
     try {
-      await endHmsSession(sessionId, { reason: "Customer ended consultation", lock: true });
+      if (hmsRef.current?.actions) {
+        await hmsRef.current.actions.leave().catch(() => {});
+      }
+      const bId = session?.booking?.id || session?.bookingId || session?.booking?._id;
+      if (bId) {
+        if (isExpert) {
+          await endExpertBooking(bId, { reason }).catch(() => {});
+        } else {
+          await endBookingSession(bId, { reason }).catch(() => {});
+        }
+      } else {
+        await endHmsSession(sessionId, { reason, lock: true }).catch(() => {});
+      }
     } catch (e) {
-      /* ignore */
+      console.warn("End session notice:", e.message);
     }
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
@@ -278,9 +358,16 @@ export default function HmsConsultationModal({
                 <span className="hms-live-pill__dot" />
                 Live
               </div>
-              <div className="hms-timer-pill">
-                <Clock className="h-3.5 w-3.5" />
-                <span>{formatTime(elapsedSecs)}</span>
+              <div
+                className="hms-timer-pill"
+                title={session?.remainingSeconds ? "Time Remaining in Paid Plan" : "Elapsed Time"}
+              >
+                <Clock className="h-3.5 w-3.5 text-amber-400" />
+                <span>
+                  {session?.remainingSeconds
+                    ? `${formatTime(Math.max(0, session.remainingSeconds - elapsedSecs))} left`
+                    : formatTime(elapsedSecs)}
+                </span>
               </div>
               <div className="hms-mode-pill">
                 {mode === "video" ? (
@@ -324,14 +411,26 @@ export default function HmsConsultationModal({
                 <div className="hms-video-grid">
                   {/* Remote Astrologer Video Frame */}
                   <div className="hms-remote-feed">
-                    <img
-                      src={astrologer.imageUrl}
-                      alt={astrologer.name}
-                      className="hms-remote-feed__img"
-                    />
+                    {remotePeer?.videoTrack ? (
+                      <video
+                        ref={remoteVideoRef}
+                        autoPlay
+                        playsInline
+                        className="hms-remote-feed__video"
+                      />
+                    ) : (
+                      <img
+                        src={astrologer.imageUrl}
+                        alt={astrologer.name}
+                        className="hms-remote-feed__img"
+                      />
+                    )}
                     <div className="hms-remote-badge">
                       <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-                      <span>{astrologer.name} (Live Video)</span>
+                      <span>
+                        {astrologer.name}{" "}
+                        {isConnected ? "(100ms Live HD)" : "(Connecting...)"}
+                      </span>
                     </div>
                   </div>
 

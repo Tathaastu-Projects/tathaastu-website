@@ -18,6 +18,7 @@ import {
   Video,
 } from "lucide-react";
 import "./pricing.css";
+import { fetchPlans } from "../services/plansApi";
 
 export default function Pricing() {
   const navigate = useNavigate();
@@ -31,6 +32,19 @@ export default function Pricing() {
   });
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [apiPlans, setApiPlans] = useState([]);
+
+  useEffect(() => {
+    fetchPlans()
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setApiPlans(data);
+        }
+      })
+      .catch((err) => {
+        console.warn("Could not load plans from API:", err);
+      });
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -83,14 +97,24 @@ export default function Pricing() {
   }, []);
 
   const handleGetStarted = (plan) => {
+    const planName = plan.name;
+    const planPrice = plan.priceLabel || plan.price;
+    const planDuration = plan.durationLabel || plan.duration;
+    const planMode = plan.mode || "video";
+    const planId = plan.id || plan._id || "";
+
     if (typeof window !== "undefined") {
       try {
         sessionStorage.setItem(
           "tathaastu_selected_package",
           JSON.stringify({
-            package: plan.name,
-            price: plan.price,
-            duration: plan.duration,
+            planId,
+            planCode: plan.code || "",
+            package: planName,
+            price: planPrice,
+            priceInr: plan.priceInr,
+            duration: planDuration,
+            mode: planMode,
             service: consult.service || "consult",
           })
         );
@@ -100,10 +124,13 @@ export default function Pricing() {
     const params = new URLSearchParams({
       flow: "consult",
       service: consult.service || "consult",
-      package: plan.name,
-      price: plan.price,
-      duration: plan.duration,
+      planId,
+      package: planName,
+      price: planPrice,
+      duration: planDuration,
+      mode: planMode,
     });
+    if (plan.code) params.set("planCode", plan.code);
     if (consult.astrologerId) params.set("astrologer", consult.astrologerId);
     if (consult.expertName) params.set("expertName", consult.expertName);
     if (consult.expertSlug) params.set("expertSlug", consult.expertSlug);
@@ -112,7 +139,7 @@ export default function Pricing() {
     navigate(`/talk-to-astrologers?${params.toString()}`);
   };
 
-  const pricingPlans = [
+  const defaultPricingPlans = [
     {
       id: "01",
       name: "Kundli Clarity Session",
@@ -181,7 +208,7 @@ export default function Pricing() {
     },
   ];
 
-  const exclusivePlan = {
+  const defaultExclusivePlan = {
     name: "Exclusive Consultation with Co-Founder Priyanka Singh",
     subtitle: "Lead Spiritual Mentor & Vedic Astrologer",
     price: "₹21,000",
@@ -199,6 +226,40 @@ export default function Pricing() {
     ],
     buttonText: "Consult Now",
   };
+
+  const pricingPlans = apiPlans.length > 0
+    ? apiPlans.filter((p) => !p.isExclusive).map((p, idx) => ({
+        id: p.id || String(idx + 1).padStart(2, "0"),
+        code: p.code,
+        name: p.name,
+        price: p.priceLabel || `₹${p.priceInr}`,
+        priceInr: p.priceInr,
+        duration: p.durationLabel || `${p.durationMinutes} Minutes`,
+        mode: p.mode,
+        description: p.description,
+        features: p.features || [],
+        buttonText: "Book Now",
+        isPopular: Boolean(p.isPopular),
+      }))
+    : defaultPricingPlans;
+
+  const exclusivePlan = apiPlans.length > 0 && apiPlans.find((p) => p.isExclusive)
+    ? {
+        id: apiPlans.find((p) => p.isExclusive).id,
+        code: apiPlans.find((p) => p.isExclusive).code,
+        name: apiPlans.find((p) => p.isExclusive).name,
+        subtitle: "Lead Spiritual Mentor & Vedic Astrologer",
+        price: apiPlans.find((p) => p.isExclusive).priceLabel || `₹${apiPlans.find((p) => p.isExclusive).priceInr}`,
+        priceInr: apiPlans.find((p) => p.isExclusive).priceInr,
+        priceNote: "Starting from",
+        duration: apiPlans.find((p) => p.isExclusive).durationLabel || `${apiPlans.find((p) => p.isExclusive).durationMinutes} Minutes`,
+        mode: apiPlans.find((p) => p.isExclusive).mode,
+        format: "Face-to-face meeting or video call",
+        description: apiPlans.find((p) => p.isExclusive).description,
+        features: apiPlans.find((p) => p.isExclusive).features || [],
+        buttonText: "Consult Now",
+      }
+    : defaultExclusivePlan;
 
   return (
     <div className="bg-white text-[#073349]">

@@ -81,7 +81,7 @@ export default function ServiceDetails() {
       <section className="relative w-full">
         <div className="relative h-[360px] md:h-[420px] lg:h-[460px] overflow-hidden">
           <img
-            src={service.banner}
+            src={service.banner?.src || service.banner}
             alt={`${service.title} banner`}
             className="w-full h-full object-cover"
           />

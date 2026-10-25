@@ -322,6 +322,9 @@ export default function TalkToAstrologers() {
     let price = params.get("price") || "";
     let duration = params.get("duration") || "";
     let service = params.get("service") || "";
+    let planId = params.get("planId") || "";
+    let planCode = params.get("planCode") || "";
+    let mode = params.get("mode") || "video";
 
     if (!pkg) {
       try {
@@ -332,6 +335,9 @@ export default function TalkToAstrologers() {
           price = parsed.price || "";
           duration = parsed.duration || "";
           service = parsed.service || "";
+          if (!planId) planId = parsed.planId || "";
+          if (!planCode) planCode = parsed.planCode || "";
+          if (!mode) mode = parsed.mode || "video";
         }
       } catch (e) {}
     }
@@ -342,6 +348,9 @@ export default function TalkToAstrologers() {
       packageName: pkg,
       price: price || "₹499",
       duration: duration || "30 Minutes",
+      planId: planId || "",
+      planCode: planCode || "",
+      mode: mode || "video",
       astrologerId: params.get("astrologer") || params.get("astrologerId") || "",
       expertName: params.get("expertName") || "",
     };
@@ -362,6 +371,9 @@ export default function TalkToAstrologers() {
       price: consult.price || "₹499",
       duration: consult.duration || "30 Minutes",
       service: consult.service || "consult",
+      planId: consult.planId || "",
+      planCode: consult.planCode || "",
+      mode: consult.mode || "video",
       astrologer: expert.name,
       astrologerId: expert.id || expert._id || "",
       astrologerSlug: expert.slug || "",
@@ -576,7 +588,7 @@ export default function TalkToAstrologers() {
             {consult.packageName ? (
               <>
                 <strong>Step 2 of 3: Selected Package: {consult.packageName} ({consult.price} • {consult.duration}). </strong>
-                Click <strong>&quot;Call now&quot;</strong> on {consult.expertName ? <strong>{consult.expertName}</strong> : "your preferred verified expert"} to proceed to secure PayU payment.
+                Click <strong>&quot;Call now&quot;</strong> on {consult.expertName ? <strong>{consult.expertName}</strong> : "your preferred verified expert"} to proceed to secure payment.
               </>
             ) : (
               <>

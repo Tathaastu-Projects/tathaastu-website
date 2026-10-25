@@ -46,9 +46,9 @@ import drPriyankaImg from "../../assets/home/Priyanka Mam.svg";
 import "./astro-experts.css";
 import "./astro-guidance.css";
 import heroVideo from "../../assets/videos/short_video.mp4";
-import numerologyVideo from "../../assets/videos/video4.mp4";
-import matchVideo from "../../assets/videos/video9.mp4";
-import kundliVideo from "../../assets/videos/video2.mp4";
+import numerologyReportImg from "../../assets/home/reports/Numerlogy Report.svg";
+import matchVideo from "../../assets/home/reports/life partner in horizontal frame.mp4";
+import kundliConsultationImg from "../../assets/home/reports/Kundli Consultation.svg";
 import tarotVideo from "../../assets/videos/video10.mp4";
 import AppDownloadBanner from "../../assets/background_banner/app_download_banner.svg";
 import LeftMandala from "../../assets/background_banner/Left mandala.png";
@@ -150,7 +150,7 @@ const CLIENT_TESTIMONIALS = [
 ];
 
 const API_BASE =
-  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:9001/api";
+  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:3032/api";
 
 const BEST_SELLER_HOVER = {
   "capricorn-zodiac-bracelet": capricornHover,
@@ -1132,16 +1132,12 @@ export default function AstroHomePage() {
 
       {/* FREE NUMEROLOGY REPORT — Figma banner */}
       <section className="astro-promo-banner astro-promo-banner--video">
-        <video
-          className="astro-promo-banner__video"
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          className="astro-promo-banner__img"
+          src={numerologyReportImg?.src || numerologyReportImg}
+          alt="Free Numerology Report"
           aria-hidden="true"
-        >
-          <source src={numerologyVideo} type="video/mp4" />
-        </video>
+        />
         <div className="astro-promo-banner__scrim" aria-hidden="true" />
         <div className="astro-section astro-promo-banner__inner">
           <div className="astro-promo-banner__copy">
@@ -1288,7 +1284,7 @@ export default function AstroHomePage() {
           playsInline
           aria-hidden="true"
         >
-          <source src={matchVideo} type="video/mp4" />
+          <source src={typeof matchVideo === "string" ? matchVideo : (matchVideo?.src || matchVideo)} type="video/mp4" />
         </video>
         <div className="astro-promo-banner__scrim astro-promo-banner__scrim--right" aria-hidden="true" />
         <div className="astro-section astro-promo-banner__inner astro-promo-banner__inner--right">
@@ -1405,16 +1401,12 @@ export default function AstroHomePage() {
 
       {/* FULL KUNDLI CONSULTATION — Figma banner */}
       <section className="astro-promo-banner astro-promo-banner--video">
-        <video
-          className="astro-promo-banner__video"
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          className="astro-promo-banner__img"
+          src={kundliConsultationImg?.src || kundliConsultationImg}
+          alt="Full Kundli Consultation"
           aria-hidden="true"
-        >
-          <source src={kundliVideo} type="video/mp4" />
-        </video>
+        />
         <div className="astro-promo-banner__scrim" aria-hidden="true" />
         <div className="astro-section astro-promo-banner__inner">
           <div className="astro-promo-banner__copy astro-promo-banner__copy--wide">

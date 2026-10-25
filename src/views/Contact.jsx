@@ -6,7 +6,7 @@ import SiteNavbar from '../layout/SiteNavbar';
 import Seperator from '../components/Home/SeperatorComponent';
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:9001/api";
+  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:3032/api";
 
 // Debug: Log the API URL being used (check browser console)
 

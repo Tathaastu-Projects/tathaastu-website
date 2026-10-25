@@ -6,7 +6,7 @@
 const API_BASE =
   process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL ||
   (typeof window !== "undefined" && window.location.hostname === "localhost"
-    ? "http://localhost:9001/api"
+    ? "http://localhost:3032/api"
     : "/api");
 
 export const TOKEN_KEY = "tathaastu_token";
@@ -56,6 +56,8 @@ export function getStoredUser() {
   }
   return null;
 }
+
+export const getUser = getStoredUser;
 
 /**
  * Persist authentication session (JWT token and user info)

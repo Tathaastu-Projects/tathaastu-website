@@ -213,7 +213,8 @@
   background: radial-gradient(circle at center, #1c152a 0%, #090610 100%);
 }
 
-.hms-remote-feed__img {
+.hms-remote-feed__img,
+.hms-remote-feed__video {
   width: 100%;
   height: 100%;
   object-fit: cover;

@@ -27,9 +27,25 @@ import {
 import SiteNavbar from "../layout/SiteNavbar";
 import Footer from "../layout/Footer";
 import "./consultation-booking.css";
-import { initiatePayUPayment } from "../services/paymentApi";
+import { useAuth } from "../contexts/AuthContext";
+// Active Payment: Easebuzz Hosted Checkout & Config
+import {
+  initiateEasebuzzPayment,
+  verifyEasebuzzPayment,
+  fetchPaymentConfig,
+} from "../services/paymentApi";
+/* ==========================================================================
+   LEGACY PayU Payment (Commented out — will be re-enabled when switching gateways)
+   import { initiatePayUPayment } from "../services/paymentApi";
+   ========================================================================== */
+import {
+  createBooking,
+  confirmDemoPayment,
+  joinBookingSession,
+  fetchBookingById,
+} from "../services/bookingsApi";
+import { fetchPlans } from "../services/plansApi";
 import { createHmsSession } from "../services/hmsApi";
-import { connectExotelCall } from "../services/callsApi";
 import dynamic from "next/dynamic";
 
 const HmsConsultationModal = dynamic(
@@ -82,9 +98,13 @@ const POPULAR_BANKS = [
 export default function ConsultationBooking() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, token } = useAuth();
 
   // Booking Parameters (from query or state)
   const [params, setParams] = useState({
+    planId: "",
+    planCode: "kundli-clarity",
+    mode: "video",
     packageName: "Kundli Clarity Session",
     price: "₹499",
     duration: "30 Minutes",
@@ -109,6 +129,18 @@ export default function ConsultationBooking() {
     concern: "Love & Marriage",
   });
 
+  // Pre-fill user data when authenticated
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || user.name || "",
+        phone: prev.phone || user.phone || "",
+        email: prev.email || user.email || "",
+      }));
+    }
+  }, [user]);
+
   // UI States
   const [showBirthDetails, setShowBirthDetails] = useState(false);
   const [selectedPayMethod, setSelectedPayMethod] = useState("UPI");
@@ -121,11 +153,10 @@ export default function ConsultationBooking() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successOrder, setSuccessOrder] = useState(null);
 
-  // 100ms Consultation & Exotel Calling State
+  // 100ms In-App Audio & Video Consultation State
   const [activeHmsSession, setActiveHmsSession] = useState(null);
   const [isHmsModalOpen, setIsHmsModalOpen] = useState(false);
   const [hmsLoading, setHmsLoading] = useState(false);
-  const [phoneCallNotice, setPhoneCallNotice] = useState(null);
 
   // Initialize data on mount
   useEffect(() => {
@@ -138,6 +169,10 @@ export default function ConsultationBooking() {
     const price = searchParams.get("price") || statePlan?.price || "₹499";
     const duration =
       searchParams.get("duration") || statePlan?.duration || "30 Minutes";
+
+    const planId = searchParams.get("planId") || statePlan?.id || statePlan?._id || "";
+    const planCode = searchParams.get("planCode") || statePlan?.code || "";
+    const mode = searchParams.get("mode") || statePlan?.mode || "video";
 
     const astroName =
       searchParams.get("astrologer") ||
@@ -165,6 +200,9 @@ export default function ConsultationBooking() {
     }
 
     setParams({
+      planId,
+      planCode,
+      mode,
       packageName,
       price,
       duration,
@@ -178,6 +216,51 @@ export default function ConsultationBooking() {
       astrologerLanguages:
         searchParams.get("expertLanguages") || DEFAULT_EXPERT.languages,
     });
+
+    // Check return from Easebuzz Hosted Checkout
+    const urlStatus = searchParams.get("status");
+    const urlBookingId = searchParams.get("bookingId") || searchParams.get("udf5");
+    const urlTxnId = searchParams.get("txnid");
+
+    if (urlStatus && (urlBookingId || urlTxnId)) {
+      const callbackPayload = {};
+      searchParams.forEach((v, k) => {
+        callbackPayload[k] = v;
+      });
+      if (urlBookingId && !callbackPayload.bookingId) {
+        callbackPayload.bookingId = urlBookingId;
+      }
+
+      const verifyAndLoad = async () => {
+        try {
+          if (urlStatus.toLowerCase() === "success") {
+            // Call POST /payment/verify to process reverse hash and mark booking ready
+            await verifyEasebuzzPayment(callbackPayload).catch((e) => {
+              console.warn("Verify notice:", e.message);
+            });
+            const b = await fetchBookingById(urlBookingId);
+            if (b) {
+              setSuccessOrder({
+                bookingId: b.id,
+                name: b.customerName || "Devotee",
+                phone: b.customerPhone || "",
+                astrologer: b.astrologer?.name || astroName,
+                packageName: b.planSnapshot?.name || packageName,
+                slot: b.appointmentSlot || "Immediate",
+                amount: b.amountInr || 499,
+                mode: b.mode || mode || "video",
+              });
+            }
+          } else {
+            alert(`Payment status: ${urlStatus}. Please retry booking your consultation.`);
+          }
+        } catch (err) {
+          console.warn("Easebuzz return processing notice:", err);
+        }
+      };
+
+      verifyAndLoad();
+    }
   }, [location]);
 
   // Compute numeric price
@@ -212,42 +295,86 @@ export default function ConsultationBooking() {
     }
   };
 
-  // Launch 100ms in-app audio/video consultation session
+  // Helper to ensure valid MongoDB ObjectIds for planId & astrologerId
+  const resolveBookingIds = async () => {
+    let pId = params.planId;
+    let aId = params.astrologerId;
+    const isMongoId = (id) => typeof id === "string" && /^[a-f\d]{24}$/i.test(id);
+
+    if (!isMongoId(pId)) {
+      try {
+        const plans = await fetchPlans();
+        const match =
+          plans.find(
+            (p) =>
+              p.code === params.planCode ||
+              p.id === params.planId ||
+              p.name?.toLowerCase() === params.packageName?.toLowerCase()
+          ) || plans[0];
+        if (match) pId = match.id || match._id;
+      } catch (e) {
+        console.warn("Failed to resolve plan id:", e);
+      }
+    }
+
+    if (!isMongoId(aId)) {
+      try {
+        const res = await fetch(
+          typeof window !== "undefined" && window.location.hostname === "localhost"
+            ? "http://localhost:3032/api/astrologers"
+            : "/api/astrologers"
+        ).then((r) => r.json());
+        const astros = res.data || [];
+        const match =
+          astros.find(
+            (a) =>
+              a.slug === params.astrologerId ||
+              a.name?.toLowerCase() === params.astrologerName?.toLowerCase()
+          ) || astros[0];
+        if (match) aId = match.id || match._id;
+      } catch (e) {
+        console.warn("Failed to resolve astrologer id:", e);
+      }
+    }
+
+    return { pId, aId };
+  };
+
+  // Launch official gated 100ms consultation session
   const handleLaunchConsultation = async (mode = "video") => {
     setHmsLoading(true);
     try {
-      const data = await createHmsSession({
-        mode,
-        astrologerId: params.astrologerId,
-      });
-      setActiveHmsSession(data);
-      setIsHmsModalOpen(true);
+      if (successOrder?.bookingId) {
+        // Gated 100ms session bound to paid booking entitlement
+        const data = await joinBookingSession(successOrder.bookingId);
+        setActiveHmsSession({
+          ...data.join,
+          bookingId: successOrder.bookingId,
+          remainingSeconds: data.join?.remainingSeconds,
+          sessionEndsAt: data.join?.sessionEndsAt || data.booking?.sessionEndsAt,
+          id: data.session?.id || data.booking?.hmsSessionId,
+          session: data.session,
+          booking: data.booking,
+          mode: data.join?.mode || data.booking?.mode || mode,
+        });
+        setIsHmsModalOpen(true);
+      } else {
+        const data = await createHmsSession({
+          mode,
+          astrologerId: params.astrologerId,
+        });
+        setActiveHmsSession(data);
+        setIsHmsModalOpen(true);
+      }
     } catch (err) {
-      console.warn("Could not create HMS session:", err);
+      console.warn("Could not join consultation session:", err);
+      alert(err.message || "Consultation session could not be joined. Please try again.");
     } finally {
       setHmsLoading(false);
     }
   };
 
-  // Connect direct phone call via Exotel
-  const handleConnectPhoneCall = async () => {
-    try {
-      const res = await connectExotelCall({
-        from: "9876543210",
-        to: formData.phone || "9123456789",
-        astrologerId: params.astrologerId,
-        customerName: formData.name,
-      });
-      setPhoneCallNotice(
-        res?.message ||
-          "Exotel phone bridge connected! Both parties will receive an incoming telephone call shortly."
-      );
-    } catch (err) {
-      setPhoneCallNotice(
-        "Phone bridge call initiated. Please keep your mobile phone accessible."
-      );
-    }
-  };
+
 
   const handleSubmitPayment = async (e) => {
     e.preventDefault();
@@ -261,15 +388,64 @@ export default function ConsultationBooking() {
       return;
     }
 
+    // Require authentication so booking is bound to user account
+    if (!token) {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("tathaastu_consult_form", JSON.stringify(formData));
+        const returnUrl = window.location.pathname + window.location.search;
+        alert("Please login or create an account to secure your sacred consultation slot.");
+        navigate(`/login?redirect=${encodeURIComponent(returnUrl)}`);
+      }
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Backend PayU payment initiation
-      const payResult = await initiatePayUPayment({
-        amount: finalPrice,
-        packageName: params.packageName,
-        astrologerName: params.astrologerName,
-        astrologerId: params.astrologerId,
+      /* ==========================================================================
+         LEGACY PAYU PAYMENT INTEGRATION (Commented out — preserve for future use)
+         --------------------------------------------------------------------------
+         const payResult = await initiatePayUPayment({
+           amount: finalPrice,
+           packageName: params.packageName,
+           astrologerName: params.astrologerName,
+           astrologerId: params.astrologerId,
+           customerName: formData.name,
+           customerPhone: formData.phone,
+           customerEmail: formData.email,
+           appointmentSlot: formData.slot,
+           birthDetails: {
+             dob: formData.dob,
+             tob: formData.tob,
+             pob: formData.pob,
+             concern: formData.concern,
+           },
+         }).catch(() => null);
+
+         if (payResult?.params && !payResult?.isDemo && payResult?.actionUrl) {
+           const form = document.createElement("form");
+           form.method = "POST";
+           form.action = payResult.actionUrl;
+           Object.entries(payResult.params).forEach(([k, v]) => {
+             const input = document.createElement("input");
+             input.type = "hidden";
+             input.name = k;
+             input.value = v;
+             form.appendChild(input);
+           });
+           document.body.appendChild(form);
+           form.submit();
+           return;
+         }
+         ========================================================================== */
+
+      // 1. Resolve MongoDB IDs
+      const { pId, aId } = await resolveBookingIds();
+
+      // 2. Create official Booking on backend (status: pending_payment)
+      const booking = await createBooking({
+        planId: pId,
+        astrologerId: aId,
         customerName: formData.name,
         customerPhone: formData.phone,
         customerEmail: formData.email,
@@ -280,48 +456,41 @@ export default function ConsultationBooking() {
           pob: formData.pob,
           concern: formData.concern,
         },
-      }).catch(() => null);
+      });
 
-      if (payResult?.params && !payResult?.isDemo && payResult?.actionUrl) {
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = payResult.actionUrl;
-        Object.entries(payResult.params).forEach(([k, v]) => {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = k;
-          input.value = v;
-          form.appendChild(input);
-        });
-        document.body.appendChild(form);
-        form.submit();
+      // 3. Initiate Easebuzz Payment with bookingId
+      const payResult = await initiateEasebuzzPayment({
+        bookingId: booking.id,
+        amount: finalPrice,
+        customerName: formData.name,
+        customerPhone: formData.phone,
+        customerEmail: formData.email,
+      });
+
+      // 4. Live Easebuzz Hosted Checkout
+      if (payResult && !payResult.isDemo && payResult.paymentUrl) {
+        window.location.href = payResult.paymentUrl;
         return;
       }
 
-      // Smooth PayU Sandbox simulation state
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      const bookingId = `TAT-PAYU-${Date.now().toString().slice(-6)}`;
+      // 5. Demo Mode: confirm payment so booking unlocks for 100ms consultation
+      if (payResult?.isDemo) {
+        await confirmDemoPayment(booking.id);
+      }
+
       setSuccessOrder({
-        bookingId,
+        bookingId: booking.id,
         name: formData.name,
         phone: formData.phone,
         astrologer: params.astrologerName,
         packageName: params.packageName,
         slot: formData.slot,
         amount: finalPrice,
+        mode: booking.mode || params.mode || "video",
       });
     } catch (err) {
-      console.warn("PayU checkout fallback:", err);
-      const bookingId = `TAT-PAYU-${Date.now().toString().slice(-6)}`;
-      setSuccessOrder({
-        bookingId,
-        name: formData.name,
-        phone: formData.phone,
-        astrologer: params.astrologerName,
-        packageName: params.packageName,
-        slot: formData.slot,
-        amount: finalPrice,
-      });
+      console.warn("Easebuzz checkout error:", err);
+      alert(err.message || "Unable to initiate payment. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -361,7 +530,7 @@ export default function ConsultationBooking() {
               <span className="pay-step__badge">
                 <Lock className="h-3 w-3" />
               </span>
-              <span>3. PayU Secure Payment</span>
+              <span>3. Secure Easebuzz Payment</span>
             </span>
           </nav>
 
@@ -371,7 +540,7 @@ export default function ConsultationBooking() {
             </h1>
             <p className="pay-header__sub">
               Your session is protected by Tathaastu’s Sacred Vedic Guarantee and
-              encrypted 256-bit payment processing powered by PayU India.
+              encrypted 256-bit payment processing powered by Easebuzz (RBI &amp; PCI-DSS certified).
             </p>
           </header>
         </div>
@@ -531,7 +700,7 @@ export default function ConsultationBooking() {
                   </div>
                   <div className="pay-trust-item">
                     <Lock className="h-4 w-4" />
-                    <span>PayU India 256-Bit Bank Grade SSL Encryption</span>
+                    <span>Easebuzz 256-Bit Bank Grade SSL Encryption</span>
                   </div>
                   <div className="pay-trust-item">
                     <Phone className="h-4 w-4" />
@@ -780,18 +949,18 @@ export default function ConsultationBooking() {
                   )}
                 </div>
 
-                {/* 4. PAYU INDIA GATEWAY INTEGRATION */}
+                {/* 4. EASEBUZZ SECURE PAYMENT GATEWAY */}
                 <div className="payu-box">
                   <div className="payu-header">
                     <div className="payu-brand">
-                      <span className="payu-logo-badge">PayU</span>
+                      <span className="easebuzz-logo-badge">Easebuzz</span>
                       <div className="payu-brand-text">
-                        <h4>PayU India Payment Gateway</h4>
-                        <p>Instant UPI, Cards, Net Banking & Wallets</p>
+                        <h4>Easebuzz Secure Payment Gateway</h4>
+                        <p>Instant UPI, Cards, Net Banking &amp; Wallets</p>
                       </div>
                     </div>
                     <span className="payu-cert-badge">
-                      <Lock className="h-3 w-3" /> 256-Bit SSL
+                      <Lock className="h-3 w-3" /> RBI &amp; PCI-DSS
                     </span>
                   </div>
 
@@ -961,7 +1130,7 @@ export default function ConsultationBooking() {
                         }}
                       >
                         You will be routed to your wallet provider (Paytm, Mobikwik,
-                        Amazon Pay) securely through PayU.
+                        Amazon Pay) securely through Easebuzz.
                       </p>
                     </div>
                   )}
@@ -975,8 +1144,8 @@ export default function ConsultationBooking() {
                     <Lock className="h-4 w-4" />
                     <span>
                       {isSubmitting
-                        ? "Connecting to PayU Gateway..."
-                        : `Proceed to Pay ₹${finalPrice.toLocaleString("en-IN")} via PayU`}
+                        ? "Connecting to Easebuzz Gateway..."
+                        : `Proceed to Pay ₹${finalPrice.toLocaleString("en-IN")} via Easebuzz`}
                     </span>
                   </button>
 
@@ -1033,7 +1202,7 @@ export default function ConsultationBooking() {
                   <strong>+91 {successOrder.phone}</strong>
                 </div>
                 <div className="pay-receipt-row">
-                  <span>Amount Paid (PayU)</span>
+                  <span>Amount Paid (Easebuzz)</span>
                   <strong style={{ color: "#16a34a" }}>
                     ₹{successOrder.amount.toLocaleString("en-IN")}
                   </strong>
@@ -1042,39 +1211,50 @@ export default function ConsultationBooking() {
 
               {/* Instant In-App 100ms Consultation Actions */}
               <div className="pay-consult-actions">
-                <button
-                  type="button"
-                  className="pay-launch-btn pay-launch-btn--video"
-                  onClick={() => handleLaunchConsultation("video")}
-                  disabled={hmsLoading}
-                >
-                  <Video className="h-5 w-5" />
-                  <span>{hmsLoading ? "Connecting 100ms..." : "Join Live Video Consultation"}</span>
-                </button>
-
-                <button
-                  type="button"
-                  className="pay-launch-btn pay-launch-btn--audio"
-                  onClick={() => handleLaunchConsultation("audio")}
-                  disabled={hmsLoading}
-                >
-                  <Radio className="h-5 w-5" />
-                  <span>{hmsLoading ? "Connecting 100ms..." : "Join Live Audio Consultation"}</span>
-                </button>
-
-                <button
-                  type="button"
-                  className="pay-launch-btn pay-launch-btn--phone"
-                  onClick={handleConnectPhoneCall}
-                >
-                  <Phone className="h-5 w-5" />
-                  <span>Connect Direct Phone Call (Exotel)</span>
-                </button>
+                {successOrder.mode === "audio" ? (
+                  <>
+                    <button
+                      type="button"
+                      className="pay-launch-btn pay-launch-btn--audio"
+                      onClick={() => handleLaunchConsultation("audio")}
+                      disabled={hmsLoading}
+                    >
+                      <Radio className="h-5 w-5" />
+                      <span>{hmsLoading ? "Connecting 100ms..." : "Join Live Audio Consultation (100ms)"}</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="pay-launch-btn pay-launch-btn--video"
+                      onClick={() => handleLaunchConsultation("video")}
+                      disabled={hmsLoading}
+                    >
+                      <Video className="h-5 w-5" />
+                      <span>Switch to Video Consultation (100ms)</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      className="pay-launch-btn pay-launch-btn--video"
+                      onClick={() => handleLaunchConsultation("video")}
+                      disabled={hmsLoading}
+                    >
+                      <Video className="h-5 w-5" />
+                      <span>{hmsLoading ? "Connecting 100ms..." : "Join Live Video Consultation (100ms)"}</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="pay-launch-btn pay-launch-btn--audio"
+                      onClick={() => handleLaunchConsultation("audio")}
+                      disabled={hmsLoading}
+                    >
+                      <Radio className="h-5 w-5" />
+                      <span>Switch to Audio Consultation (100ms)</span>
+                    </button>
+                  </>
+                )}
               </div>
-
-              {phoneCallNotice && (
-                <p className="pay-phone-status-notice">{phoneCallNotice}</p>
-              )}
 
               <a
                 href={`https://wa.me/919319368333?text=${encodeURIComponent(

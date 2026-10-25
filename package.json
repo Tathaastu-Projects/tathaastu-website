@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@100mslive/hms-video-store": "^0.15.3",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
     "dotenv": "^18.0.8",
