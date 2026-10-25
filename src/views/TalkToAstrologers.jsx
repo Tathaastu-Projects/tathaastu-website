@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import SiteNavbar from "../layout/SiteNavbar";
 import Footer from "../layout/Footer";
-import { useConnectModal } from "../contexts/ConnectModalContext";
 import {
   fetchAstrologerCategories,
   fetchAstrologers,
@@ -270,7 +269,7 @@ function AstrologerCard({ expert, isChosen, onCall, onSelect }) {
       <button
         type="button"
         className="talk-card__body talk-card__pick"
-        onClick={() => onSelect(expert)}
+        onClick={() => onCall(expert)}
       >
         {profile}
       </button>
@@ -289,7 +288,6 @@ function AstrologerCard({ expert, isChosen, onCall, onSelect }) {
 
 export default function TalkToAstrologers() {
   const navigate = useNavigate();
-  const { openModal } = useConnectModal();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("popular");
@@ -307,60 +305,73 @@ export default function TalkToAstrologers() {
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [consult, setConsult] = useState({
-    active: false,
-    service: "",
-    packageName: "",
-    price: "",
-    duration: "",
-    astrologerId: "",
-    expertName: "",
+  const [consult, setConsult] = useState(() => {
+    if (typeof window === "undefined") {
+      return {
+        active: false,
+        service: "",
+        packageName: "",
+        price: "",
+        duration: "",
+        astrologerId: "",
+        expertName: "",
+      };
+    }
+    const params = new URLSearchParams(window.location.search);
+    let pkg = params.get("package") || "";
+    let price = params.get("price") || "";
+    let duration = params.get("duration") || "";
+    let service = params.get("service") || "";
+
+    if (!pkg) {
+      try {
+        const raw = sessionStorage.getItem("tathaastu_selected_package");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          pkg = parsed.package || "";
+          price = parsed.price || "";
+          duration = parsed.duration || "";
+          service = parsed.service || "";
+        }
+      } catch (e) {}
+    }
+
+    return {
+      active: Boolean(pkg),
+      service: service || "consult",
+      packageName: pkg,
+      price: price || "₹499",
+      duration: duration || "30 Minutes",
+      astrologerId: params.get("astrologer") || params.get("astrologerId") || "",
+      expertName: params.get("expertName") || "",
+    };
   });
   const [selectedExpert, setSelectedExpert] = useState(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const pkg = params.get("package") || "";
-    setConsult({
-      active: params.get("flow") === "consult" || Boolean(pkg),
-      service: params.get("service") || "",
-      packageName: pkg,
-      price: params.get("price") || "₹499",
-      duration: params.get("duration") || "30 Minutes",
-      astrologerId: params.get("astrologer") || params.get("astrologerId") || "",
-      expertName: params.get("expertName") || "",
-    });
-  }, []);
+    // MANDATORY GUARD: Users must never access astrologers directly without selecting a package
+    if (!consult.packageName) {
+      navigate("/pricing?flow=consult", { replace: true });
+    }
+  }, [consult.packageName, navigate]);
 
   const handleCallExpert = (expert) => {
-    if (consult.packageName) {
-      // Step 3: Package already selected -> Redirect to Payment Screen!
-      const params = new URLSearchParams({
-        package: consult.packageName,
-        price: consult.price || "₹499",
-        duration: consult.duration || "30 Minutes",
-        astrologer: expert.name,
-        astrologerId: expert.id || "",
-        astrologerSlug: expert.slug || "",
-        astrologerImg: expert.imageUrl || "",
-        expertRating: expert.rating || "5.0",
-        expertExp: expert.expYears || "10",
-        expertExpertise: (expert.expertise || []).join(", "),
-        expertLanguages: formatLanguages(expert.languages) || "",
-      });
-      navigate(`/consultation-booking?${params.toString()}`);
-      return;
-    }
-
-    // Step 1: No package selected yet -> Redirect to Packages Screen!
+    // Step 3: Package selected -> Route directly to Payment Screen!
     const params = new URLSearchParams({
-      flow: "consult",
-      astrologer: expert.id || "",
-      expertName: expert.name || "",
-      expertSlug: expert.slug || "",
-      expertImg: expert.imageUrl || "",
+      package: consult.packageName || "Kundli Clarity Session",
+      price: consult.price || "₹499",
+      duration: consult.duration || "30 Minutes",
+      service: consult.service || "consult",
+      astrologer: expert.name,
+      astrologerId: expert.id || expert._id || "",
+      astrologerSlug: expert.slug || "",
+      astrologerImg: expert.imageUrl || "",
+      expertRating: expert.rating || "5.0",
+      expertExp: expert.expYears || "10",
+      expertExpertise: (expert.expertise || []).join(", "),
+      expertLanguages: formatLanguages(expert.languages) || "",
     });
-    navigate(`/pricing?${params.toString()}`);
+    navigate(`/payment?${params.toString()}`);
   };
 
   const handleCardClick = (expert) => {
@@ -446,9 +457,45 @@ export default function TalkToAstrologers() {
       ?.scrollIntoView({ behavior: "smooth" });
   };
 
+  if (!consult.packageName) {
+    return (
+      <div className="talk-page min-h-screen flex items-center justify-center bg-[#faf8f5]">
+        <div className="text-center p-8">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#d44459] border-r-transparent align-[-0.125em]" />
+          <p className="mt-4 text-[#073349] font-medium text-sm">
+            Redirecting to Packages... Please choose a package first.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="talk-page">
       <SiteNavbar />
+
+      {/* Step 2 of 3 Header Banner */}
+      <div className="bg-gradient-to-r from-[#064233] to-[#0a5240] text-white px-4 py-3 shadow-md border-b border-[#f5b301]/30">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+          <div className="flex items-center gap-2">
+            <span className="bg-[#f5b301] text-[#064233] font-bold text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              Step 2 of 3
+            </span>
+            <span>
+              Selected Package: <strong className="text-[#f5b301]">{consult.packageName}</strong> ({consult.price} • {consult.duration})
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-gray-200 hidden md:inline">Select your astrologer to proceed to payment</span>
+            <Link
+              to="/pricing?flow=consult"
+              className="text-[#f5b301] hover:underline font-semibold text-xs flex items-center gap-1"
+            >
+              Change Package
+            </Link>
+          </div>
+        </div>
+      </div>
 
       <section className="talk-hero">
         <div className="talk-wrap talk-hero__inner">
@@ -675,6 +722,8 @@ export default function TalkToAstrologers() {
       <AstroFaqSection id="talk-faq" />
 
       <Footer />
+      {/* Consultation modal commented out everywhere as per requirement.
+          Consultation flow routes directly: Packages -> Astrologers -> Payment
       {selectedExpert ? (
         <ConsultationRequestDialog
           expert={selectedExpert}
@@ -683,6 +732,7 @@ export default function TalkToAstrologers() {
           onClose={() => setSelectedExpert(null)}
         />
       ) : null}
+      */}
     </div>
   );
 }

@@ -974,7 +974,7 @@ Visit: https://tathaastu.com
                 <button
                   type="button"
                   className="action-btn-primary"
-                  onClick={() => navigate("/talk-to-astrologers")}
+                  onClick={() => navigate("/pricing?service=kundli&flow=consult")}
                 >
                   <PhoneCall className="h-4 w-4" />
                   <span>Consult an Astrologer with this Kundli</span>

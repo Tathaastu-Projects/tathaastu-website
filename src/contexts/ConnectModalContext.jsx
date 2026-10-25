@@ -13,15 +13,18 @@ export const useConnectModal = () => {
 };
 
 export const ConnectModalProvider = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  // Modal disabled everywhere as per requirement.
+  // Any legacy triggers to openModal will safely route directly to /pricing (Packages screen).
+  const openModal = () => {
+    if (typeof window !== "undefined") {
+      window.location.href = "/pricing?flow=consult";
+    }
+  };
+  const closeModal = () => {};
 
   return (
-    <ConnectModalContext.Provider value={{ isOpen, openModal, closeModal }}>
+    <ConnectModalContext.Provider value={{ isOpen: false, openModal, closeModal }}>
       {children}
     </ConnectModalContext.Provider>
   );
 };
-

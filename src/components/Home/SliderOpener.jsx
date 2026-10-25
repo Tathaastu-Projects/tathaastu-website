@@ -21,6 +21,19 @@ export default function SliderOpener({ variant = "light" }) {
       window.open(path, "_blank", "noopener,noreferrer");
     } else {
       navigate(path);
+      if (typeof window !== "undefined" && typeof path === "string" && path.includes("#")) {
+        const hash = path.split("#")[1];
+        setTimeout(() => {
+          const el = document.getElementById(hash);
+          if (el) {
+            const yOffset = -90;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: "smooth" });
+            el.classList.add("svc-row--highlighted");
+            setTimeout(() => el.classList.remove("svc-row--highlighted"), 2200);
+          }
+        }, 120);
+      }
     }
   };
 

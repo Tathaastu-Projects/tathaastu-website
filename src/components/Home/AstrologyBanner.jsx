@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { useConnectModal } from "../../contexts/ConnectModalContext";
+import { useNavigate } from "@/lib/router";
 import ChakraImg from "../../assets/chakra.jpg";
 import HOMESEPERATOR from '../../assets/HOME_Seperator_1.png';
 import ExpertIcon from "../../assets/expert.svg";
@@ -48,7 +48,7 @@ import SolarHero from "./SolarHero";
 // import React from "react";
 
 const AstrologyHome = () => {
-  const { openModal } = useConnectModal();
+  const navigate = useNavigate();
   const slides = useMemo(() => [HomeBanner1, HomeBanner2, HomeBanner3, HomeBanner4], []);
   const [active, setActive] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -304,14 +304,14 @@ const AstrologyHome = () => {
                 <button
                   type="button"
                   className="home_top_banner_btn home_top_banner_btn_gold"
-                  onClick={openModal}
+                  onClick={() => navigate("/calculator")}
                 >
                   Generate Free Kundli <span aria-hidden="true">›</span>
                 </button>
                 <button
                   type="button"
                   className="home_top_banner_btn home_top_banner_btn_pink"
-                  onClick={openModal}
+                  onClick={() => navigate("/pricing?flow=consult")}
                 >
                   Talk to an Astrologer
                 </button>
@@ -370,7 +370,7 @@ const AstrologyHome = () => {
                 <button
                   type="button"
                   className="home_top_banner_btn home_top_banner_btn_pink"
-                  onClick={openModal}
+                  onClick={() => navigate("/pricing?flow=consult&service=vastu")}
                 >
                   Talk to Vaastu Expert
                 </button>
@@ -1150,7 +1150,7 @@ const AstrologyHome = () => {
 
     {/* Button */}
     <button 
-      onClick={openModal}
+      onClick={() => navigate("/pricing?flow=consult")}
       className="mt-4 text-xl md:text-2xl bg-[#d05a69] hover:bg-rose-600 text-white font-semibold py-2 px-10 md:px-12 rounded-full transition duration-300"
     >
       Get a prediction

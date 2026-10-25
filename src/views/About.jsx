@@ -104,7 +104,7 @@ export default function About() {
             home. With 24/7 platform access, finding guidance is easy whenever
             you need it.
           </p>
-          <Link to="/talk-to-astrologers" className="about-hero__cta">
+          <Link to="/pricing?flow=consult" className="about-hero__cta">
             Talk to Astrologers Now
           </Link>
           <div className="about-hero__toast">

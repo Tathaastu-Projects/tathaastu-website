@@ -413,7 +413,7 @@ export default function Matchmaking() {
               </div>
               <button
                 type="button"
-                onClick={() => navigate("/talk-to-astrologers")}
+                onClick={() => navigate("/pricing?service=matchmaking&flow=consult")}
                 className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#064233] to-[#0d5c47] text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center gap-2"
               >
                 <PhoneCall className="h-4 w-4" />

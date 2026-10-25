@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "@/lib/router";
+import { Link, useNavigate } from "@/lib/router";
 import {
   ArrowRight,
   BadgeCheck,
@@ -30,7 +30,6 @@ import {
   Award,
   CheckCircle2,
 } from "lucide-react";
-import { useConnectModal } from "../../contexts/ConnectModalContext";
 import AstroFaqSection from "./AstroFaqSection";
 import AstroBlogSection from "./AstroBlogSection";
 import DailyHoroscopeSection from "./DailyHoroscopeSection";
@@ -568,7 +567,7 @@ function RunningCounter({
 }
 
 export default function AstroHomePage() {
-  const { openModal } = useConnectModal();
+  const navigate = useNavigate();
   const heroVideoRef = useRef(null);
   const astrologersTrackRef = useRef(null);
 
@@ -910,7 +909,7 @@ export default function AstroHomePage() {
                   key={title}
                   type="button"
                   className="astro-category"
-                  onClick={openModal}
+                  onClick={() => navigate(`/pricing?flow=consult&category=${encodeURIComponent(title)}`)}
                   aria-label={`${title} - ${count}`}
                 >
                   <div className="astro-category__medallion">
@@ -977,7 +976,7 @@ export default function AstroHomePage() {
                       <ChevronRight className="h-4 w-4" />
                     </button>
                   </div>
-                  <Link to="/talk-to-astrologers" className="astro-link">
+                  <Link to="/pricing?flow=consult" className="astro-link">
                     View all <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
@@ -1076,7 +1075,13 @@ export default function AstroHomePage() {
                           <button
                             type="button"
                             className="astro-expert-btn astro-expert-btn--chat"
-                            onClick={openModal}
+                            onClick={() =>
+                              navigate(
+                                `/pricing?flow=consult&astrologer=${encodeURIComponent(
+                                  a.id || a.name
+                                )}&expertName=${encodeURIComponent(a.name)}`
+                              )
+                            }
                             aria-label={`Chat with ${a.name}`}
                           >
                             <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
@@ -1085,7 +1090,13 @@ export default function AstroHomePage() {
                           <button
                             type="button"
                             className="astro-expert-btn astro-expert-btn--call"
-                            onClick={openModal}
+                            onClick={() =>
+                              navigate(
+                                `/pricing?flow=consult&astrologer=${encodeURIComponent(
+                                  a.id || a.name
+                                )}&expertName=${encodeURIComponent(a.name)}`
+                              )
+                            }
                             aria-label={`Call ${a.name}`}
                           >
                             <Phone className="h-3.5 w-3.5" aria-hidden="true" />
@@ -1258,7 +1269,7 @@ export default function AstroHomePage() {
                     <p>{numerologyResult.luckyTips}</p>
                   </div>
                 ) : null}
-                <button type="button" className="astro-promo-banner__link" onClick={openModal}>
+                <button type="button" className="astro-promo-banner__link" onClick={() => navigate("/pricing?service=numerology&flow=consult")}>
                   Talk to an expert
                 </button>
               </div>
@@ -1383,7 +1394,7 @@ export default function AstroHomePage() {
                     <p>{matchMakingResult.nextStep}</p>
                   </div>
                 ) : null}
-                <button type="button" className="astro-promo-banner__link" onClick={openModal}>
+                <button type="button" className="astro-promo-banner__link" onClick={() => navigate("/pricing?service=matchmaking&flow=consult")}>
                   Talk to an expert
                 </button>
               </div>
@@ -1513,8 +1524,8 @@ export default function AstroHomePage() {
                     <p>{kundliResult.whyConsult}</p>
                   </div>
                 ) : null}
-                <button type="button" className="astro-promo-banner__link" onClick={openModal}>
-                  Share contact details
+                <button type="button" className="astro-promo-banner__link" onClick={() => navigate("/pricing?service=kundli&flow=consult")}>
+                  Talk to an expert
                 </button>
               </div>
             ) : null}
@@ -1523,7 +1534,7 @@ export default function AstroHomePage() {
       </section>
 
       {/* 6-CARD FREE SACRED TAROT READING EXPERIENCE */}
-      <FreeTarotSection onConsult={openModal} />
+      <FreeTarotSection onConsult={() => navigate("/pricing?service=tarot&flow=consult")} />
 
       {/* DOWNLOAD TATHAASTU APP — Figma promo banner */}
       <section className="astro-app-download-banner">
@@ -1547,20 +1558,20 @@ export default function AstroHomePage() {
             </p>
 
             <div className="astro-app-download-banner__actions">
-              <button type="button" className="astro-app-download-banner__cta" onClick={openModal}>
+              <button type="button" className="astro-app-download-banner__cta" onClick={() => navigate("/pricing?flow=consult")}>
                 Download The App Now
                 <ArrowRight className="h-4 w-4" />
               </button>
 
               <div className="astro-app-download-banner__stores">
-                <button type="button" className="astro-app-store-btn" onClick={openModal}>
+                <button type="button" className="astro-app-store-btn" onClick={() => navigate("/pricing?flow=consult")}>
                   <img src={AppleLogoPng} alt="Apple logo" className="astro-app-store-btn__icon" />
                   <span>
                     <small>Download on the</small>
                     <strong>App Store</strong>
                   </span>
                 </button>
-                <button type="button" className="astro-app-store-btn" onClick={openModal}>
+                <button type="button" className="astro-app-store-btn" onClick={() => navigate("/pricing?flow=consult")}>
                   <img src={PlayStoreLogoPng} alt="Google Play logo" className="astro-app-store-btn__icon" />
                   <span>
                     <small>Get it on</small>
@@ -1651,7 +1662,7 @@ export default function AstroHomePage() {
             </div>
 
             <div className="astro-founder__action">
-              <Link to="/talk-to-astrologers" className="astro-founder__btn">
+              <Link to="/pricing?flow=consult&expertName=Priyanka+Singh" className="astro-founder__btn">
                 <span>Book Consultation with Priyanka</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>

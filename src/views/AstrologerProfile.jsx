@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useParams } from "@/lib/router";
+import { Link, Navigate, useNavigate, useParams } from "@/lib/router";
 import {
   ArrowLeft,
   BadgeCheck,
@@ -13,16 +13,9 @@ import {
 import SiteNavbar from "../layout/SiteNavbar";
 import Footer from "../layout/Footer";
 import AstroFaqSection from "../components/Home/AstroFaqSection";
-import { useConnectModal } from "../contexts/ConnectModalContext";
-import { createHmsSession } from "../services/hmsApi";
-import dynamic from "next/dynamic";
-
-const HmsConsultationModal = dynamic(
-  () => import("../components/Consult/HmsConsultationModal"),
-  { ssr: false }
-);
 import {
   fetchAstrologerBySlug,
+  formatLanguages,
   formatSessionPrice,
 } from "../services/astrologersApi";
 
@@ -37,29 +30,67 @@ function reviewInitial(name = "") {
 
 export default function AstrologerProfile() {
   const { slug } = useParams();
-  const { openModal } = useConnectModal();
+  const navigate = useNavigate();
   const [expert, setExpert] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [tab, setTab] = useState("overview");
-  const [activeHmsSession, setActiveHmsSession] = useState(null);
-  const [isHmsModalOpen, setIsHmsModalOpen] = useState(false);
-  const [hmsLoading, setHmsLoading] = useState(false);
 
-  const startConsultation = async (mode = "video") => {
-    setHmsLoading(true);
+  const [selectedPkg, setSelectedPkg] = useState(() => {
+    if (typeof window === "undefined") return null;
     try {
-      const data = await createHmsSession({
-        mode,
-        astrologerId: expert?._id || expert?.id || slug,
-      });
-      setActiveHmsSession(data);
-      setIsHmsModalOpen(true);
-    } catch (err) {
-      console.warn("Could not start HMS session:", err);
-    } finally {
-      setHmsLoading(false);
+      const raw = sessionStorage.getItem("tathaastu_selected_package");
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return null;
+  });
+
+  const handleConsultAction = (mode = "video") => {
+    let pkg = selectedPkg?.package || "";
+    let price = selectedPkg?.price || "";
+    let duration = selectedPkg?.duration || "";
+
+    if (!pkg) {
+      try {
+        const raw = sessionStorage.getItem("tathaastu_selected_package");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          pkg = parsed.package || "";
+          price = parsed.price || "";
+          duration = parsed.duration || "";
+        }
+      } catch (e) {}
     }
+
+    // STRICT FLOW: If no package selected yet, redirect to packages screen first!
+    if (!pkg) {
+      const params = new URLSearchParams({
+        flow: "consult",
+        astrologer: expert?._id || expert?.id || slug,
+        expertName: expert?.name || "",
+        expertSlug: expert?.slug || slug,
+        expertImg: expert?.imageUrl || "",
+      });
+      navigate(`/pricing?${params.toString()}`);
+      return;
+    }
+
+    // Package selected -> navigate to payment screen
+    const params = new URLSearchParams({
+      package: pkg,
+      price: price || "₹499",
+      duration: duration || "30 Minutes",
+      service: "consult",
+      astrologer: expert?.name || "Expert",
+      astrologerId: expert?._id || expert?.id || slug,
+      astrologerSlug: expert?.slug || slug,
+      astrologerImg: expert?.imageUrl || "",
+      expertRating: expert?.rating || "5.0",
+      expertExp: expert?.expYears || "10",
+      expertExpertise: (expert?.expertise || []).join(", "),
+      expertLanguages: formatLanguages(expert?.languages) || "",
+    });
+    navigate(`/payment?${params.toString()}`);
   };
 
   useEffect(() => {
@@ -85,7 +116,7 @@ export default function AstrologerProfile() {
   }, [slug]);
 
   if (!loading && notFound) {
-    return <Navigate to="/talk-to-astrologers" replace />;
+    return <Navigate to="/pricing" replace />;
   }
 
   const price = expert ? formatSessionPrice(expert) : null;
@@ -93,14 +124,18 @@ export default function AstrologerProfile() {
   const specialties = formatList(expert?.expertise);
   const languages = formatList(expert?.languages);
 
+  const backLink = selectedPkg?.package
+    ? `/talk-to-astrologers?package=${encodeURIComponent(selectedPkg.package)}&price=${encodeURIComponent(selectedPkg.price || "₹499")}`
+    : "/pricing";
+
   return (
     <div className="talk-page">
       <SiteNavbar />
 
       <main className="talk-wrap talk-profile">
-        <Link to="/talk-to-astrologers" className="talk-profile__back">
+        <Link to={backLink} className="talk-profile__back">
           <ArrowLeft className="h-4 w-4" />
-          Back to experts
+          {selectedPkg?.package ? "Back to Astrologers" : "View Packages"}
         </Link>
 
         {loading || !expert ? (
@@ -163,7 +198,7 @@ export default function AstrologerProfile() {
                     <button
                       type="button"
                       className="ap-pill"
-                      onClick={() => startConsultation("audio")}
+                      onClick={() => handleConsultAction("audio")}
                     >
                       <Phone className="h-4 w-4" />
                       Call now
@@ -171,7 +206,7 @@ export default function AstrologerProfile() {
                     <button
                       type="button"
                       className="ap-pill"
-                      onClick={() => startConsultation("video")}
+                      onClick={() => handleConsultAction("video")}
                     >
                       <Video className="h-4 w-4" />
                       Video Call now
@@ -236,7 +271,7 @@ export default function AstrologerProfile() {
                 <button
                   type="button"
                   className="ap-consult__btn"
-                  onClick={openModal}
+                  onClick={() => handleConsultAction("chat")}
                 >
                   <MessageCircle className="h-4 w-4" />
                   Chat now
@@ -244,7 +279,7 @@ export default function AstrologerProfile() {
                 <button
                   type="button"
                   className="ap-consult__btn"
-                  onClick={() => startConsultation("audio")}
+                  onClick={() => handleConsultAction("audio")}
                 >
                   <Phone className="h-4 w-4" />
                   Call now
@@ -252,7 +287,7 @@ export default function AstrologerProfile() {
                 <button
                   type="button"
                   className="ap-consult__btn"
-                  onClick={() => startConsultation("video")}
+                  onClick={() => handleConsultAction("video")}
                 >
                   <Video className="h-4 w-4" />
                   Video Call
@@ -314,21 +349,6 @@ export default function AstrologerProfile() {
 
       <AstroFaqSection id="profile-faq" />
       <Footer />
-      {/* 100ms In-App Audio/Video Consultation Modal */}
-      <HmsConsultationModal
-        isOpen={isHmsModalOpen}
-        onClose={() => setIsHmsModalOpen(false)}
-        session={activeHmsSession}
-        astrologer={{
-          name: expert?.name || "Vedic Guru",
-          title: formatList(expert?.expertise) || "Vedic Specialist",
-          imageUrl:
-            expert?.imageUrl ||
-            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
-          rating: expert?.rating || 4.9,
-          experience: `${expert?.expYears || 15}+ yrs`,
-        }}
-      />
     </div>
   );
 }

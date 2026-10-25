@@ -148,7 +148,7 @@ export default function AstroFaqSection({ id = "faq" }) {
               <h4>Your planets are waiting for us</h4>
             </div>
           </div>
-          <Link to="/talk-to-astrologers" className="astro-faq-support__btn">
+          <Link to="/pricing?flow=consult" className="astro-faq-support__btn">
             <MessageCircle className="h-4 w-4" />
             <span>Chat with an Astrologer</span>
             <ArrowRight className="h-4 w-4" />

@@ -347,7 +347,7 @@ export default function ConsultationBooking() {
             </Link>
             <span className="pay-step__sep">/</span>
             <Link
-              to="/talk-to-astrologers"
+              to={`/talk-to-astrologers?flow=consult&package=${encodeURIComponent(params.packageName || "")}&price=${encodeURIComponent(params.price || "")}&duration=${encodeURIComponent(params.duration || "")}`}
               className="pay-step pay-step--done"
               title="Click to select another astrologer"
             >
@@ -431,7 +431,7 @@ export default function ConsultationBooking() {
                       <span>{params.astrologerExp} yrs exp</span>
                     </div>
                     <Link
-                      to="/talk-to-astrologers"
+                      to={`/talk-to-astrologers?flow=consult&package=${encodeURIComponent(params.packageName || "")}&price=${encodeURIComponent(params.price || "")}&duration=${encodeURIComponent(params.duration || "")}`}
                       className="pay-change-link"
                       style={{ display: "inline-block", marginTop: "0.4rem" }}
                     >
@@ -1093,10 +1093,10 @@ export default function ConsultationBooking() {
                 className="pay-modal-close-btn"
                 onClick={() => {
                   setSuccessOrder(null);
-                  navigate("/talk-to-astrologers");
+                  navigate("/user/dashboard");
                 }}
               >
-                Return to Astrologers
+                Go to My Dashboard
               </button>
             </div>
           </div>

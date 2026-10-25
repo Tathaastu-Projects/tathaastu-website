@@ -2,11 +2,8 @@
 
 import React from "react";
 import { Link } from "@/lib/router";
-import { useConnectModal } from "../../contexts/ConnectModalContext";
 
 export default function SolarHero() {
-  const { openModal } = useConnectModal();
-
   return (
     <section className="home7 hs_slider_main_wrapper">
       <div className="hs_slider_bg_track" aria-hidden="true">
@@ -44,7 +41,7 @@ export default function SolarHero() {
               </span>
             </Link>
 
-            <button type="button" onClick={openModal} className="hs_slider_cta hs_slider_cta_secondary">
+            <Link to="/calculator" className="hs_slider_cta hs_slider_cta_secondary">
               <svg className="hs_slider_cta_icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path
                   d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"
@@ -59,7 +56,7 @@ export default function SolarHero() {
                 <span className="hs_slider_cta_lbl_sub">No signup needed</span>
                 <span className="hs_slider_cta_lbl_main">Get Free Insight</span>
               </span>
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -110,4 +107,3 @@ export default function SolarHero() {
     </section>
   );
 }
-

@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "@/lib/router";
 import { ChevronDown } from "lucide-react";
-import { useConnectModal } from "../contexts/ConnectModalContext";
 import {
   dashboardPathForRole,
   useAuth,
@@ -16,7 +15,6 @@ import { NAV_MEGA_MENUS } from "../data/navMegaMenu";
  * Sticky cream navbar with simple top labels + mega-menus for depth.
  */
 export default function SiteNavbar({ endSlot = null }) {
-  const { openModal } = useConnectModal();
   const { isAuthenticated, user, logout } = useAuth();
   const location = useLocation();
   const [openMenuId, setOpenMenuId] = useState(null);
@@ -156,7 +154,22 @@ export default function SiteNavbar({ endSlot = null }) {
                             <Link
                               to={item.path}
                               className="block px-4 py-2.5 text-sm font-medium text-[#073349] transition-colors hover:bg-white hover:text-[#D44459]"
-                              onClick={() => setOpenMenuId(null)}
+                              onClick={() => {
+                                setOpenMenuId(null);
+                                if (typeof window !== "undefined" && item.path && item.path.includes("#")) {
+                                  const hash = item.path.split("#")[1];
+                                  if (window.location.pathname === "/services") {
+                                    const el = document.getElementById(hash);
+                                    if (el) {
+                                      const yOffset = -90;
+                                      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                                      window.scrollTo({ top: y, behavior: "smooth" });
+                                      el.classList.add("svc-row--highlighted");
+                                      setTimeout(() => el.classList.remove("svc-row--highlighted"), 2200);
+                                    }
+                                  }
+                                }
+                              }}
                             >
                               {item.name}
                             </Link>
@@ -198,14 +211,13 @@ export default function SiteNavbar({ endSlot = null }) {
                   Login
                 </Link>
               )}
-              <button
-                type="button"
-                onClick={openModal}
-                className="rounded-xl bg-[#E74660] px-2.5 py-2 text-[11px] font-bold text-white shadow-sm transition hover:bg-[#d13a52] sm:px-4 sm:text-sm whitespace-nowrap"
+              <Link
+                to="/pricing?flow=consult"
+                className="rounded-xl bg-[#E74660] px-2.5 py-2 text-[11px] font-bold text-white shadow-sm transition hover:bg-[#d13a52] sm:px-4 sm:text-sm whitespace-nowrap inline-flex items-center justify-center"
               >
                 <span className="sm:hidden">Chat</span>
                 <span className="hidden sm:inline">Chat with Expert</span>
-              </button>
+              </Link>
             </>
           )}
         </div>

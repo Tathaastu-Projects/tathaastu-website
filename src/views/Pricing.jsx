@@ -83,6 +83,20 @@ export default function Pricing() {
   }, []);
 
   const handleGetStarted = (plan) => {
+    if (typeof window !== "undefined") {
+      try {
+        sessionStorage.setItem(
+          "tathaastu_selected_package",
+          JSON.stringify({
+            package: plan.name,
+            price: plan.price,
+            duration: plan.duration,
+            service: consult.service || "consult",
+          })
+        );
+      } catch (e) {}
+    }
+
     const params = new URLSearchParams({
       flow: "consult",
       service: consult.service || "consult",

@@ -56,7 +56,8 @@ export default function Providers({ children }) {
         </Suspense>
         <FloatingPromoVideo />
         <WhatsAppFloatingButton />
-        <ConnectModalButton />
+        {/* Consultation modal commented out everywhere as per requirement */}
+        {/* <ConnectModalButton /> */}
         <CookieConsent />
       </ConnectModalProvider>
     </AuthProvider>

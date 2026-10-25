@@ -103,7 +103,7 @@ export default function ConsultationRoom() {
       <main style={{ maxWidth: "900px", margin: "0 auto", padding: "3rem 1.5rem 5rem" }}>
         <div style={{ marginBottom: "2rem" }}>
           <Link
-            to="/talk-to-astrologers"
+            to="/pricing?flow=consult"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -115,7 +115,7 @@ export default function ConsultationRoom() {
             }}
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Astrologers
+            View Packages
           </Link>
 
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "0.5rem" }}>

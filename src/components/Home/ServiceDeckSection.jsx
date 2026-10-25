@@ -269,7 +269,7 @@ export default function ServiceDeckSection() {
               })}
             </div>
 
-            <Link to="/talk-to-astrologers" className="vedic-consult">
+            <Link to="/pricing?flow=consult" className="vedic-consult">
               <span>Talk to an Expert</span>
               <ArrowRight className="h-4 w-4" />
             </Link>

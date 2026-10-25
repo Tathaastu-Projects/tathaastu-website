@@ -257,7 +257,7 @@ export default function DailyHoroscope() {
                 </Link>
                 <button
                   type="button"
-                  onClick={() => navigate("/talk-to-astrologers")}
+                  onClick={() => navigate("/pricing?service=horoscope&flow=consult")}
                   className="px-5 py-2.5 rounded-xl bg-[#064233] text-white text-xs font-bold shadow-md hover:bg-[#0d5c47] transition flex items-center gap-1.5"
                 >
                   <PhoneCall className="h-3.5 w-3.5" />
