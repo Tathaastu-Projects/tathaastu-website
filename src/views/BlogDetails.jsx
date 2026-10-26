@@ -213,10 +213,6 @@ export default function BlogDetails() {
 
   return (
     <div className="bg-white text-[#073349] min-h-screen">
-      <div className="bg-[#D44459] text-white text-center py-2 px-4">
-        <p className="text-sm font-medium">AI-POWERED PLATFORM REVOLUTIONIZING ASTROLOGY</p>
-      </div>
-
       <SiteNavbar
         endSlot={
           <button

@@ -263,15 +263,6 @@ export default function Pricing() {
 
   return (
     <div className="bg-white text-[#073349]">
-      {/* TOP ANNOUNCEMENT BAR */}
-      <div className="bg-[#D44459] text-white text-center py-2 px-4 shadow-sm">
-        <p className="text-xs sm:text-sm font-semibold tracking-wider flex items-center justify-center gap-2">
-          <Sparkles className="h-3.5 w-3.5" />
-          <span>AI-POWERED PLATFORM REVOLUTIONIZING ASTROLOGY</span>
-          <Sparkles className="h-3.5 w-3.5" />
-        </p>
-      </div>
-
       <SiteNavbar />
 
       <div className="pricing-page-wrapper">

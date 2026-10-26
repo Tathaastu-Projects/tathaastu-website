@@ -59,6 +59,16 @@ export default function PrivacyPolicy() {
             By accessing our website or using our services, you acknowledge that you have read this Privacy Policy. Where consent is required for the collection or processing of personal information, we will seek it in accordance with applicable law.
           </p>
 
+          {/* Corporate Information & Platform Ownership */}
+          <section className="legal-section">
+            <h2 className="legal-section__heading">Corporate Information &amp; Platform Ownership</h2>
+            <div className="legal-callout">
+              <p>
+                Tathasstu is a subsidiary of Thrive Tech Land Private Limited and operates within its group of companies, offering astrology, spiritual guidance, and holistic healing services through its platform.
+              </p>
+            </div>
+          </section>
+
           {/* Section 1 */}
           <section className="legal-section">
             <h2 className="legal-section__heading">1. Information We Collect</h2>

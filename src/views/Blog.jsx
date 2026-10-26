@@ -12,12 +12,6 @@ export default function Blog() {
 
   return (
     <div className="bg-white text-[#073349]">
-      
-      {/* TOP BAR */}
-      <div className="bg-[#D44459] text-white text-center py-2 px-4">
-        <p className="text-sm font-medium">AI-POWERED PLATFORM REVOLUTIONIZING ASTROLOGY</p>
-      </div>
-      
       <SiteNavbar />
 
       {/* HERO SECTION WITH BANNER IMAGE */}
