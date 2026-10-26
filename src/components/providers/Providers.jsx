@@ -12,10 +12,11 @@ const SmoothScroll = dynamic(() => import("@/components/motion/SmoothScroll"), {
 const CardTilt = dynamic(() => import("@/components/motion/CardTilt"), {
   ssr: false,
 });
-const FloatingPromoVideo = dynamic(
-  () => import("@/components/FloatingPromoVideo"),
-  { ssr: false }
-);
+// Watch Now floating promo — temporarily disabled
+// const FloatingPromoVideo = dynamic(
+//   () => import("@/components/FloatingPromoVideo"),
+//   { ssr: false }
+// );
 const WhatsAppFloatingButton = dynamic(
   () => import("@/components/WhatsAppFloatingButton"),
   { ssr: false }
@@ -69,7 +70,7 @@ function DeferredChrome({ children }) {
         <>
           <SmoothScroll />
           <CardTilt />
-          <FloatingPromoVideo />
+          {/* <FloatingPromoVideo /> */}
           <CookieConsent />
         </>
       ) : null}

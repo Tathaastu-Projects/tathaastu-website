@@ -7,7 +7,8 @@
     "build": "node scripts/run-next.js build",
     "start": "node scripts/run-next.js start",
     "lint": "eslint",
-    "optimize:assets": "node scripts/optimize-assets.mjs"
+    "optimize:assets": "node scripts/optimize-assets.mjs",
+    "optimize:reels": "node scripts/compress-reels.mjs"
   },
   "dependencies": {
     "@100mslive/hms-video-store": "^0.15.3",

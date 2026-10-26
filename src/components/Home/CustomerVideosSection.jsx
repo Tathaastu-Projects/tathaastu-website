@@ -9,22 +9,23 @@ import { formatInr } from "../../data/storeData";
 const productBySlug = Object.fromEntries(CATALOG_PRODUCTS.map((product) => [product.slug, product]));
 
 /** Max videos decoding/playing at once — keeps the page smooth. */
-const MAX_CONCURRENT_PLAY = 3;
+const MAX_CONCURRENT_PLAY = 2;
 
 /**
- * Served from /public/videos so ~100MB of MP4s are not pulled into the JS bundle.
- * Add files under public/videos and list them here.
+ * Optimized copies in /public/reel-media (from /public/Reels masters).
+ * Only near-viewport cards load/play — see intersection logic below.
  */
 export const CUSTOMER_VIDEOS = [
-  { id: "video1", src: "/videos/short_video.mp4", title: "Morning ritual", label: "Morning ritual", productSlug: "7-mukhi-rudraksha" },
-  { id: "video2", src: "/videos/video2.mp4", title: "Daily horoscope", label: "Daily guidance", productSlug: "amethyst-crystal" },
-  { id: "video3", src: "/videos/video7.mp4", title: "Evening offerings", label: "Home altar", overlay: "Evening offerings", productSlug: "annapurna-pyramid" },
-  { id: "video4", src: "/videos/video4.mp4", title: "Number stories", label: "Numerology", productSlug: "virgo-zodiac-bracelet" },
-  { id: "video5", src: "/videos/video5.mp4", title: "Vastu at home", label: "Vastu at home", productSlug: "money-wealth-pyramid" },
-  { id: "video6", src: "/videos/video6.mp4", title: "Crystal care", label: "Crystal care", productSlug: "green-aventurine" },
-  { id: "video7", src: "/videos/video8.mp4", title: "Career guidance", label: "Career", productSlug: "tigers-eye-stone" },
-  { id: "video8", src: "/videos/video9.mp4", title: "Relationships", label: "Relationships", productSlug: "libra-zodiac-bracelet" },
-  { id: "video9", src: "/videos/video10.mp4", title: "Sacred stones", label: "Sacred stones", productSlug: "lapis-lazuli" },
+  { id: "video1", src: "/reel-media/7-mukhi-rudraksha.mp4", title: "7 Mukhi Rudraksha", label: "Rudraksha", productSlug: "7-mukhi-rudraksha" },
+  { id: "video2", src: "/reel-media/clear-quartz.mp4", title: "Clear Quartz", label: "Clear Quartz", productSlug: "clear-quartz" },
+  { id: "video3", src: "/reel-media/money-magnet-pyramid.mp4", title: "Money Magnet Pyramid", label: "Money pyramid", productSlug: "money-wealth-pyramid" },
+  { id: "video4", src: "/reel-media/green-aventurine.mp4", title: "Green Aventurine", label: "Aventurine", productSlug: "green-aventurine" },
+  { id: "video5", src: "/reel-media/tiger-eye.mp4", title: "Tiger Eye", label: "Tiger Eye", productSlug: "tigers-eye-stone" },
+  { id: "video6", src: "/reel-media/sulemani-hakik.mp4", title: "Sulemani Hakik", label: "Sulemani Hakik", productSlug: "sodalite" },
+  // Re-add after restoring masters into public/Reels, then: npm run optimize:reels
+  // { id: "video7", src: "/reel-media/amethyst.mp4", title: "Amethyst", label: "Amethyst", productSlug: "amethyst-crystal" },
+  // { id: "video8", src: "/reel-media/libra.mp4", title: "Libra bracelet", label: "Libra", productSlug: "libra-zodiac-bracelet" },
+  // { id: "video9", src: "/reel-media/virgo.mp4", title: "Virgo bracelet", label: "Virgo", productSlug: "virgo-zodiac-bracelet" },
 ];
 
 function VideoCard({ item, shouldLoad, shouldPlay, registerVideo }) {

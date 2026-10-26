@@ -3,7 +3,7 @@
 import React from "react";
 
 const WhatsAppFloatingButton = ({
-  phoneNumber = "+918318875772",
+  phoneNumber = "+919756303737",
   message = "Hello! I'd like to know more about Tathaastu astrology consultations.",
 }) => {
   const cleanPhone = phoneNumber.replace(/[^0-9]/g, "");

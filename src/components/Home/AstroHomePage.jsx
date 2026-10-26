@@ -73,7 +73,7 @@ import amethystHover from "../../assets/products/amethyst-hover.jpg";
 import pyramidHover from "../../assets/products/pyramid-hover.jpg";
 import LazyVideo from "../media/LazyVideo";
 
-const heroVideo = "/videos/short_video.mp4";
+const heroVideo = "/videos/tathaastu_hero_banner_web_720p.mp4";
 const matchVideo = "/videos/life-partner.mp4";
 
 const sectionFallback = () => <div className="astro-section min-h-[12rem]" aria-hidden="true" />;
