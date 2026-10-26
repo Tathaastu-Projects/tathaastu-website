@@ -1555,6 +1555,7 @@ export default function AstroHomePage() {
         </div>
       </section>
 
+      {/* Best sellers store strip — temporarily hidden
       <section className="astro-section astro-bestsellers">
         <SectionHeading
           eyebrow="Store"
@@ -1572,6 +1573,7 @@ export default function AstroHomePage() {
           ))}
         </div>
       </section>
+      */}
 
       <section className="astro-section astro-founder" aria-labelledby="founder-heading">
         <div className="astro-founder__panel">
