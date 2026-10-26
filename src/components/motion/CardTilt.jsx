@@ -15,7 +15,8 @@ export default function CardTilt() {
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (media.matches) return undefined;
+    const coarse = window.matchMedia("(pointer: coarse)");
+    if (media.matches || coarse.matches) return undefined;
 
     const handlers = new Map();
     const timer = window.setTimeout(() => {

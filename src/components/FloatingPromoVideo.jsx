@@ -1,15 +1,49 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
-import promoVideo from "../assets/videos/short_video.mp4";
+
+const PROMO_SRC = "/videos/short_video.mp4";
 
 export default function FloatingPromoVideo() {
+  const pathname = usePathname();
+  const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(true);
   const videoRef = useRef(null);
 
+  // Only show on the marketing home page so other routes stay light.
+  const isHome = pathname === "/";
+
   useEffect(() => {
-    if (!visible || !videoRef.current) return;
+    if (!isHome || !visible) {
+      setReady(false);
+      return undefined;
+    }
+
+    let cancelled = false;
+    const enable = () => {
+      if (!cancelled) setReady(true);
+    };
+
+    // Defer media work until the browser is idle / first paint settles.
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(enable, { timeout: 2500 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+
+    const timer = window.setTimeout(enable, 1200);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [isHome, visible]);
+
+  useEffect(() => {
+    if (!ready || !visible || !videoRef.current) return;
     const video = videoRef.current;
     video.muted = true;
     const playPromise = video.play();
@@ -18,9 +52,9 @@ export default function FloatingPromoVideo() {
         // Autoplay can be blocked until user interaction; keep muted loop ready.
       });
     }
-  }, [visible]);
+  }, [ready, visible]);
 
-  if (!visible) return null;
+  if (!isHome || !visible || !ready) return null;
 
   return (
     <div className="fixed right-4 bottom-[5.25rem] z-[60] w-[120px] overflow-hidden rounded-2xl bg-black shadow-[0_16px_40px_rgba(0,0,0,0.35)] sm:right-6 sm:bottom-[6.25rem] sm:w-[150px]">
@@ -36,12 +70,12 @@ export default function FloatingPromoVideo() {
       <video
         ref={videoRef}
         className="block h-[210px] w-full object-cover sm:h-[260px]"
-        src={promoVideo}
+        src={PROMO_SRC}
         autoPlay
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
       />
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-2.5 pb-2.5 pt-8">

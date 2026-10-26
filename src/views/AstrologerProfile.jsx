@@ -13,6 +13,7 @@ import {
 import SiteNavbar from "../layout/SiteNavbar";
 import Footer from "../layout/Footer";
 import AstroFaqSection from "../components/Home/AstroFaqSection";
+import "./talk-astrologers.css";
 import {
   fetchAstrologerBySlug,
   formatLanguages,

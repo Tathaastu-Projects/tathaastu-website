@@ -14,6 +14,7 @@ import {
   Hammer,
 } from "lucide-react";
 import { formatInr } from "../../data/storeData";
+import "./store.css";
 
 function getProductHighlights(product) {
   if (product.highlights && Array.isArray(product.highlights) && product.highlights.length > 0) {

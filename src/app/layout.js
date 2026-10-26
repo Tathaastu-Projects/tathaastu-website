@@ -4,36 +4,22 @@ import { DEFAULT_DESCRIPTION, SITE_URL, organizationJsonLd } from "@/lib/seo";
 import "../index.css";
 import "../styles/global.css";
 import "../styles/motion.css";
-import "../components/Home/astro-home.css";
-import "../components/Home/astro-faq.css";
-import "../components/Home/astro-blog.css";
-import "../components/Home/astro-horoscope.css";
-import "../components/Home/astro-experts.css";
-import "../components/Home/astro-guidance.css";
-import "../components/Home/astro-deck.css";
-import "../components/Home/solar-hero/tathaastu-solar-hero.css";
-import "../components/Home/solar-hero/tathaastu-solar-home7.css";
-import "../home7-solar-screen/home7-overrides.css";
-import "../home7-solar-screen/solar-system.css";
-import "../components/Store/store.css";
-import "../views/talk-astrologers.css";
-import "../views/calculator.css";
-import "../views/about.css";
-import "lenis/dist/lenis.css";
-import "swiper/css";
-import "swiper/css/navigation";
+// Lenis CSS loads with SmoothScroll (deferred). Page CSS loads in the views that need it.
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
 });
 
 const playfair = Playfair_Display_SC({
   subsets: ["latin"],
-  weight: ["400", "700", "900"],
+  // Display headings only need bold SC — skip unused 400/900 downloads.
+  weight: ["700"],
   variable: "--font-playfair",
   display: "swap",
+  preload: false,
 });
 
 export const metadata = {

@@ -1,13 +1,11 @@
 "use client";
 
-import { Suspense } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ConnectModalProvider } from "@/contexts/ConnectModalContext";
 import useScrollToTop from "@/hooks/useScrollToTop";
 
-// Dynamically load non-critical floating elements and animation utilities
-// to keep app/layout.js bundle light and prevent ChunkLoadError timeouts
 const SmoothScroll = dynamic(() => import("@/components/motion/SmoothScroll"), {
   ssr: false,
 });
@@ -20,10 +18,6 @@ const FloatingPromoVideo = dynamic(
 );
 const WhatsAppFloatingButton = dynamic(
   () => import("@/components/WhatsAppFloatingButton"),
-  { ssr: false }
-);
-const ConnectModalButton = dynamic(
-  () => import("@/components/ConnectModalButton"),
   { ssr: false }
 );
 const CookieConsent = dynamic(
@@ -43,22 +37,51 @@ function ScrollManager() {
   return null;
 }
 
+function DeferredChrome({ children }) {
+  const [extrasReady, setExtrasReady] = useState(false);
+
+  useEffect(() => {
+    let idleId = 0;
+    let timer = 0;
+    const enable = () => setExtrasReady(true);
+
+    if ("requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(enable, { timeout: 1800 });
+    } else {
+      timer = window.setTimeout(enable, 700);
+    }
+
+    return () => {
+      if (idleId && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timer) window.clearTimeout(timer);
+    };
+  }, []);
+
+  return (
+    <>
+      <ScrollManager />
+      {extrasReady ? <RouteTracker /> : null}
+      {children}
+      <WhatsAppFloatingButton />
+      {extrasReady ? (
+        <>
+          <SmoothScroll />
+          <CardTilt />
+          <FloatingPromoVideo />
+          <CookieConsent />
+        </>
+      ) : null}
+    </>
+  );
+}
+
 export default function Providers({ children }) {
   return (
     <AuthProvider>
       <ConnectModalProvider>
-        <SmoothScroll />
-        <CardTilt />
-        <Suspense fallback={<div className="min-h-screen bg-[#F8FFF6]" />}>
-          <ScrollManager />
-          <RouteTracker />
-          {children}
-        </Suspense>
-        <FloatingPromoVideo />
-        <WhatsAppFloatingButton />
-        {/* Consultation modal commented out everywhere as per requirement */}
-        {/* <ConnectModalButton /> */}
-        <CookieConsent />
+        <DeferredChrome>{children}</DeferredChrome>
       </ConnectModalProvider>
     </AuthProvider>
   );

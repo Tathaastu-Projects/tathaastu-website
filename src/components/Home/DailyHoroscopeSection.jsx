@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useRef, useState, useMemo } from "react";
+import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, Sparkles, Heart, Briefcase, Gem, Wallet } from "lucide-react";
+import { zodiacLogo } from "../../data/zodiacLogos";
 import "./astro-horoscope.css";
 
 export const ZODIAC_METADATA = {
@@ -118,8 +119,6 @@ export default function DailyHoroscopeSection({
   goNextZodiac,
   visibleZodiac = [],
   scoreMeta = DEFAULT_SCORE_META,
-  leftMandala,
-  rightMandala,
 }) {
   const [touchStartX, setTouchStartX] = useState(null);
 
@@ -226,7 +225,12 @@ export default function DailyHoroscopeSection({
 
                   {/* Zodiac Emblem Halo */}
                   <div className="astro-horoscope-card__logo">
-                    <img src={z.logo} alt="" loading="lazy" />
+                    <img
+                      src={z.logo || zodiacLogo(z.name)}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
 
                   {/* Zodiac Title & Dates */}

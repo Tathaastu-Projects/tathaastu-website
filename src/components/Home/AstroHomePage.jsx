@@ -30,10 +30,7 @@ import {
   Award,
   CheckCircle2,
 } from "lucide-react";
-import AstroFaqSection from "./AstroFaqSection";
-import AstroBlogSection from "./AstroBlogSection";
-import DailyHoroscopeSection from "./DailyHoroscopeSection";
-import AstroServicesSection from "./AstroServicesSection";
+import dynamic from "next/dynamic";
 import blogsData from "../../data/blogsData";
 import harishankarImg from "../../assets/astrologer/harishnkar.jpg";
 import anuradhaImg from "../../assets/astrologer/anuradha.jpg";
@@ -43,16 +40,13 @@ import upendraImg from "../../assets/astrologer/upendra.jpg";
 import deepakImg from "../../assets/astrologer/deepak.jpg";
 import duttImg from "../../assets/astrologer/dutt.jpg";
 import drPriyankaImg from "../../assets/home/Priyanka Mam.svg";
+import "./astro-home.css";
 import "./astro-experts.css";
 import "./astro-guidance.css";
-import heroVideo from "../../assets/videos/short_video.mp4";
+import "../Store/store.css";
 import numerologyReportImg from "../../assets/home/reports/Numerlogy Report.svg";
-import matchVideo from "../../assets/home/reports/life partner in horizontal frame.mp4";
 import kundliConsultationImg from "../../assets/home/reports/Kundli Consultation.svg";
-import tarotVideo from "../../assets/videos/video10.mp4";
 import AppDownloadBanner from "../../assets/background_banner/app_download_banner.svg";
-import LeftMandala from "../../assets/background_banner/Left mandala.png";
-import RightMandala from "../../assets/background_banner/Right mandala.png";
 import FreeKundliLogo from "../../assets/home_services/Free-kundli.png";
 import AppleLogoPng from "../../assets/logo/apple_logo.png";
 import PlayStoreLogoPng from "../../assets/logo/playstore_logo.png";
@@ -67,22 +61,6 @@ import CareerCategoryIcon from "../../assets/home/career 2.svg";
 import MoneyCategoryIcon from "../../assets/home/Money 2.svg";
 import EducationCategoryIcon from "../../assets/home/education 2.svg";
 import FamilyCategoryIcon from "../../assets/home/family 2.svg";
-import AriesLogo from "../../assets/logo/aries_logo.svg";
-import TaurusLogo from "../../assets/logo/taurus_logo.svg";
-import GeminiLogo from "../../assets/logo/gemini_logo.svg";
-import CancerLogo from "../../assets/logo/cancer_logo.svg";
-import LeoLogo from "../../assets/logo/leo_logo.svg";
-import VirgoLogo from "../../assets/logo/virgo_logo.svg";
-import LibraLogo from "../../assets/logo/libra_logo.svg";
-import ScorpioLogo from "../../assets/logo/scorpio_logo.svg";
-import SagittariusLogo from "../../assets/logo/sagittarius_logo.svg";
-import CapricornLogo from "../../assets/logo/capricorn_logo.svg";
-import AquariusLogo from "../../assets/logo/aquarius_logo.svg";
-import PiscesLogo from "../../assets/logo/pisces_logo.svg";
-import CustomerVideosSection from "./CustomerVideosSection";
-import ServiceDeckSection from "./ServiceDeckSection";
-import FreeTarotSection from "./FreeTarotSection";
-import ProductCard from "../Store/ProductCard";
 import ClientTestimonialCard from "./ClientTestimonialCard";
 import ankitCustomer from "../../assets/customers/ankit.jpg";
 import meeraCustomer from "../../assets/customers/meera.jpg";
@@ -93,6 +71,37 @@ import capricornHover from "../../assets/products/capricorn-hover.jpg";
 import mukhiHover from "../../assets/products/mukhi-hover.jpg";
 import amethystHover from "../../assets/products/amethyst-hover.jpg";
 import pyramidHover from "../../assets/products/pyramid-hover.jpg";
+import LazyVideo from "../media/LazyVideo";
+
+const heroVideo = "/videos/short_video.mp4";
+const matchVideo = "/videos/life-partner.mp4";
+
+const sectionFallback = () => <div className="astro-section min-h-[12rem]" aria-hidden="true" />;
+
+const AstroServicesSection = dynamic(() => import("./AstroServicesSection"), {
+  loading: sectionFallback,
+});
+const ServiceDeckSection = dynamic(() => import("./ServiceDeckSection"), {
+  loading: sectionFallback,
+});
+const DailyHoroscopeSection = dynamic(() => import("./DailyHoroscopeSection"), {
+  loading: sectionFallback,
+});
+const FreeTarotSection = dynamic(() => import("./FreeTarotSection"), {
+  loading: sectionFallback,
+});
+const CustomerVideosSection = dynamic(() => import("./CustomerVideosSection"), {
+  loading: sectionFallback,
+});
+const AstroBlogSection = dynamic(() => import("./AstroBlogSection"), {
+  loading: sectionFallback,
+});
+const AstroFaqSection = dynamic(() => import("./AstroFaqSection"), {
+  loading: sectionFallback,
+});
+const ProductCard = dynamic(() => import("../Store/ProductCard"), {
+  loading: () => null,
+});
 
 const CLIENT_TESTIMONIALS = [
   {
@@ -380,73 +389,61 @@ const SERVICE_TILES = [
 const ZODIAC = [
   {
     name: "Aries",
-    logo: AriesLogo,
     blurb: "Bold, energetic, and driven. Today brings fresh momentum and opportunities to take the lead.",
     scores: { love: 50, career: 85, marriage: 62, finance: 78 },
   },
   {
     name: "Taurus",
-    logo: TaurusLogo,
     blurb: "Steady and grounded. Focus on comfort, patience, and one meaningful goal that builds lasting value.",
     scores: { love: 72, career: 60, marriage: 80, finance: 70 },
   },
   {
     name: "Gemini",
-    logo: GeminiLogo,
     blurb: "Curious energy opens doors. Conversations spark clarity—share ideas and stay flexible with plans.",
     scores: { love: 65, career: 88, marriage: 55, finance: 58 },
   },
   {
     name: "Cancer",
-    logo: CancerLogo,
     blurb: "Emotional intuition is strong. Nurture close bonds and protect your peace with gentle boundaries.",
     scores: { love: 82, career: 54, marriage: 76, finance: 63 },
   },
   {
     name: "Leo",
-    logo: LeoLogo,
     blurb: "Confidence shines today. Lead with warmth, celebrate progress, and let your creativity take center stage.",
     scores: { love: 78, career: 90, marriage: 68, finance: 74 },
   },
   {
     name: "Virgo",
-    logo: VirgoLogo,
     blurb: "Detail brings results. Organize priorities, refine routines, and trust careful steps over rush.",
     scores: { love: 58, career: 86, marriage: 70, finance: 81 },
   },
   {
     name: "Libra",
-    logo: LibraLogo,
     blurb: "Balance and beauty guide you. Seek harmony in relationships and choose fairness in every decision.",
     scores: { love: 84, career: 66, marriage: 88, finance: 60 },
   },
   {
     name: "Scorpio",
-    logo: ScorpioLogo,
     blurb: "Depth and focus intensify. Transform one lingering issue and trust your instinct on hidden truths.",
     scores: { love: 70, career: 75, marriage: 64, finance: 82 },
   },
   {
     name: "Sagittarius",
-    logo: SagittariusLogo,
     blurb: "Adventure calls. Expand your view, say yes to learning, and keep optimism as your compass.",
     scores: { love: 67, career: 79, marriage: 58, finance: 69 },
   },
   {
     name: "Capricorn",
-    logo: CapricornLogo,
     blurb: "Discipline pays off. Climb steadily, honor commitments, and build toward a long-term win.",
     scores: { love: 55, career: 92, marriage: 72, finance: 88 },
   },
   {
     name: "Aquarius",
-    logo: AquariusLogo,
     blurb: "Fresh ideas flow freely. Innovate with community in mind and welcome unexpected allies.",
     scores: { love: 61, career: 84, marriage: 57, finance: 73 },
   },
   {
     name: "Pisces",
-    logo: PiscesLogo,
     blurb: "Dreams feel vivid. Soften into intuition, create space for rest, and let compassion lead.",
     scores: { love: 86, career: 52, marriage: 79, finance: 56 },
   },
@@ -568,7 +565,6 @@ function RunningCounter({
 
 export default function AstroHomePage() {
   const navigate = useNavigate();
-  const heroVideoRef = useRef(null);
   const astrologersTrackRef = useRef(null);
 
   const scrollAstrologers = (direction) => {
@@ -622,11 +618,6 @@ export default function AstroHomePage() {
       return { ...zodiacCards[index], index, offset };
     });
   }, [activeZodiac, zodiacCards]);
-
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (media.matches && heroVideoRef.current) heroVideoRef.current.pause();
-  }, []);
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -770,15 +761,10 @@ export default function AstroHomePage() {
       {/* HERO — Figma-style banner */}
       <section className="astro-hero">
         <div className="astro-hero-banner">
-          <video
-            ref={heroVideoRef}
+          <LazyVideo
             className="astro-hero-banner__video"
             src={heroVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden="true"
+            preload="metadata"
           />
           <div className="astro-hero-banner__scrim" />
           <div className="astro-hero-banner__overlay">
@@ -1126,8 +1112,6 @@ export default function AstroHomePage() {
         goNextZodiac={goNextZodiac}
         visibleZodiac={visibleZodiac}
         scoreMeta={SCORE_META}
-        leftMandala={LeftMandala}
-        rightMandala={RightMandala}
       />
 
       {/* FREE NUMEROLOGY REPORT — Figma banner */}
@@ -1276,16 +1260,11 @@ export default function AstroHomePage() {
 
       {/* FREE MATCH MAKING — Figma banner */}
       <section className="astro-promo-banner astro-promo-banner--video">
-        <video
+        <LazyVideo
           className="astro-promo-banner__video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden="true"
-        >
-          <source src={typeof matchVideo === "string" ? matchVideo : (matchVideo?.src || matchVideo)} type="video/mp4" />
-        </video>
+          src={matchVideo}
+          preload="none"
+        />
         <div className="astro-promo-banner__scrim astro-promo-banner__scrim--right" aria-hidden="true" />
         <div className="astro-section astro-promo-banner__inner astro-promo-banner__inner--right">
           <div className="astro-promo-banner__copy">

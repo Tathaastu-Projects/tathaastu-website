@@ -5,15 +5,6 @@ import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 import { Link } from "@/lib/router";
 import { CATALOG_PRODUCTS } from "../../data/catalogProducts";
 import { formatInr } from "../../data/storeData";
-import shortVideo from "../../assets/videos/short_video.mp4";
-import video2 from "../../assets/videos/video2.mp4";
-import video4 from "../../assets/videos/video4.mp4";
-import video5 from "../../assets/videos/video5.mp4";
-import video6 from "../../assets/videos/video6.mp4";
-import video7 from "../../assets/videos/video7.mp4";
-import video8 from "../../assets/videos/video8.mp4";
-import video9 from "../../assets/videos/video9.mp4";
-import video10 from "../../assets/videos/video10.mp4";
 
 const productBySlug = Object.fromEntries(CATALOG_PRODUCTS.map((product) => [product.slug, product]));
 
@@ -21,19 +12,19 @@ const productBySlug = Object.fromEntries(CATALOG_PRODUCTS.map((product) => [prod
 const MAX_CONCURRENT_PLAY = 3;
 
 /**
- * Add more entries here as you drop new files into src/assets/videos.
- * The strip stays horizontally scrollable for future growth.
+ * Served from /public/videos so ~100MB of MP4s are not pulled into the JS bundle.
+ * Add files under public/videos and list them here.
  */
 export const CUSTOMER_VIDEOS = [
-  { id: "video1", src: shortVideo, title: "Morning ritual", label: "Morning ritual", productSlug: "7-mukhi-rudraksha" },
-  { id: "video2", src: video2, title: "Daily horoscope", label: "Daily guidance", productSlug: "amethyst-crystal" },
-  { id: "video3", src: video7, title: "Evening offerings", label: "Home altar", overlay: "Evening offerings", productSlug: "annapurna-pyramid" },
-  { id: "video4", src: video4, title: "Number stories", label: "Numerology", productSlug: "virgo-zodiac-bracelet" },
-  { id: "video5", src: video5, title: "Vastu at home", label: "Vastu at home", productSlug: "money-wealth-pyramid" },
-  { id: "video6", src: video6, title: "Crystal care", label: "Crystal care", productSlug: "green-aventurine" },
-  { id: "video7", src: video8, title: "Career guidance", label: "Career", productSlug: "tigers-eye-stone" },
-  { id: "video8", src: video9, title: "Relationships", label: "Relationships", productSlug: "libra-zodiac-bracelet" },
-  { id: "video9", src: video10, title: "Sacred stones", label: "Sacred stones", productSlug: "lapis-lazuli" },
+  { id: "video1", src: "/videos/short_video.mp4", title: "Morning ritual", label: "Morning ritual", productSlug: "7-mukhi-rudraksha" },
+  { id: "video2", src: "/videos/video2.mp4", title: "Daily horoscope", label: "Daily guidance", productSlug: "amethyst-crystal" },
+  { id: "video3", src: "/videos/video7.mp4", title: "Evening offerings", label: "Home altar", overlay: "Evening offerings", productSlug: "annapurna-pyramid" },
+  { id: "video4", src: "/videos/video4.mp4", title: "Number stories", label: "Numerology", productSlug: "virgo-zodiac-bracelet" },
+  { id: "video5", src: "/videos/video5.mp4", title: "Vastu at home", label: "Vastu at home", productSlug: "money-wealth-pyramid" },
+  { id: "video6", src: "/videos/video6.mp4", title: "Crystal care", label: "Crystal care", productSlug: "green-aventurine" },
+  { id: "video7", src: "/videos/video8.mp4", title: "Career guidance", label: "Career", productSlug: "tigers-eye-stone" },
+  { id: "video8", src: "/videos/video9.mp4", title: "Relationships", label: "Relationships", productSlug: "libra-zodiac-bracelet" },
+  { id: "video9", src: "/videos/video10.mp4", title: "Sacred stones", label: "Sacred stones", productSlug: "lapis-lazuli" },
 ];
 
 function VideoCard({ item, shouldLoad, shouldPlay, registerVideo }) {

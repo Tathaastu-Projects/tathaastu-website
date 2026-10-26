@@ -23,6 +23,7 @@ import {
 } from "../services/astrologersApi";
 import AstroFaqSection from "../components/Home/AstroFaqSection";
 import ConsultationRequestDialog from "../components/Consult/ConsultationRequestDialog";
+import "./talk-astrologers.css";
 import lotusMandala from "../assets/lotus_mandala.svg";
 import harishankarImg from "../assets/astrologer/harishnkar.jpg";
 import anuradhaImg from "../assets/astrologer/anuradha.jpg";

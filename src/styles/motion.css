@@ -1,9 +1,11 @@
+/* Scoped motion — avoid site-wide `article` / every-section scroll animations
+   that tax the main thread while the user is trying to interact. */
+
 .astro-service-card,
 .astro-category,
 .astro-trust-item,
-.store-card,
-article {
-  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s ease;
+.store-card {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
 }
 
 .astro-btn-primary,
@@ -11,7 +13,7 @@ article {
 .store-btn,
 .about-hero__cta,
 .talk-hero__cta {
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -20,30 +22,21 @@ article {
   .store-btn:hover,
   .about-hero__cta:hover,
   .talk-hero__cta:hover {
-    transform: translateY(-2px) scale(1.03);
+    transform: translateY(-2px) scale(1.02);
   }
 }
 
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    section:not(.astro-hero) {
-      animation: rise-in 0.85s ease both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 28%;
-    }
-
-    footer section {
-      animation: none;
-    }
-  }
-}
-
-@keyframes rise-in {
-  from {
-    transform: translateY(28px);
-  }
-  to {
-    transform: none;
+@media (prefers-reduced-motion: reduce) {
+  .astro-service-card,
+  .astro-category,
+  .astro-trust-item,
+  .store-card,
+  .astro-btn-primary,
+  .astro-btn-ghost,
+  .store-btn,
+  .about-hero__cta,
+  .talk-hero__cta {
+    transition: none;
   }
 }
 

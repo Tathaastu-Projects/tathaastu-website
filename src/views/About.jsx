@@ -6,6 +6,7 @@ import { Clock, Phone, ShieldCheck, Star, Users } from "lucide-react";
 import SiteNavbar from "../layout/SiteNavbar";
 import Footer from "../layout/Footer";
 import AstroFaqSection from "../components/Home/AstroFaqSection";
+import "./about.css";
 import lotusMandala from "../assets/lotus_mandala.svg";
 import whoImage from "../assets/about/whoweare.svg";
 import whatImage from "../assets/numerologist.png";
