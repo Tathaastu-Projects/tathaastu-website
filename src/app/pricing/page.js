@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import View from "@/views/Pricing";
 import { pageMeta } from "@/lib/seo";
 
@@ -10,5 +11,9 @@ export const metadata = pageMeta({
 });
 
 export default function Page() {
-  return <View />;
+  return (
+    <Suspense fallback={null}>
+      <View />
+    </Suspense>
+  );
 }
