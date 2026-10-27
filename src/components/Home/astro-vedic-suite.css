@@ -1,0 +1,668 @@
+/* ===================================================================
+   TATHAASTU SACRED VEDIC SUITE: NUMEROLOGY · MATCHMAKING · KUNDLI
+   Ultra-Luxury Cosmic Emerald & Temple Gold Aesthetic
+   =================================================================== */
+
+.astro-vedic-suite {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(120% 120% at 50% 0%, #0d382e 0%, #06231c 45%, #031410 100%);
+  border-top: 1px solid rgba(212, 168, 83, 0.22);
+  border-bottom: 1px solid rgba(212, 168, 83, 0.22);
+  color: #f4efe6;
+  padding: 4.5rem 1rem;
+}
+
+/* Ambient cosmic glow particles */
+.astro-vedic-suite__nebula {
+  position: absolute;
+  top: -20%;
+  left: 20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(212, 168, 83, 0.12) 0%, rgba(6, 66, 51, 0) 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.astro-vedic-suite__wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===================================================================
+   HEADER
+   =================================================================== */
+.astro-vedic-suite__head {
+  text-align: center;
+  margin-bottom: 2.75rem;
+}
+
+.astro-vedic-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.12);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  color: #ecd599;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.astro-vedic-title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.85rem, 3.2vw, 2.65rem);
+  line-height: 1.22;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.astro-vedic-title span {
+  background: linear-gradient(135deg, #f6e0a4 0%, #d4a853 50%, #c49232 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.astro-vedic-sub {
+  margin: 0.85rem auto 0;
+  max-width: 38rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #9cb1a8;
+}
+
+/* ===================================================================
+   3-PILLAR LUXURY TAB SWITCHER
+   =================================================================== */
+.astro-vedic-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.25rem;
+}
+
+.astro-vedic-tab-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1.15rem 1.25rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(212, 168, 83, 0.16);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.astro-vedic-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(212, 168, 83, 0.38);
+  transform: translateY(-2px);
+}
+
+.astro-vedic-tab-btn.is-active {
+  background: linear-gradient(180deg, rgba(212, 168, 83, 0.15) 0%, rgba(6, 43, 34, 0.75) 100%);
+  border-color: #d4a853;
+  box-shadow: 0 12px 32px rgba(212, 168, 83, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.astro-vedic-tab-btn__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.astro-vedic-tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 0.65rem;
+  background: rgba(212, 168, 83, 0.15);
+  border: 1px solid rgba(212, 168, 83, 0.3);
+  color: #ecd599;
+  transition: transform 0.2s ease;
+}
+
+.astro-vedic-tab-btn.is-active .astro-vedic-tab-icon {
+  background: #d4a853;
+  color: #062b22;
+  transform: scale(1.05);
+}
+
+.astro-vedic-tab-pill {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #d4a853;
+  border: 1px solid rgba(212, 168, 83, 0.25);
+}
+
+.astro-vedic-tab-pill--special {
+  background: rgba(212, 168, 83, 0.25);
+  color: #f7e2a9;
+  border-color: #d4a853;
+}
+
+.astro-vedic-tab-btn__name {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.astro-vedic-tab-btn__desc {
+  font-size: 0.78rem;
+  color: #9cb1a8;
+  line-height: 1.4;
+}
+
+/* ===================================================================
+   ACTIVE STAGE (2-COLUMN GRID)
+   =================================================================== */
+.astro-vedic-stage {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 1.75rem;
+  align-items: stretch;
+}
+
+/* Left Column: Visual Media & Value Highlights */
+.astro-vedic-media-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  padding: 1.5rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.astro-vedic-media-wrap {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  background: #041a14;
+  border: 1px solid rgba(212, 168, 83, 0.18);
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.5);
+}
+
+.astro-vedic-media-img,
+.astro-vedic-media-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.astro-vedic-media-overlay-pill {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 0.85rem;
+  right: 0.85rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.55rem;
+  background: rgba(4, 25, 20, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 168, 83, 0.4);
+  color: #ecd599;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Key Inclusions / Features */
+.astro-vedic-highlights {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.astro-vedic-feature-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: #d1ded9;
+}
+
+.astro-vedic-feature-icon {
+  color: #d4a853;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Right Column: Interactive Luxury Console */
+.astro-vedic-form-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1.25rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(4, 25, 20, 0.75) 100%);
+  border: 1px solid rgba(212, 168, 83, 0.28);
+  padding: 2.25rem 2.25rem;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+}
+
+.astro-vedic-form-card__head {
+  margin-bottom: 1.5rem;
+}
+
+.astro-vedic-form-eyebrow {
+  margin: 0 0 0.4rem;
+  color: #d4a853;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.astro-vedic-form-title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.45rem, 2.2vw, 1.85rem);
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+.astro-vedic-price-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin-top: 0.35rem;
+}
+
+.astro-vedic-price-main {
+  color: #f7e2a9;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+}
+
+.astro-vedic-price-original {
+  color: #839790;
+  font-size: 0.95rem;
+  text-decoration: line-through;
+}
+
+.astro-vedic-price-discount {
+  background: rgba(212, 168, 83, 0.2);
+  border: 1px solid rgba(212, 168, 83, 0.4);
+  color: #ecd599;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.astro-vedic-form-sub {
+  margin: 0.65rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #a3b8b0;
+}
+
+/* Fields & Form Layout */
+.astro-vedic-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.astro-vedic-fields-grid--1col {
+  grid-template-columns: 1fr;
+}
+
+.astro-vedic-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: rgba(3, 18, 14, 0.72);
+  border: 1px solid rgba(212, 168, 83, 0.22);
+  color: #d4a853;
+  transition: all 0.2s ease;
+}
+
+.astro-vedic-field:focus-within {
+  border-color: #d4a853;
+  background: rgba(3, 18, 14, 0.95);
+  box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.22);
+}
+
+.astro-vedic-field input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+.astro-vedic-field input::placeholder {
+  color: #6d847c;
+}
+
+/* Date/time picker styling in dark mode */
+.astro-vedic-field input[type="date"],
+.astro-vedic-field input[type="time"] {
+  color-scheme: dark;
+}
+
+/* Submit & CTA Buttons */
+.astro-vedic-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: linear-gradient(135deg, #f6e0a4 0%, #d4a853 50%, #c49232 100%);
+  color: #062b22;
+  font-size: 0.96rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(212, 168, 83, 0.28);
+  transition: all 0.22s ease;
+  text-decoration: none;
+}
+
+.astro-vedic-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(212, 168, 83, 0.42);
+  background: linear-gradient(135deg, #ffedb5 0%, #e0b45a 50%, #b88628 100%);
+}
+
+.astro-vedic-btn-primary:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+.astro-vedic-actions-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.astro-vedic-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  flex: 1;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(212, 168, 83, 0.4);
+  background: rgba(212, 168, 83, 0.1);
+  color: #ecd599;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.astro-vedic-btn-secondary:hover:not(:disabled) {
+  background: rgba(212, 168, 83, 0.2);
+  border-color: #d4a853;
+  color: #ffffff;
+}
+
+/* Status & Errors */
+.astro-vedic-error {
+  margin-top: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.65rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  font-size: 0.85rem;
+}
+
+/* ===================================================================
+   RESULT CARD (ROYAL VEDIC READING)
+   =================================================================== */
+.astro-vedic-result-box {
+  margin-top: 1.25rem;
+  border-radius: 1rem;
+  background: rgba(4, 25, 20, 0.85);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  padding: 1.45rem;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.35);
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.astro-vedic-result-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.astro-vedic-result-box::-webkit-scrollbar-thumb {
+  background: rgba(212, 168, 83, 0.3);
+  border-radius: 4px;
+}
+
+.astro-vedic-result-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.astro-vedic-chip {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.15);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  color: #f4d99b;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.astro-vedic-chip--highlight {
+  background: #d4a853;
+  color: #062b22;
+  border-color: #d4a853;
+}
+
+.astro-vedic-result-summary {
+  padding-left: 0.85rem;
+  border-left: 3px solid #d4a853;
+  color: #e6f0ec;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-bottom: 1.15rem;
+}
+
+.astro-vedic-result-section {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(212, 168, 83, 0.16);
+}
+
+.astro-vedic-result-section h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d4a853;
+}
+
+.astro-vedic-result-section p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #d1ded9;
+  line-height: 1.5;
+}
+
+.astro-vedic-result-section ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.25rem;
+  font-size: 0.84rem;
+  color: #d1ded9;
+}
+
+.astro-vedic-result-section li {
+  margin: 0.2rem 0;
+}
+
+.astro-vedic-result-cta {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(212, 168, 83, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.astro-vedic-result-cta span {
+  font-size: 0.82rem;
+  color: #9cb1a8;
+}
+
+.astro-vedic-result-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.18);
+  border: 1px solid #d4a853;
+  color: #ecd599;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.astro-vedic-result-cta-btn:hover {
+  background: #d4a853;
+  color: #062b22;
+}
+
+/* ===================================================================
+   BOTTOM CROSS-NAVIGATION BAR
+   =================================================================== */
+.astro-vedic-footer-nav {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(212, 168, 83, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.astro-vedic-footer-nav__label {
+  font-size: 0.85rem;
+  color: #8da49c;
+}
+
+.astro-vedic-footer-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.astro-vedic-nav-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  color: #ecd599;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.astro-vedic-nav-chip:hover {
+  background: rgba(212, 168, 83, 0.18);
+  border-color: #d4a853;
+  color: #ffffff;
+}
+
+/* ===================================================================
+   RESPONSIVE BREAKPOINTS
+   =================================================================== */
+@media (max-width: 960px) {
+  .astro-vedic-tabs {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .astro-vedic-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .astro-vedic-form-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .astro-vedic-media-card {
+    padding: 1.25rem;
+  }
+
+  .astro-vedic-media-wrap {
+    height: 200px;
+  }
+}
+
+@media (max-width: 600px) {
+  .astro-vedic-suite {
+    padding: 3rem 0.75rem;
+  }
+
+  .astro-vedic-fields-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .astro-vedic-actions-row {
+    flex-direction: column;
+  }
+}

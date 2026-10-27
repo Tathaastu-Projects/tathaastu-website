@@ -87,6 +87,9 @@ const ServiceDeckSection = dynamic(() => import("./ServiceDeckSection"), {
 const DailyHoroscopeSection = dynamic(() => import("./DailyHoroscopeSection"), {
   loading: sectionFallback,
 });
+const VedicReportsSection = dynamic(() => import("./VedicReportsSection"), {
+  loading: sectionFallback,
+});
 const FreeTarotSection = dynamic(() => import("./FreeTarotSection"), {
   loading: sectionFallback,
 });
@@ -937,9 +940,141 @@ export default function AstroHomePage() {
             </div>
           </div>
 
+      {/* ============================================================== */}
+      {/* CONSULT SHOWCASE: MARQUEE HEADER & FEATURED CO-FOUNDER GURU   */}
+      {/* ============================================================== */}
+      <div className="astro-section astro-consult-header-section">
+        <div className="astro-consult-header">
+          <div className="astro-consult-header__intro">
+            <div className="astro-consult-header__badge">
+              <span className="astro-consult-header__badge-star">✦</span>
+              <span>Sacred 1-on-1 Guidance</span>
+              <span className="astro-consult-header__badge-dot" aria-hidden="true" />
+            </div>
+
+            <h2 className="astro-consult-header__title">
+              Private Consultations with <em>Master Astrologers</em>
+            </h2>
+
+            <p className="astro-consult-header__subtitle">
+              Speak directly with Tathaastu’s Co-Founder and India’s most revered Vedic gurus. 
+              Receive authentic, compassionate clarity across life decisions, Kundli charts, and spiritual healing.
+            </p>
+          </div>
+
+          <div className="astro-consult-header__trust">
+            <div className="astro-consult-header__pill">
+              <ShieldCheck className="h-4 w-4 text-[#064233]" />
+              <span>100% Private Audio &amp; Video</span>
+            </div>
+            <div className="astro-consult-header__pill">
+              <Sparkles className="h-4 w-4 text-[#c4782a]" />
+              <span>First 5 Mins Guarantee</span>
+            </div>
+            <Link to="/talk-to-astrologers" className="astro-consult-header__link">
+              <span>Explore All Experts</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <section className="astro-section astro-founder" aria-labelledby="founder-heading">
+        <div className="astro-founder__panel">
+          <div className="astro-founder__watermark" aria-hidden="true" />
+
+          <div className="astro-founder__copy">
+            <div className="astro-founder__badge">
+              <Award className="h-3.5 w-3.5" />
+              <span>Co-Founder & Occult Healer</span>
+            </div>
+
+            <p className="astro-founder__kicker">Vedic Wisdom · Modern Clarity</p>
+            <h2 id="founder-heading">Priyanka Singh</h2>
+            <p className="astro-founder__credentials">
+              Vedic Astrology · Gold Medalist · 15+ Years Consulting
+            </p>
+
+            <blockquote className="astro-founder__quote">
+              “Astrology is not about predicting a fixed destiny — it is about illuminating your
+              innate strengths and navigating time with conscious awareness.”
+            </blockquote>
+
+            <p className="astro-founder__desc">
+              With over 15 years of experience in classical Vedic astrology, Priyanka Singh has
+              guided seekers through crucial life transitions, relationships, and career paths. Her
+              personalized consultations combine sacred astrological shastras with grounded,
+              compassionate modern clarity.
+            </p>
+
+            <div className="astro-founder__pillars">
+              <span className="astro-founder__pillar">Vedic Kundli</span>
+              <span className="astro-founder__pillar">Vastu Shastra</span>
+              <span className="astro-founder__pillar">Numerology</span>
+              <span className="astro-founder__pillar">Chakra Healing</span>
+            </div>
+
+            <div className="astro-founder__stats">
+              <div className="astro-founder__stat-card">
+                <div className="astro-founder__stat-icon">
+                  <Award size={22} />
+                </div>
+                <div>
+                  <strong>15+ Years</strong>
+                  <span>Of Vedic Mastery</span>
+                  <small>Guiding seekers worldwide</small>
+                </div>
+              </div>
+
+              <div className="astro-founder__stat-card">
+                <div className="astro-founder__stat-icon">
+                  <Users size={22} />
+                </div>
+                <div>
+                  <strong>10 Lakh+</strong>
+                  <span>People Guided</span>
+                  <small>Across 45+ countries</small>
+                </div>
+              </div>
+            </div>
+
+            <div className="astro-founder__action">
+              <Link to="/pricing?flow=consult&expertName=Priyanka+Singh" className="astro-founder__btn">
+                <span>Book Consultation with Priyanka</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="astro-founder__photo-card">
+            <div className="astro-founder__photo-frame">
+              <img
+                src={drPriyankaImg?.src || drPriyankaImg}
+                alt="Priyanka Singh - Co-Founder of Tathaastu"
+                className="astro-founder__photo-img"
+                loading="lazy"
+              />
+              <div className="astro-founder__photo-sheen" aria-hidden="true" />
+
+              <div className="astro-founder__floating-badge">
+                <Star className="h-3.5 w-3.5 fill-current" />
+                <span>Top Rated · 5.0 (12k+ Sessions)</span>
+              </div>
+
+              <div className="astro-founder__floating-card">
+                <div className="astro-founder__floating-name">
+                  <strong>Priyanka Singh</strong>
+                  <CheckCircle2 size={16} className="astro-founder__check-icon" />
+                </div>
+                <span>Co-Founder · Occult Healer, Tathaastu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
           <div className="astro-experts">
             <SectionHeading
-              eyebrow="Consult"
               title="Connect with India’s Trusted Astrologers"
               subtitle="Get personalised guidance from verified Astrologers who bring experience, clarity, and a caring approach to every consultation."
               action={
@@ -1114,395 +1249,31 @@ export default function AstroHomePage() {
         scoreMeta={SCORE_META}
       />
 
-      {/* FREE NUMEROLOGY REPORT — Figma banner */}
-      <section className="astro-promo-banner astro-promo-banner--video">
-        <img
-          className="astro-promo-banner__img"
-          src={numerologyReportImg?.src || numerologyReportImg}
-          alt="Free Numerology Report"
-          aria-hidden="true"
-        />
-        <div className="astro-promo-banner__scrim" aria-hidden="true" />
-        <div className="astro-section astro-promo-banner__inner">
-          <div className="astro-promo-banner__copy">
-            <p className="astro-promo-banner__eyebrow">Free Numerology Report</p>
-            <h2>
-              Understand What Your
-              <br />
-              Numbers Say About You
-            </h2>
-            <p className="astro-promo-banner__sub">
-              Get a personalised look at your personality, strengths and life path with a free
-              numerology report.
-            </p>
-
-            <form className="astro-promo-banner__form" onSubmit={submitNumerology}>
-              <label className="astro-promo-field">
-                <User className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  value={numerologyForm.name}
-                  onChange={(e) =>
-                    setNumerologyForm((prev) => ({ ...prev, name: e.target.value }))
-                  }
-                  required
-                />
-              </label>
-              <label className="astro-promo-field">
-                <Calendar className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="date"
-                  name="dob"
-                  placeholder="Date of Birth"
-                  value={numerologyForm.dob}
-                  onChange={(e) =>
-                    setNumerologyForm((prev) => ({ ...prev, dob: e.target.value }))
-                  }
-                  required
-                />
-              </label>
-              <button
-                type="submit"
-                className="astro-promo-banner__btn"
-                disabled={numerologyLoading}
-              >
-                {numerologyLoading ? "Generating..." : "Get Your Free Report"}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
-            {numerologyError ? (
-              <p className="astro-promo-banner__status is-error">{numerologyError}</p>
-            ) : null}
-            {numerologyResult ? (
-              <div className="astro-promo-banner__status is-success astro-ai-brief">
-                <p className="astro-ai-brief__eyebrow">
-                  <strong>Life Path {numerologyResult.lifePathNumber}</strong>
-                  {numerologyResult.sunSign ? ` · ${numerologyResult.sunSign}` : ""}
-                  {numerologyResult.nameNumber
-                    ? ` · Name No. ${numerologyResult.nameNumber}`
-                    : ""}
-                </p>
-                {numerologyResult.summary ? <p>{numerologyResult.summary}</p> : null}
-                {numerologyResult.personality ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Personality</h4>
-                    <p>{numerologyResult.personality}</p>
-                  </div>
-                ) : null}
-                {numerologyResult.lifePathInsight ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Life Path insight</h4>
-                    <p>{numerologyResult.lifePathInsight}</p>
-                  </div>
-                ) : null}
-                {numerologyResult.nameNumberInsight ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Name number</h4>
-                    <p>{numerologyResult.nameNumberInsight}</p>
-                  </div>
-                ) : null}
-                {Array.isArray(numerologyResult.strengths) &&
-                numerologyResult.strengths.length ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Strengths</h4>
-                    <ul>
-                      {numerologyResult.strengths.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-                {Array.isArray(numerologyResult.growthAreas) &&
-                numerologyResult.growthAreas.length ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Growth areas</h4>
-                    <ul>
-                      {numerologyResult.growthAreas.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-                {numerologyResult.careerMoney ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Career &amp; money</h4>
-                    <p>{numerologyResult.careerMoney}</p>
-                  </div>
-                ) : null}
-                {numerologyResult.relationships ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Relationships</h4>
-                    <p>{numerologyResult.relationships}</p>
-                  </div>
-                ) : null}
-                {numerologyResult.focusToday ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Focus today</h4>
-                    <p>{numerologyResult.focusToday}</p>
-                  </div>
-                ) : null}
-                {numerologyResult.luckyTips ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Lucky tips</h4>
-                    <p>{numerologyResult.luckyTips}</p>
-                  </div>
-                ) : null}
-                <button type="button" className="astro-promo-banner__link" onClick={() => navigate("/pricing?service=numerology&flow=consult")}>
-                  Talk to an expert
-                </button>
-              </div>
-            ) : null}
-          </div>
-        </div>
-      </section>
-
-      {/* FREE MATCH MAKING — Figma banner */}
-      <section className="astro-promo-banner astro-promo-banner--video">
-        <LazyVideo
-          className="astro-promo-banner__video"
-          src={matchVideo}
-          preload="none"
-        />
-        <div className="astro-promo-banner__scrim astro-promo-banner__scrim--right" aria-hidden="true" />
-        <div className="astro-section astro-promo-banner__inner astro-promo-banner__inner--right">
-          <div className="astro-promo-banner__copy">
-            <p className="astro-promo-banner__eyebrow">Free Matchmaking</p>
-            <h2>
-              Find Your Life
-              <br />
-              Partner
-            </h2>
-            <p className="astro-promo-banner__sub">
-              Understand your compatibility through Vedic Astrology and explore the strengths of
-              your relationship — completely free.
-            </p>
-
-            <form className="astro-promo-banner__form" onSubmit={submitMatchMaking}>
-              <label className="astro-promo-field">
-                <User className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  value={matchMakingForm.name}
-                  onChange={(e) =>
-                    setMatchMakingForm((prev) => ({ ...prev, name: e.target.value }))
-                  }
-                  required
-                />
-              </label>
-              <label className="astro-promo-field">
-                <Users className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="text"
-                  name="partnerName"
-                  placeholder="Partner Name"
-                  value={matchMakingForm.partnerName}
-                  onChange={(e) =>
-                    setMatchMakingForm((prev) => ({
-                      ...prev,
-                      partnerName: e.target.value,
-                    }))
-                  }
-                  required
-                />
-              </label>
-              <button
-                type="submit"
-                className="astro-promo-banner__btn"
-                disabled={matchMakingLoading}
-              >
-                {matchMakingLoading ? "Checking..." : "Check Your Compatibility"}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
-            {matchMakingError ? (
-              <p className="astro-promo-banner__status is-error">{matchMakingError}</p>
-            ) : null}
-            {matchMakingResult ? (
-              <div className="astro-promo-banner__status is-success astro-ai-brief">
-                <p className="astro-ai-brief__eyebrow">
-                  <strong>{matchMakingResult.score}% compatibility</strong> for{" "}
-                  {matchMakingResult.name} &amp; {matchMakingResult.partnerName}
-                </p>
-                {matchMakingResult.summary ? <p>{matchMakingResult.summary}</p> : null}
-                {matchMakingResult.emotionalBond ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Emotional bond</h4>
-                    <p>{matchMakingResult.emotionalBond}</p>
-                  </div>
-                ) : null}
-                {matchMakingResult.communication ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Communication</h4>
-                    <p>{matchMakingResult.communication}</p>
-                  </div>
-                ) : null}
-                {matchMakingResult.challenges ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Growth areas</h4>
-                    <p>{matchMakingResult.challenges}</p>
-                  </div>
-                ) : null}
-                {Array.isArray(matchMakingResult.strengths) &&
-                matchMakingResult.strengths.length ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Relationship strengths</h4>
-                    <ul>
-                      {matchMakingResult.strengths.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-                {matchMakingResult.advice ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Advice</h4>
-                    <p>{matchMakingResult.advice}</p>
-                  </div>
-                ) : null}
-                {matchMakingResult.nextStep ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Next step</h4>
-                    <p>{matchMakingResult.nextStep}</p>
-                  </div>
-                ) : null}
-                <button type="button" className="astro-promo-banner__link" onClick={() => navigate("/pricing?service=matchmaking&flow=consult")}>
-                  Talk to an expert
-                </button>
-              </div>
-            ) : null}
-          </div>
-        </div>
-      </section>
-
-      {/* FULL KUNDLI CONSULTATION — Figma banner */}
-      <section className="astro-promo-banner astro-promo-banner--video">
-        <img
-          className="astro-promo-banner__img"
-          src={kundliConsultationImg?.src || kundliConsultationImg}
-          alt="Full Kundli Consultation"
-          aria-hidden="true"
-        />
-        <div className="astro-promo-banner__scrim" aria-hidden="true" />
-        <div className="astro-section astro-promo-banner__inner">
-          <div className="astro-promo-banner__copy astro-promo-banner__copy--wide">
-            <p className="astro-promo-banner__eyebrow">Full Kundli Consultation</p>
-            <h2>
-              Full Kundli Consultation
-              <br />
-              at Just ₹499
-            </h2>
-            <p className="astro-promo-banner__sub">
-              Get your detailed Kundli PDF along with a 30-minute live Q&amp;A session with an expert
-              for personalised guidance and answers to your questions.
-            </p>
-
-            <form
-              className="astro-promo-banner__form astro-promo-banner__form--kundli"
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <label className="astro-promo-field">
-                <User className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  value={kundliForm.name}
-                  onChange={(e) =>
-                    setKundliForm((prev) => ({ ...prev, name: e.target.value }))
-                  }
-                  required
-                />
-              </label>
-              <label className="astro-promo-field">
-                <Calendar className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="date"
-                  name="dob"
-                  placeholder="Date of Birth"
-                  value={kundliForm.dob}
-                  onChange={(e) =>
-                    setKundliForm((prev) => ({ ...prev, dob: e.target.value }))
-                  }
-                  required
-                />
-              </label>
-              <label className="astro-promo-field">
-                <Clock className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="time"
-                  name="tob"
-                  placeholder="Time of Birth"
-                  value={kundliForm.tob}
-                  onChange={(e) =>
-                    setKundliForm((prev) => ({ ...prev, tob: e.target.value }))
-                  }
-                  required
-                />
-              </label>
-              <label className="astro-promo-field">
-                <MapPin className="h-4 w-4" aria-hidden="true" />
-                <input
-                  type="text"
-                  name="place"
-                  placeholder="Place of Birth"
-                  value={kundliForm.place}
-                  onChange={(e) =>
-                    setKundliForm((prev) => ({ ...prev, place: e.target.value }))
-                  }
-                  required
-                />
-              </label>
-              <Link to="/pricing" className="astro-promo-banner__btn" style={{ textDecoration: "none" }}>
-                Book Your Consultation Now
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </form>
-            {kundliError ? (
-              <p className="astro-promo-banner__status is-error">{kundliError}</p>
-            ) : null}
-            {kundliResult ? (
-              <div className="astro-promo-banner__status is-success astro-ai-brief">
-                <p className="astro-ai-brief__eyebrow">
-                  <strong>{kundliResult.sunSign}</strong>
-                  {kundliResult.lifePathNumber
-                    ? ` · Life Path ${kundliResult.lifePathNumber}`
-                    : ""}
-                </p>
-                {kundliResult.preview ? <p>{kundliResult.preview}</p> : null}
-                {kundliResult.sunSignInsight ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Sun sign insight</h4>
-                    <p>{kundliResult.sunSignInsight}</p>
-                  </div>
-                ) : null}
-                {Array.isArray(kundliResult.whatYouGet) && kundliResult.whatYouGet.length ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>What you get</h4>
-                    <ul>
-                      {kundliResult.whatYouGet.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-                {kundliResult.whyConsult ? (
-                  <div className="astro-ai-brief__block">
-                    <h4>Why this consult</h4>
-                    <p>{kundliResult.whyConsult}</p>
-                  </div>
-                ) : null}
-                <button type="button" className="astro-promo-banner__link" onClick={() => navigate("/pricing?service=kundli&flow=consult")}>
-                  Talk to an expert
-                </button>
-              </div>
-            ) : null}
-          </div>
-        </div>
-      </section>
+      {/* SACRED VEDIC REPORTS & CONSULTATION SUITE: NUMEROLOGY · MATCHMAKING · FULL KUNDLI */}
+      <VedicReportsSection
+        numerologyForm={numerologyForm}
+        setNumerologyForm={setNumerologyForm}
+        submitNumerology={submitNumerology}
+        numerologyLoading={numerologyLoading}
+        numerologyError={numerologyError}
+        numerologyResult={numerologyResult}
+        matchMakingForm={matchMakingForm}
+        setMatchMakingForm={setMatchMakingForm}
+        submitMatchMaking={submitMatchMaking}
+        matchMakingLoading={matchMakingLoading}
+        matchMakingError={matchMakingError}
+        matchMakingResult={matchMakingResult}
+        kundliForm={kundliForm}
+        setKundliForm={setKundliForm}
+        submitKundli={submitKundli}
+        kundliLoading={kundliLoading}
+        kundliError={kundliError}
+        kundliResult={kundliResult}
+        numerologyReportImg={numerologyReportImg}
+        kundliConsultationImg={kundliConsultationImg}
+        matchVideo={matchVideo}
+        navigate={navigate}
+      />
 
       {/* 6-CARD FREE SACRED TAROT READING EXPERIENCE */}
       <FreeTarotSection onConsult={() => navigate("/pricing?service=tarot&flow=consult")} />
@@ -1574,100 +1345,6 @@ export default function AstroHomePage() {
         </div>
       </section>
       */}
-
-      <section className="astro-section astro-founder" aria-labelledby="founder-heading">
-        <div className="astro-founder__panel">
-          <div className="astro-founder__watermark" aria-hidden="true" />
-
-          <div className="astro-founder__copy">
-            <div className="astro-founder__badge">
-              <Award className="h-3.5 w-3.5" />
-              <span>Co-Founder & Occult Healer</span>
-            </div>
-
-            <p className="astro-founder__kicker">Vedic Wisdom · Modern Clarity</p>
-            <h2 id="founder-heading">Priyanka Singh</h2>
-            <p className="astro-founder__credentials">
-              Vedic Astrology · Gold Medalist · 15+ Years Consulting
-            </p>
-
-            <blockquote className="astro-founder__quote">
-              “Astrology is not about predicting a fixed destiny — it is about illuminating your
-              innate strengths and navigating time with conscious awareness.”
-            </blockquote>
-
-            <p className="astro-founder__desc">
-              With over 15 years of experience in classical Vedic astrology, Priyanka Singh has
-              guided seekers through crucial life transitions, relationships, and career paths. Her
-              personalized consultations combine sacred astrological shastras with grounded,
-              compassionate modern clarity.
-            </p>
-
-            <div className="astro-founder__pillars">
-              <span className="astro-founder__pillar">Vedic Kundli</span>
-              <span className="astro-founder__pillar">Vastu Shastra</span>
-              <span className="astro-founder__pillar">Numerology</span>
-              <span className="astro-founder__pillar">Chakra Healing</span>
-            </div>
-
-            <div className="astro-founder__stats">
-              <div className="astro-founder__stat-card">
-                <div className="astro-founder__stat-icon">
-                  <Award size={22} />
-                </div>
-                <div>
-                  <strong>15+ Years</strong>
-                  <span>Of Vedic Mastery</span>
-                  <small>Guiding seekers worldwide</small>
-                </div>
-              </div>
-
-              <div className="astro-founder__stat-card">
-                <div className="astro-founder__stat-icon">
-                  <Users size={22} />
-                </div>
-                <div>
-                  <strong>10 Lakh+</strong>
-                  <span>People Guided</span>
-                  <small>Across 45+ countries</small>
-                </div>
-              </div>
-            </div>
-
-            <div className="astro-founder__action">
-              <Link to="/pricing?flow=consult&expertName=Priyanka+Singh" className="astro-founder__btn">
-                <span>Book Consultation with Priyanka</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="astro-founder__photo-card">
-            <div className="astro-founder__photo-frame">
-              <img
-                src={drPriyankaImg?.src || drPriyankaImg}
-                alt="Priyanka Singh - Co-Founder of Tathaastu"
-                className="astro-founder__photo-img"
-                loading="lazy"
-              />
-              <div className="astro-founder__photo-sheen" aria-hidden="true" />
-
-              <div className="astro-founder__floating-badge">
-                <Star className="h-3.5 w-3.5 fill-current" />
-                <span>Top Rated · 5.0 (12k+ Sessions)</span>
-              </div>
-
-              <div className="astro-founder__floating-card">
-                <div className="astro-founder__floating-name">
-                  <strong>Priyanka Singh</strong>
-                  <CheckCircle2 size={16} className="astro-founder__check-icon" />
-                </div>
-                <span>Co-Founder · Occult Healer, Tathaastu</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* CUSTOMER VIDEOS — horizontal strip above blogs */}
       <CustomerVideosSection />

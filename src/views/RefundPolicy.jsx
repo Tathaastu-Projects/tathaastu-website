@@ -70,7 +70,7 @@ export default function RefundPolicy() {
                 Tathasstu is a subsidiary of Thrive Tech Land Private Limited and operates within its group of companies, offering astrology, spiritual guidance, and holistic healing services through its platform.
               </p>
               <p style={{ marginTop: "0.5rem" }}>
-                <strong>Operating Office Address:</strong> 201, 2nd Floor, Stellar 1423, Noida-142
+                <strong>Operating Office Address:</strong> Office no -201, Plot no 3, Stellar 1423, Sector 142, Noida, Gautambuddha Nagar, Uttar Pradesh, 201305
               </p>
             </div>
           </section>
@@ -309,7 +309,7 @@ export default function RefundPolicy() {
                   <div>
                     <span className="legal-contact-label">Office Address</span>
                     <span className="legal-contact-value">
-                      201, 2nd Floor, Stellar 1423, Noida-142
+                      Office no -201, Plot no 3, Stellar 1423, Sector 142, Noida, Gautambuddha Nagar, Uttar Pradesh, 201305
                     </span>
                   </div>
                 </div>

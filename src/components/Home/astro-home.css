@@ -1078,6 +1078,146 @@
   }
 }
 
+/* ==========================================================================
+   CONSULT MARQUEE HEADER (SACRED 1-ON-1 GUIDANCE)
+   ========================================================================== */
+.astro-consult-header-section {
+  padding-top: 3.5rem;
+  padding-bottom: 1rem;
+}
+
+.astro-founder {
+  padding-top: 0 !important;
+}
+
+.astro-consult-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.astro-consult-header__intro {
+  max-width: 44rem;
+}
+
+.astro-consult-header__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(6, 66, 51, 0.08) 0%, rgba(212, 168, 83, 0.16) 100%);
+  border: 1px solid rgba(212, 168, 83, 0.45);
+  color: #064233;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 8px rgba(212, 168, 83, 0.12);
+}
+
+.astro-consult-header__badge-star {
+  color: #d4a853;
+  font-size: 0.82rem;
+}
+
+.astro-consult-header__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.astro-consult-header__title {
+  margin: 0 0 0.65rem;
+  font-family: "Playfair Display SC", Georgia, "Times New Roman", serif;
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  line-height: 1.16;
+  font-weight: 700;
+  color: #064233;
+  letter-spacing: -0.015em;
+}
+
+.astro-consult-header__title em {
+  font-style: italic;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  background: linear-gradient(135deg, #c4782a 0%, #8a6218 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.astro-consult-header__subtitle {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.62;
+  color: #4a5750;
+  max-width: 40rem;
+}
+
+.astro-consult-header__trust {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.astro-consult-header__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(6, 66, 51, 0.12);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #064233;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.astro-consult-header__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  background: #064233;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(6, 66, 51, 0.2);
+  transition: all 0.22s ease;
+}
+
+.astro-consult-header__link:hover {
+  background: #0a5643;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(6, 66, 51, 0.25);
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .astro-consult-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+  .astro-consult-header__trust {
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
 .astro-founder__panel {
   position: relative;
   overflow: hidden;

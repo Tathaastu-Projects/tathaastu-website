@@ -256,7 +256,7 @@ export default function FreeTarotSection({ onConsult }) {
   const handleStartPicking = (e) => {
     if (e) e.preventDefault();
     if (!question.trim()) {
-      setQuestion("What sacred guidance and blessing does the universe have for me?");
+      setQuestion("What important guidance does tarot have for me right now?");
     }
     setStep("pick");
   };
@@ -300,7 +300,7 @@ export default function FreeTarotSection({ onConsult }) {
   const activeCard = pickedCards[activeDetailIdx];
   const activePosition = SPREAD_POSITIONS[activeDetailIdx];
 
-  // Synthesize a master interpretation summary from all 6 cards
+  // Synthesize an easy-to-understand summary from all 6 cards
   const masterSynthesis = useMemo(() => {
     if (pickedCards.length < 6) return "";
     const p1 = pickedCards[0]; // Past
@@ -310,7 +310,7 @@ export default function FreeTarotSection({ onConsult }) {
     const p5 = pickedCards[4]; // Future
     const p6 = pickedCards[5]; // Outcome
 
-    return `The universe reveals that your foundation was formed by the lessons of ${p1.name}, which taught you resilience. Currently, you stand in the energy of ${p2.name}, where conscious action and awareness are awakening. Your primary testing point is ${p3.name} — reminding you to release fear or self-doubt. By following the divine counsel of ${p4.name}, you clear the path for ${p5.name} to enter your life in the coming weeks. Ultimately, this journey culminates in the triumphant blessing of ${p6.name}, bringing you profound alignment, clarity, and peace.`;
+    return `Looking at your 6 cards, your past experiences with ${p1.name} helped build your inner strength. Right now, ${p2.name} shows that you are gaining new clarity and confidence. Your main challenge to watch out for is ${p3.name} — reminding you to let go of fear or doubts. By following the advice of ${p4.name}, you clear the way for positive changes with ${p5.name} in the coming weeks. In the end, ${p6.name} brings a rewarding outcome filled with peace, happiness, and clear direction.`;
   }, [pickedCards]);
 
   return (
@@ -323,15 +323,13 @@ export default function FreeTarotSection({ onConsult }) {
         <div className="free-tarot-head">
           <div className="free-tarot-badge">
             <Sparkles size={14} />
-            <span>Sacred 6-Card Tarot Oracle</span>
+            <span>Free 6-Card Tarot Reading</span>
           </div>
           <h2 className="free-tarot-title">
-            Consult What Tarot <span>Says About You</span>
+            See What Tarot <span>Says About You</span>
           </h2>
           <p className="free-tarot-sub">
-            The ancient tarot reflects the sacred mirror of your soul. Ask your question and select
-            6 mystical cards from the celestial deck to unveil your past root, present reality, hidden
-            obstacle, divine counsel, approaching shift, and ultimate destiny.
+            Pick 6 cards to understand your past lessons, your present situation, challenges to watch out for, helpful advice, upcoming changes, and your final outcome.
           </p>
         </div>
 
@@ -365,7 +363,7 @@ export default function FreeTarotSection({ onConsult }) {
               className="tarot-cta-btn"
               onClick={handleStartPicking}
             >
-              <span>Shuffle Sacred Deck & Draw 6 Cards</span>
+              <span>Shuffle Deck & Pick 6 Cards</span>
               <ArrowRight size={18} />
             </button>
           </div>
@@ -415,7 +413,7 @@ export default function FreeTarotSection({ onConsult }) {
                     </span>
                   </>
                 ) : (
-                  "All 6 Cards Chosen! Opening Your Sacred Spread..."
+                  "All 6 Cards Chosen! Opening Your Reading..."
                 )}
               </span>
             </p>
@@ -448,14 +446,14 @@ export default function FreeTarotSection({ onConsult }) {
           <div className="tarot-stage-reveal">
             <div className="tarot-reveal-header">
               <p className="tarot-reveal-eyebrow">
-                ✦ Sacred 6-Card Spread Revealed ✦
+                ✦ Your 6-Card Tarot Reading ✦
               </p>
               <h3 className="tarot-reveal-title">
                 {selectedTopic ? `${selectedTopic} · ` : ""}
                 <span className="italic font-serif">“{question}”</span>
               </h3>
               <p className="tarot-reveal-sub">
-                Click any of your 6 cards below to inspect its deeper spiritual counsel and remedy.
+                Click any of the 6 cards below to read its meaning, advice, and message for you.
               </p>
             </div>
 
@@ -526,12 +524,12 @@ export default function FreeTarotSection({ onConsult }) {
                 <div className="tarot-synthesis">
                   <h4>
                     <Flame size={18} className="text-[#c49232]" />
-                    <span>Cosmic Synthesis of Your 6-Card Spread</span>
+                    <span>Summary of Your 6-Card Reading</span>
                   </h4>
                   <p>{masterSynthesis}</p>
                   <div className="tarot-affirmation-box">
-                    <strong>Sacred Affirmation: </strong>
-                    “I honor the lessons of my past, stand grounded in my present strength, and trust the divine timing of my highest outcome.”
+                    <strong>Daily Affirmation: </strong>
+                    “I learn from my past, stay strong and confident today, and trust that good things are coming into my life.”
                   </div>
                 </div>
 
@@ -539,7 +537,7 @@ export default function FreeTarotSection({ onConsult }) {
                 <div className="tarot-actions-row">
                   <button type="button" className="tarot-reset-btn" onClick={handleReset}>
                     <RotateCcw size={16} />
-                    <span>Ask Another Question & Draw Again</span>
+                    <span>Ask Another Question & Pick Again</span>
                   </button>
 
                   <button
@@ -554,7 +552,7 @@ export default function FreeTarotSection({ onConsult }) {
                     }}
                   >
                     <MessageCircle size={18} />
-                    <span>Consult a Verified Tarot Master (1-on-1 Deep Dive)</span>
+                    <span>Consult a Tarot Expert (1-on-1 Guidance)</span>
                   </button>
                 </div>
               </div>
