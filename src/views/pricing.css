@@ -811,3 +811,82 @@
     animation: none !important;
   }
 }
+
+/* ==========================================================================
+   MASTER PRICING TABS (PRIYANKA CO-FOUNDER vs GENERAL ASTROLOGERS)
+   ========================================================================== */
+.pricing-master-tabs-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem auto 2.5rem;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.pricing-master-tabs {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(4, 38, 29, 0.08);
+  padding: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  gap: 0.35rem;
+}
+
+.pricing-master-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: #073349;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pricing-master-tab:hover {
+  color: #042e23;
+  background: rgba(212, 168, 83, 0.12);
+}
+
+.pricing-master-tab.is-active {
+  background: linear-gradient(135deg, #042e23 0%, #064233 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(4, 46, 35, 0.3);
+}
+
+.pricing-master-tab.is-active .pricing-master-pill {
+  background: rgba(212, 168, 83, 0.25);
+  color: #f7e2a9;
+  border-color: #d4a853;
+}
+
+.pricing-master-pill {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(7, 51, 73, 0.08);
+  color: #073349;
+  border: 1px solid rgba(7, 51, 73, 0.15);
+}
+
+@media (max-width: 640px) {
+  .pricing-master-tabs {
+    flex-direction: column;
+    border-radius: 1.25rem;
+    width: 100%;
+    max-width: 380px;
+  }
+  .pricing-master-tab {
+    width: 100%;
+    justify-content: center;
+  }
+}

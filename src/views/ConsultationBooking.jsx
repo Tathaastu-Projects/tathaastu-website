@@ -60,6 +60,7 @@ import vibhutiImg from "../assets/astrologer/vibhuti.jpg";
 import upendraImg from "../assets/astrologer/upendra.jpg";
 import deepakImg from "../assets/astrologer/deepak.jpg";
 import duttImg from "../assets/astrologer/dutt.jpg";
+import drPriyankaImg from "../assets/about/dr_priyanka_singh.jpg";
 
 const DEFAULT_EXPERT = {
   id: "pameshwar-dutt",
@@ -85,6 +86,10 @@ const ASTROLOGER_IMAGE_MAP = {
   "pt-hosal": hosalImg,
   anuradha: anuradhaImg,
   "acharya-anuradha": anuradhaImg,
+  "priyanka-singh": drPriyankaImg,
+  "dr-priyanka-singh": drPriyankaImg,
+  "dr-priyanka": drPriyankaImg,
+  priyanka: drPriyankaImg,
 };
 
 const POPULAR_BANKS = [
@@ -190,7 +195,8 @@ export default function ConsultationBooking() {
     }
     if (!avatar) {
       const lower = astroName.toLowerCase();
-      if (lower.includes("vibhuti")) avatar = vibhutiImg;
+      if (lower.includes("priyanka")) avatar = drPriyankaImg;
+      else if (lower.includes("vibhuti")) avatar = vibhutiImg;
       else if (lower.includes("upendra")) avatar = upendraImg;
       else if (lower.includes("deepak")) avatar = deepakImg;
       else if (lower.includes("harishankar")) avatar = harishankarImg;

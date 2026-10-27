@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "@/lib/router";
+import { useNavigate, useSearchParams } from "@/lib/router";
 import Footer from "../layout/Footer";
 import SiteNavbar from "../layout/SiteNavbar";
 import drPriyankaImg from "../assets/home/Priyanka Mam.svg";
@@ -19,9 +19,21 @@ import {
 } from "lucide-react";
 import "./pricing.css";
 import { fetchPlans } from "../services/plansApi";
+import PriyankaConsultationScreen from "../components/Pricing/PriyankaConsultationScreen";
 
 export default function Pricing() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const expertQuery = (searchParams?.get("expertName") || searchParams?.get("astrologer") || "").toLowerCase();
+  const isPriyankaInit = expertQuery.includes("priyanka");
+
+  const [activeTab, setActiveTab] = useState(isPriyankaInit ? "priyanka" : "all");
+
+  useEffect(() => {
+    if (isPriyankaInit) {
+      setActiveTab("priyanka");
+    }
+  }, [isPriyankaInit]);
   const [consult, setConsult] = useState({
     active: false,
     service: "consult",
@@ -49,6 +61,10 @@ export default function Pricing() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const astro = params.get("astrologer") || params.get("astrologerId") || "";
+    const exp = (params.get("expertName") || params.get("astrologerName") || "").toLowerCase();
+    if (exp.includes("priyanka") || astro.toLowerCase().includes("priyanka")) {
+      setActiveTab("priyanka");
+    }
     setConsult({
       active: params.get("flow") === "consult" || Boolean(astro),
       service: params.get("service") || "consult",
@@ -137,6 +153,46 @@ export default function Pricing() {
     if (consult.expertImg) params.set("expertImg", consult.expertImg);
 
     navigate(`/talk-to-astrologers?${params.toString()}`);
+  };
+
+  const handleBookPriyanka = (pkg) => {
+    if (typeof window !== "undefined") {
+      try {
+        sessionStorage.setItem(
+          "tathaastu_selected_package",
+          JSON.stringify({
+            planId: pkg.id,
+            planCode: pkg.serviceKey,
+            package: pkg.name,
+            price: pkg.price,
+            priceInr: pkg.priceInr,
+            duration: pkg.duration,
+            mode: "video",
+            service: pkg.serviceKey,
+            astrologer: "Dr. Priyanka Singh",
+            astrologerId: "priyanka-singh",
+          })
+        );
+      } catch (e) {}
+    }
+
+    const params = new URLSearchParams({
+      package: pkg.name,
+      price: pkg.price,
+      duration: pkg.duration,
+      service: pkg.serviceKey,
+      planId: pkg.id,
+      mode: "video",
+      astrologer: "Dr. Priyanka Singh",
+      astrologerId: "priyanka-singh",
+      astrologerSlug: "priyanka-singh",
+      expertRating: "5.0",
+      expertExp: "15+",
+      expertExpertise: "Vedic, Vastu, Tarot, Numerology, Aura & Energy",
+      expertLanguages: "Hindi - English",
+    });
+
+    navigate(`/payment?${params.toString()}`);
   };
 
   const defaultPricingPlans = [
@@ -266,183 +322,216 @@ export default function Pricing() {
       <SiteNavbar />
 
       <div className="pricing-page-wrapper">
-        {/* HERO HEADER */}
-        <section className="pricing-hero-section">
-          <div className="pricing-eyebrow-badge">
-            <Sparkles className="h-3 w-3 text-[#c4842a]" />
-            <span>Personalised Astrology Consultations</span>
-            <Sparkles className="h-3 w-3 text-[#c4842a]" />
+        {/* MASTER TABS: PRIYANKA VS ALL EXPERTS */}
+        <div className="pricing-master-tabs-wrap">
+          <div className="pricing-master-tabs">
+            <button
+              type="button"
+              className={`pricing-master-tab ${activeTab === "priyanka" ? "is-active" : ""}`}
+              onClick={() => setActiveTab("priyanka")}
+            >
+              <Sparkles className="h-4 w-4" />
+              <span>Dr. Priyanka Singh (Co-Founder)</span>
+              <span className="pricing-master-pill">5 Exclusive Packages</span>
+            </button>
+            <button
+              type="button"
+              className={`pricing-master-tab ${activeTab === "all" ? "is-active" : ""}`}
+              onClick={() => setActiveTab("all")}
+            >
+              <Users className="h-4 w-4" />
+              <span>Verified Tathaastu Astrologers</span>
+              <span className="pricing-master-pill">Sessions from ₹499</span>
+            </button>
           </div>
+        </div>
 
-          <h1 className="pricing-hero-title">
-            Choose Your Consultation <span>Package</span>
-          </h1>
-
-          <p className="pricing-hero-sub">
-            Find the right level of guidance for your questions, your Kundli, and the clarity you seek.
-          </p>
-
-          {consult.expertName ? (
-            <div className="pricing-stepper-pill">
-              <span className="pricing-stepper-dot" />
-              <span>Step 1: Choose a package for your session with <strong>{consult.expertName}</strong></span>
-            </div>
-          ) : consult.active ? (
-            <div className="pricing-stepper-pill">
-              <span className="pricing-stepper-dot" />
-              <span>Step 1: Choose a package · Next: Select your verified expert & proceed to payment</span>
-            </div>
-          ) : null}
-        </section>
-
-        {/* CONSULTATION PACKAGES GRID */}
-        <section
-          ref={sectionRef}
-          className={`pricing-cards-section ${isVisible ? "is-visible" : ""}`}
-        >
-          <div className="pricing-cards-container">
-            <div className="pricing-cards-grid">
-              {pricingPlans.map((plan, index) => (
-                <article
-                  key={plan.name}
-                  className={`pricing-card ${plan.isPopular ? "is-popular" : ""}`}
-                  style={{ "--plan-index": index }}
-                >
-                  {plan.isPopular && (
-                    <div className="pricing-popular-ribbon">
-                      <Star className="fill-white" />
-                      <span>Most Popular</span>
-                    </div>
-                  )}
-
-                  <div className="pricing-card__meta-bar">
-                    <span className="pricing-card__num-token">
-                      {plan.id}
-                    </span>
-                    <span className="pricing-card__duration-badge">
-                      <Clock />
-                      <span>{plan.duration}</span>
-                    </span>
-                  </div>
-
-                  <div className="pricing-card__price-wrap">
-                    <p className="pricing-card__price">{plan.price}</p>
-                    <span className="pricing-card__price-sub">/ One-time session</span>
-                  </div>
-
-                  <h2 className="pricing-card__title">{plan.name}</h2>
-                  <p className="pricing-card__desc">{plan.description}</p>
-
-                  <div className="pricing-card__divider" />
-
-                  <div className="pricing-card__features-head">
-                    <Sparkles className="h-3 w-3 text-[#c4842a]" />
-                    <span>What&apos;s Included</span>
-                  </div>
-
-                  <ul className="pricing-card__features-list">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="pricing-card__feature-item">
-                        <span className="pricing-card__check-disc">
-                          <Check />
-                        </span>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <button
-                    type="button"
-                    onClick={() => handleGetStarted(plan)}
-                    className="pricing-card__btn"
-                  >
-                    <span>{plan.buttonText}</span>
-                    <ArrowRight />
-                  </button>
-                </article>
-              ))}
-            </div>
-
-            {/* EXCLUSIVE CO-FOUNDER CONSULTATION CARD */}
-            <article className="pricing-exclusive-card">
-              <div className="pricing-exclusive-inner">
-                <div>
-                  <div className="pricing-exclusive-badge">
-                    <Star className="h-3 w-3 fill-[#ffd88a]" />
-                    <span>Exclusive VIP Concierge</span>
-                  </div>
-
-                  <div className="pricing-exclusive-header-row">
-                    <div className="pricing-exclusive-portrait-wrap">
-                      <img
-                        src={drPriyankaImg?.src || drPriyankaImg}
-                        alt="Priyanka Singh"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div>
-                      <h2 className="pricing-exclusive-title">{exclusivePlan.name}</h2>
-                      <p className="text-xs font-semibold tracking-wider text-[#ffd88a] uppercase mt-1">
-                        {exclusivePlan.subtitle}
-                      </p>
-                    </div>
-                  </div>
-
-                  <p className="pricing-exclusive-desc">
-                    {exclusivePlan.description}
-                  </p>
-
-                  <div className="pricing-exclusive-features-head">
-                    <Sparkles className="h-3 w-3 text-[#ffd88a]" />
-                    <span>What&apos;s Included</span>
-                  </div>
-
-                  <ul className="pricing-exclusive-features-list">
-                    {exclusivePlan.features.map((feature) => (
-                      <li key={feature} className="pricing-exclusive-feature-item">
-                        <Star className="h-3 w-3 fill-[#ffd88a]" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pricing-exclusive-price-box">
-                  <span className="pricing-exclusive-price-note">
-                    {exclusivePlan.priceNote}
-                  </span>
-                  <p className="pricing-exclusive-price-val">{exclusivePlan.price}</p>
-
-                  <dl className="pricing-exclusive-specs">
-                    <div className="pricing-exclusive-spec-row">
-                      <Clock />
-                      <div>
-                        <dt>Duration</dt>
-                        <dd>{exclusivePlan.duration}</dd>
-                      </div>
-                    </div>
-                    <div className="pricing-exclusive-spec-row">
-                      <Video />
-                      <div>
-                        <dt>Format</dt>
-                        <dd>{exclusivePlan.format}</dd>
-                      </div>
-                    </div>
-                  </dl>
-
-                  <button
-                    type="button"
-                    onClick={() => handleGetStarted(exclusivePlan)}
-                    className="pricing-exclusive-cta-btn"
-                  >
-                    <span>{exclusivePlan.buttonText}</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                </div>
+        {activeTab === "priyanka" ? (
+          <PriyankaConsultationScreen
+            onSelectPackage={handleBookPriyanka}
+            onBackToAll={() => setActiveTab("all")}
+          />
+        ) : (
+          <>
+            {/* HERO HEADER */}
+            <section className="pricing-hero-section">
+              <div className="pricing-eyebrow-badge">
+                <Sparkles className="h-3 w-3 text-[#c4842a]" />
+                <span>Personalised Astrology Consultations</span>
+                <Sparkles className="h-3 w-3 text-[#c4842a]" />
               </div>
-            </article>
-          </div>
-        </section>
+
+              <h1 className="pricing-hero-title">
+                Choose Your Consultation <span>Package</span>
+              </h1>
+
+              <p className="pricing-hero-sub">
+                Find the right level of guidance for your questions, your Kundli, and the clarity you seek.
+              </p>
+
+              {consult.expertName ? (
+                <div className="pricing-stepper-pill">
+                  <span className="pricing-stepper-dot" />
+                  <span>Step 1: Choose a package for your session with <strong>{consult.expertName}</strong></span>
+                </div>
+              ) : consult.active ? (
+                <div className="pricing-stepper-pill">
+                  <span className="pricing-stepper-dot" />
+                  <span>Step 1: Choose a package · Next: Select your verified expert & proceed to payment</span>
+                </div>
+              ) : null}
+            </section>
+
+            {/* CONSULTATION PACKAGES GRID */}
+            <section
+              ref={sectionRef}
+              className={`pricing-cards-section ${isVisible ? "is-visible" : ""}`}
+            >
+              <div className="pricing-cards-container">
+                <div className="pricing-cards-grid">
+                  {pricingPlans.map((plan, index) => (
+                    <article
+                      key={plan.name}
+                      className={`pricing-card ${plan.isPopular ? "is-popular" : ""}`}
+                      style={{ "--plan-index": index }}
+                    >
+                      {plan.isPopular && (
+                        <div className="pricing-popular-ribbon">
+                          <Star className="fill-white" />
+                          <span>Most Popular</span>
+                        </div>
+                      )}
+
+                      <div className="pricing-card__meta-bar">
+                        <span className="pricing-card__num-token">
+                          {plan.id}
+                        </span>
+                        <span className="pricing-card__duration-badge">
+                          <Clock />
+                          <span>{plan.duration}</span>
+                        </span>
+                      </div>
+
+                      <div className="pricing-card__price-wrap">
+                        <p className="pricing-card__price">{plan.price}</p>
+                        <span className="pricing-card__price-sub">/ One-time session</span>
+                      </div>
+
+                      <h2 className="pricing-card__title">{plan.name}</h2>
+                      <p className="pricing-card__desc">{plan.description}</p>
+
+                      <div className="pricing-card__divider" />
+
+                      <div className="pricing-card__features-head">
+                        <Sparkles className="h-3 w-3 text-[#c4842a]" />
+                        <span>What&apos;s Included</span>
+                      </div>
+
+                      <ul className="pricing-card__features-list">
+                        {plan.features.map((feature) => (
+                          <li key={feature} className="pricing-card__feature-item">
+                            <span className="pricing-card__check-disc">
+                              <Check />
+                            </span>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <button
+                        type="button"
+                        onClick={() => handleGetStarted(plan)}
+                        className="pricing-card__btn"
+                      >
+                        <span>{plan.buttonText}</span>
+                        <ArrowRight />
+                      </button>
+                    </article>
+                  ))}
+                </div>
+
+                {/* EXCLUSIVE CO-FOUNDER CONSULTATION CARD */}
+                <article className="pricing-exclusive-card">
+                  <div className="pricing-exclusive-inner">
+                    <div>
+                      <div className="pricing-exclusive-badge">
+                        <Star className="h-3 w-3 fill-[#ffd88a]" />
+                        <span>Exclusive VIP Concierge</span>
+                      </div>
+
+                      <div className="pricing-exclusive-header-row">
+                        <div className="pricing-exclusive-portrait-wrap">
+                          <img
+                            src={drPriyankaImg?.src || drPriyankaImg}
+                            alt="Priyanka Singh"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div>
+                          <h2 className="pricing-exclusive-title">{exclusivePlan.name}</h2>
+                          <p className="text-xs font-semibold tracking-wider text-[#ffd88a] uppercase mt-1">
+                            {exclusivePlan.subtitle}
+                          </p>
+                        </div>
+                      </div>
+
+                      <p className="pricing-exclusive-desc">
+                        {exclusivePlan.description}
+                      </p>
+
+                      <div className="pricing-exclusive-features-head">
+                        <Sparkles className="h-3 w-3 text-[#ffd88a]" />
+                        <span>What&apos;s Included</span>
+                      </div>
+
+                      <ul className="pricing-exclusive-features-list">
+                        {exclusivePlan.features.map((feature) => (
+                          <li key={feature} className="pricing-exclusive-feature-item">
+                            <Star className="h-3 w-3 fill-[#ffd88a]" />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pricing-exclusive-price-box">
+                      <span className="pricing-exclusive-price-note">
+                        {exclusivePlan.priceNote}
+                      </span>
+                      <p className="pricing-exclusive-price-val">{exclusivePlan.price}</p>
+
+                      <dl className="pricing-exclusive-specs">
+                        <div className="pricing-exclusive-spec-row">
+                          <Clock />
+                          <div>
+                            <dt>Duration</dt>
+                            <dd>{exclusivePlan.duration}</dd>
+                          </div>
+                        </div>
+                        <div className="pricing-exclusive-spec-row">
+                          <Video />
+                          <div>
+                            <dt>Format</dt>
+                            <dd>{exclusivePlan.format}</dd>
+                          </div>
+                        </div>
+                      </dl>
+
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab("priyanka")}
+                        className="pricing-exclusive-cta-btn"
+                      >
+                        <span>Explore All 5 Co-Founder Consultations</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </>
+        )}
       </div>
 
       {/* Footer */}

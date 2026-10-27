@@ -71,9 +71,7 @@ import capricornHover from "../../assets/products/capricorn-hover.jpg";
 import mukhiHover from "../../assets/products/mukhi-hover.jpg";
 import amethystHover from "../../assets/products/amethyst-hover.jpg";
 import pyramidHover from "../../assets/products/pyramid-hover.jpg";
-import LazyVideo from "../media/LazyVideo";
-
-const heroVideo = "/videos/tathaastu_hero_banner_web_720p.mp4";
+const heroBannerImg = "/tathasstu-home-banner.webp";
 const matchVideo = "/videos/life-partner.mp4";
 
 const sectionFallback = () => <div className="astro-section min-h-[12rem]" aria-hidden="true" />;
@@ -764,10 +762,14 @@ export default function AstroHomePage() {
       {/* HERO — Figma-style banner */}
       <section className="astro-hero">
         <div className="astro-hero-banner">
-          <LazyVideo
+          <img
             className="astro-hero-banner__video"
-            src={heroVideo}
-            preload="metadata"
+            src={heroBannerImg}
+            alt="Tathaastu astrology and healing"
+            width={1920}
+            height={760}
+            decoding="async"
+            fetchPriority="high"
           />
           <div className="astro-hero-banner__scrim" />
           <div className="astro-hero-banner__overlay">
@@ -783,12 +785,6 @@ export default function AstroHomePage() {
                 <br />
                 <span className="astro-hero__brand-green">Platform</span>
               </h1>
-              <ul className="astro-hero__bullets">
-                <li>Personalised Kundli &amp; Life Guidance</li>
-                <li>Trusted Guidance From Verified Astrologers</li>
-                <li>Astrology, Vastu, Tarot &amp; Healing</li>
-                <li>Connect With An Expert Via Chat, Call, Or Video</li>
-              </ul>
               <div className="astro-hero__actions">
                 <Link to="/pricing?flow=consult&service=consult" className="astro-btn-primary" style={{ textDecoration: "none" }}>
                   Consult with an Expert
@@ -963,14 +959,6 @@ export default function AstroHomePage() {
           </div>
 
           <div className="astro-consult-header__trust">
-            <div className="astro-consult-header__pill">
-              <ShieldCheck className="h-4 w-4 text-[#064233]" />
-              <span>100% Private Audio &amp; Video</span>
-            </div>
-            <div className="astro-consult-header__pill">
-              <Sparkles className="h-4 w-4 text-[#c4782a]" />
-              <span>First 5 Mins Guarantee</span>
-            </div>
             <Link to="/talk-to-astrologers" className="astro-consult-header__link">
               <span>Explore All Experts</span>
               <ArrowRight className="h-4 w-4" />

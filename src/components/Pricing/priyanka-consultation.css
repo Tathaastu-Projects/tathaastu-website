@@ -1,0 +1,559 @@
+/* ===================================================================
+   TATHAASTU EXCLUSIVE CONSULTATIONS WITH OUR CO-FOUNDER
+   Dr. Priyanka Singh — Bespoke Consultation Packages Styling
+   Ultra-Luxury Cosmic Emerald, Obsidian & Temple Gold Aesthetic
+   =================================================================== */
+
+.priyanka-screen {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(130% 120% at 50% 0%, #0d382e 0%, #06231c 45%, #021410 100%);
+  border-top: 1px solid rgba(212, 168, 83, 0.22);
+  border-bottom: 1px solid rgba(212, 168, 83, 0.22);
+  color: #f4efe6;
+  padding: 3.5rem 1rem 5rem;
+}
+
+/* Background Cosmic Nebula Dust */
+.priyanka-screen__nebula {
+  position: absolute;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1000px, 95vw);
+  height: 600px;
+  background: radial-gradient(circle, rgba(212, 168, 83, 0.14) 0%, rgba(6, 66, 51, 0.04) 60%, transparent 75%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.priyanka-screen__wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+/* ===================================================================
+   HERO INTRO SECTION
+   =================================================================== */
+.priyanka-hero {
+  text-align: center;
+  margin-bottom: 3.25rem;
+}
+
+.priyanka-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.15rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(212, 168, 83, 0.1) 0%, rgba(212, 168, 83, 0.22) 50%, rgba(212, 168, 83, 0.1) 100%);
+  border: 1px solid rgba(212, 168, 83, 0.4);
+  color: #f6e0a4;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+.priyanka-hero__title {
+  margin: 0 auto;
+  max-width: 50rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 3.8vw, 3.1rem);
+  line-height: 1.18;
+  color: #ffffff;
+  letter-spacing: -0.015em;
+}
+
+.priyanka-hero__title span {
+  background: linear-gradient(135deg, #ffedb5 0%, #d4a853 45%, #b88628 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.priyanka-hero__copy {
+  margin: 1.25rem auto 0;
+  max-width: 44rem;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: #c9dbd5;
+}
+
+.priyanka-hero__copy-sub {
+  margin: 0.75rem auto 0;
+  max-width: 42rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #9cb1a8;
+}
+
+/* 3 Quick VIP Specs Bar */
+.priyanka-specs-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.priyanka-spec-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.35rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(212, 168, 83, 0.3);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s ease;
+}
+
+.priyanka-spec-pill:hover {
+  background: rgba(212, 168, 83, 0.12);
+  border-color: #d4a853;
+  transform: translateY(-2px);
+}
+
+.priyanka-spec-pill__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(212, 168, 83, 0.2);
+  color: #f7e2a9;
+  flex-shrink: 0;
+}
+
+.priyanka-spec-pill__text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.priyanka-spec-pill__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9cb1a8;
+  line-height: 1.2;
+}
+
+.priyanka-spec-pill__val {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+/* ===================================================================
+   CO-FOUNDER SPOTLIGHT CARD
+   =================================================================== */
+.priyanka-spotlight {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(4, 28, 22, 0.8) 100%);
+  border: 1px solid rgba(212, 168, 83, 0.28);
+  padding: 1.75rem 2.25rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  gap: 2rem;
+}
+
+.priyanka-spotlight__left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.priyanka-spotlight__avatar-frame {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #d4a853;
+  box-shadow: 0 0 20px rgba(212, 168, 83, 0.35);
+  flex-shrink: 0;
+}
+
+.priyanka-spotlight__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.priyanka-spotlight__info h3 {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.35rem;
+  color: #ffffff;
+}
+
+.priyanka-spotlight__info p {
+  margin: 0.35rem 0 0;
+  font-size: 0.86rem;
+  color: #d4a853;
+  font-weight: 600;
+}
+
+.priyanka-spotlight__badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.priyanka-spotlight__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e6f0ec;
+  background: rgba(212, 168, 83, 0.12);
+  border: 1px solid rgba(212, 168, 83, 0.28);
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+}
+
+/* ===================================================================
+   FILTER PILLS / NAVIGATION
+   =================================================================== */
+.priyanka-filter-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2.75rem;
+}
+
+.priyanka-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  color: #b2c5bd;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.priyanka-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-color: rgba(212, 168, 83, 0.4);
+}
+
+.priyanka-filter-btn.is-active {
+  background: linear-gradient(135deg, #d4a853 0%, #b88628 100%);
+  border-color: #d4a853;
+  color: #041f17;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(212, 168, 83, 0.35);
+}
+
+/* ===================================================================
+   THE 5 PACKAGES GRID
+   =================================================================== */
+.priyanka-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.75rem;
+  align-items: stretch;
+}
+
+.priyanka-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 1.5rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(3, 20, 16, 0.85) 100%);
+  border: 1.5px solid rgba(212, 168, 83, 0.25);
+  padding: 2.25rem 2rem 2rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.priyanka-card:hover {
+  transform: translateY(-4px);
+  border-color: #d4a853;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 168, 83, 0.2);
+}
+
+/* Ambient glow accent top edge */
+.priyanka-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #d4a853 50%, transparent 100%);
+  opacity: 0.7;
+}
+
+/* Card Header */
+.priyanka-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.priyanka-card__num-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ecd599;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.15);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+}
+
+.priyanka-card__duration-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #9cb1a8;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Price Row */
+.priyanka-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.priyanka-card__price-val {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.priyanka-card__price-sub {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #d4a853;
+}
+
+/* Title & Description */
+.priyanka-card__title {
+  margin: 0 0 0.85rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.45rem;
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+.priyanka-card__desc {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #c9dbd5;
+}
+
+.priyanka-card__divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 168, 83, 0.1) 0%, rgba(212, 168, 83, 0.35) 50%, rgba(212, 168, 83, 0.1) 100%);
+  margin: 1.4rem 0;
+}
+
+/* Inclusions List */
+.priyanka-card__inclusions-head {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d4a853;
+  margin-bottom: 1rem;
+}
+
+.priyanka-card__inclusions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.priyanka-card__inclusion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: #d1ded9;
+}
+
+.priyanka-card__inclusion-icon {
+  color: #d4a853;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.priyanka-card__inclusion-item strong {
+  color: #f7e2a9;
+  font-weight: 700;
+}
+
+/* CTA Button */
+.priyanka-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.95rem 1.35rem;
+  border-radius: 0.85rem;
+  border: none;
+  background: linear-gradient(135deg, #f6e0a4 0%, #d4a853 50%, #c49232 100%);
+  color: #042017;
+  font-size: 0.94rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(212, 168, 83, 0.28);
+  transition: all 0.22s ease;
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.priyanka-card__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(212, 168, 83, 0.45);
+  background: linear-gradient(135deg, #ffedb5 0%, #e0b45a 50%, #b88628 100%);
+}
+
+/* ===================================================================
+   CONCIERGE REASSURANCE FOOTER
+   =================================================================== */
+.priyanka-concierge {
+  margin-top: 3.5rem;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  padding: 1.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.priyanka-concierge__items {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+}
+
+.priyanka-concierge__item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.85rem;
+  color: #d1ded9;
+}
+
+.priyanka-concierge__item-icon {
+  color: #d4a853;
+  flex-shrink: 0;
+}
+
+.priyanka-concierge__back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.12);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  color: #ecd599;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.priyanka-concierge__back-btn:hover {
+  background: #d4a853;
+  color: #042017;
+}
+
+/* ===================================================================
+   RESPONSIVE
+   =================================================================== */
+@media (max-width: 900px) {
+  .priyanka-spotlight {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .priyanka-packages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .priyanka-screen {
+    padding: 2.75rem 0.75rem 3.5rem;
+  }
+
+  .priyanka-specs-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .priyanka-card {
+    padding: 1.75rem 1.25rem 1.5rem;
+  }
+
+  .priyanka-concierge {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .priyanka-concierge__items {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}
