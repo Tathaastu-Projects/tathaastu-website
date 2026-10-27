@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Link } from "@/lib/router";
-import { Shield, Clock, Mail, Phone, Globe, CheckCircle2, FileText, RefreshCw } from "lucide-react";
+import { Shield, Clock, Mail, Phone, Globe, CheckCircle2, FileText, RefreshCw, MapPin } from "lucide-react";
 import SiteNavbar from "../layout/SiteNavbar";
 import Footer from "../layout/Footer";
 import "../styles/legal-policy.css";
@@ -65,6 +65,9 @@ export default function PrivacyPolicy() {
             <div className="legal-callout">
               <p>
                 Tathasstu is a subsidiary of Thrive Tech Land Private Limited and operates within its group of companies, offering astrology, spiritual guidance, and holistic healing services through its platform.
+              </p>
+              <p style={{ marginTop: "0.5rem" }}>
+                <strong>Operating Office Address:</strong> 201, 2nd Floor, Stellar 1423, Noida-142
               </p>
             </div>
           </section>
@@ -320,6 +323,18 @@ export default function PrivacyPolicy() {
                     <a href="tel:+919756303737" className="legal-contact-value">
                       +91-9756303737
                     </a>
+                  </div>
+                </div>
+
+                <div className="legal-contact-item">
+                  <div className="legal-contact-icon">
+                    <MapPin size={18} />
+                  </div>
+                  <div>
+                    <span className="legal-contact-label">Office Address</span>
+                    <span className="legal-contact-value">
+                      201, 2nd Floor, Stellar 1423, Noida-142
+                    </span>
                   </div>
                 </div>
               </div>
