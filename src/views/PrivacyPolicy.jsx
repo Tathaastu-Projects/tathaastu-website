@@ -64,7 +64,7 @@ export default function PrivacyPolicy() {
             <h2 className="legal-section__heading">Corporate Information &amp; Platform Ownership</h2>
             <div className="legal-callout">
               <p>
-                Tathasstu is a subsidiary of Thrive Tech Land Private Limited and operates within its group of companies, offering astrology, spiritual guidance, and holistic healing services through its platform.
+                Tathasstu is a subsidiary of THRIVELABS TECH PRIVATE LIMITED and operates within its group of companies, offering astrology, spiritual guidance, and holistic healing services through its platform.
               </p>
               <p style={{ marginTop: "0.5rem" }}>
                 <strong>Operating Office Address:</strong> Office no -201, Plot no 3, Stellar 1423, Sector 142, Noida, Gautambuddha Nagar, Uttar Pradesh, 201305
