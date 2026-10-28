@@ -41,8 +41,8 @@ export default function VedicReportsSection({
   kundliError,
   kundliResult,
   numerologyReportImg,
+  matchmakingReportImg,
   kundliConsultationImg,
-  matchVideo,
   navigate,
   openModal,
 }) {
@@ -299,13 +299,11 @@ export default function VedicReportsSection({
             {/* Left Media Box */}
             <div className="astro-vedic-media-card">
               <div className="astro-vedic-media-wrap">
-                <video
-                  className="astro-vedic-media-video"
-                  src={matchVideo}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                <img
+                  src={matchmakingReportImg?.src || matchmakingReportImg}
+                  alt="Free Matchmaking"
+                  className="astro-vedic-media-img"
+                  loading="lazy"
                 />
                 <div className="astro-vedic-media-overlay-pill">
                   <Heart size={14} className="text-[#d4a853]" />

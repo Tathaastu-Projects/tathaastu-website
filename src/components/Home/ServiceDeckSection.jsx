@@ -42,7 +42,7 @@ const PANELS = [
     eyebrow: "Birth Chart Guidance",
     title: "Kundli, Read For The Questions You Brought",
     body: "Share your date, time, and place of birth. An expert walks through the chart with you, in plain, compassionate language.",
-    href: "/services/astrology-kundli",
+    href: "/services",
     explore: "Explore Kundli",
     tiles: [
       { src: kundliBirthChartSvg, badge: "Chart", caption: "Your birth chart" },
@@ -56,7 +56,7 @@ const PANELS = [
     eyebrow: "Home Ritual",
     title: "Pooja For The Day You Have In Mind",
     body: "Griha pravesh, a family pooja, or a havan. We help you arrange the ritual, the priest, and a time that suits you.",
-    href: "/services/pooja-services",
+    href: "/services",
     explore: "Explore Pooja",
     tiles: [
       { src: poojaHomeOfferingSvg, badge: "Ritual", caption: "Home offerings" },
@@ -70,7 +70,7 @@ const PANELS = [
     eyebrow: "Living Space",
     title: "Vastu For The Home You Already Live In",
     body: "We look at the directions, the rooms, and how you use the space, then suggest straightforward changes that make sense for you.",
-    href: "/services/vastu-shastra",
+    href: "/services",
     explore: "Explore Vastu",
     tiles: [
       { src: vastuRoomsDirectionsSvg, badge: "Layout", caption: "Rooms & directions" },
@@ -84,7 +84,7 @@ const PANELS = [
     eyebrow: "Compatibility",
     title: "Two Charts, Read Side By Side",
     body: "Bring both birth charts. We talk through what aligns naturally, where you might see friction, and what the years ahead suggest.",
-    href: "/services/horoscope-matching",
+    href: "/services",
     explore: "Explore Matching",
     tiles: [
       { src: matchingPairSvg, badge: "Pair", caption: "Two charts, one reading" },
@@ -98,7 +98,7 @@ const PANELS = [
     eyebrow: "Wellbeing",
     title: "When You Need Space To Breathe",
     body: "Aura work, crystals, and quiet time with a practitioner who listens. A grounding session when everyday life feels heavy.",
-    href: "/services/crystal-healing",
+    href: "/services",
     explore: "Explore Healing",
     tiles: [
       { src: healingScanningSvg, badge: "Aura", caption: "Scanning session" },
@@ -112,7 +112,7 @@ const PANELS = [
     eyebrow: "Study",
     title: "Learn Astrology, Vastu, And Tarot",
     body: "Classes if you want to study the practice yourself, from kundli basics to vastu, numerology, and tarot.",
-    href: "/courses",
+    href: "/services",
     explore: "Explore Courses",
     tiles: [
       { src: courseTarotSvg, badge: "Tarot", caption: "Tarot reading course" },
@@ -307,12 +307,14 @@ export default function ServiceDeckSection() {
                         <Sparkles className="h-3.5 w-3.5 text-[#d4a853]" aria-hidden="true" />
                         <span>{panel.eyebrow}</span>
                       </p>
-                      <h3>{panel.title}</h3>
+                      <Link to="/services" className="hover:opacity-90 transition-opacity">
+                        <h3>{panel.title}</h3>
+                      </Link>
                       <p className="vedic-card__body">{panel.body}</p>
                     </div>
 
                     <Link
-                      to={panel.href}
+                      to="/services"
                       className="vedic-card__explore"
                       tabIndex={index === active ? 0 : -1}
                     >
@@ -324,11 +326,16 @@ export default function ServiceDeckSection() {
                   {/* 3 Visual Practice Tiles */}
                   <div className="vedic-tiles">
                     {panel.tiles.map((tile) => (
-                      <figure key={tile.caption} className="vedic-tile">
+                      <Link
+                        key={tile.caption}
+                        to="/services"
+                        className="vedic-tile"
+                        tabIndex={index === active ? 0 : -1}
+                      >
                         <img src={tile.src?.src || tile.src} alt={tile.caption} loading="lazy" />
                         <span className="vedic-tile__badge">{tile.badge}</span>
                         <figcaption>{tile.caption}</figcaption>
-                      </figure>
+                      </Link>
                     ))}
                   </div>
                 </div>

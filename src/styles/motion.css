@@ -1,6 +1,26 @@
 /* Scoped motion — avoid site-wide `article` / every-section scroll animations
    that tax the main thread while the user is trying to interact. */
 
+/* Skip layout/paint for far-off sections (big win on long home page) */
+.astro-vedic-suite,
+.astro-videos-section,
+.astro-clients-banner,
+.astro-faq-section,
+.astro-blog,
+.astro-horoscope-section,
+.astro-deck-section,
+.free-tarot-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 720px;
+}
+
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  .astro-home [class*="astro-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
 .astro-service-card,
 .astro-category,
 .astro-trust-item,

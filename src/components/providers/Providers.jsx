@@ -6,12 +6,9 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ConnectModalProvider } from "@/contexts/ConnectModalContext";
 import useScrollToTop from "@/hooks/useScrollToTop";
 
-const SmoothScroll = dynamic(() => import("@/components/motion/SmoothScroll"), {
-  ssr: false,
-});
-const CardTilt = dynamic(() => import("@/components/motion/CardTilt"), {
-  ssr: false,
-});
+// Lenis + card tilt disabled — they steal main-thread time and make scroll feel laggy.
+// const SmoothScroll = dynamic(() => import("@/components/motion/SmoothScroll"), { ssr: false });
+// const CardTilt = dynamic(() => import("@/components/motion/CardTilt"), { ssr: false });
 // Watch Now floating promo — temporarily disabled
 // const FloatingPromoVideo = dynamic(
 //   () => import("@/components/FloatingPromoVideo"),
@@ -68,8 +65,8 @@ function DeferredChrome({ children }) {
       <WhatsAppFloatingButton />
       {extrasReady ? (
         <>
-          <SmoothScroll />
-          <CardTilt />
+          {/* <SmoothScroll /> */}
+          {/* <CardTilt /> */}
           {/* <FloatingPromoVideo /> */}
           <CookieConsent />
         </>

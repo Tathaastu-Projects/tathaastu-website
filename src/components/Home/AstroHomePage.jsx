@@ -44,8 +44,6 @@ import "./astro-home.css";
 import "./astro-experts.css";
 import "./astro-guidance.css";
 import "../Store/store.css";
-import numerologyReportImg from "../../assets/home/reports/Numerlogy Report.svg";
-import kundliConsultationImg from "../../assets/home/reports/Kundli Consultation.svg";
 import AppDownloadBanner from "../../assets/background_banner/app_download_banner.svg";
 import FreeKundliLogo from "../../assets/home_services/Free-kundli.png";
 import AppleLogoPng from "../../assets/logo/apple_logo.png";
@@ -71,11 +69,17 @@ import capricornHover from "../../assets/products/capricorn-hover.jpg";
 import mukhiHover from "../../assets/products/mukhi-hover.jpg";
 import amethystHover from "../../assets/products/amethyst-hover.jpg";
 import pyramidHover from "../../assets/products/pyramid-hover.jpg";
-const heroBannerImg = "/Main-Banner.png";
-const matchVideo = "/videos/life-partner.mp4";
+const heroBannerImg = "/tathasstu-home-banner.webp";
+const numerologyReportImg = "/Reports/Numerlogy Report.webp";
+const matchmakingReportImg = "/Reports/Matchmaking.webp";
+const kundliConsultationImg = "/Reports/Kundli Consultation.webp";
 
 const sectionFallback = () => <div className="astro-section min-h-[12rem]" aria-hidden="true" />;
 
+const LazyWhenVisible = dynamic(() => import("./LazyWhenVisible"), {
+  ssr: false,
+  loading: sectionFallback,
+});
 const AstroServicesSection = dynamic(() => import("./AstroServicesSection"), {
   loading: sectionFallback,
 });
@@ -191,7 +195,6 @@ const ASTROLOGERS = [
   {
     id: "pameshwar-dutt",
     name: "Pameshwar Dutt",
-    phone: "9120329906",
     expertise: ["Vedic", "Numerology", "Face Reading"],
     languages: "Hindi · English",
     exp: "11+ yrs",
@@ -207,7 +210,6 @@ const ASTROLOGERS = [
   {
     id: "vibhuti",
     name: "Dr. Vibhuti",
-    phone: "7078473994",
     expertise: ["Vedic", "Face Reading", "Tarot"],
     languages: "English · Hindi",
     exp: "10+ yrs",
@@ -223,7 +225,6 @@ const ASTROLOGERS = [
   {
     id: "upendra",
     name: "Acharya Upendra",
-    phone: "8173807057",
     expertise: ["Vedic Astrology", "Kundli Analysis"],
     languages: "Hindi · English",
     exp: "8+ yrs",
@@ -239,7 +240,6 @@ const ASTROLOGERS = [
   {
     id: "deepak",
     name: "Pt. Deepak",
-    phone: "9120329906",
     expertise: ["Vedic Astrology", "Kundli Milan"],
     languages: "Hindi · English",
     exp: "7+ yrs",
@@ -255,7 +255,6 @@ const ASTROLOGERS = [
   {
     id: "harishankar",
     name: "Pt. Harishankar",
-    phone: "8707748378",
     expertise: ["Vedic Astrology", "Face Reading"],
     languages: "Hindi · English",
     exp: "18+ yrs",
@@ -271,7 +270,6 @@ const ASTROLOGERS = [
   {
     id: "hosal",
     name: "Pt. Hosal",
-    phone: "9950421929",
     expertise: ["Vedic Astrology", "Dasha Predictions"],
     languages: "Hindi · English",
     exp: "10+ yrs",
@@ -287,7 +285,6 @@ const ASTROLOGERS = [
   {
     id: "anuradha",
     name: "Acharya Anuradha",
-    phone: "9044257411",
     expertise: ["Vedic", "Numerology", "Lo Shu Grid"],
     languages: "English · Hindi",
     exp: "12+ yrs",
@@ -509,13 +506,16 @@ function RunningCounter({
       timeoutId = setTimeout(() => {
         const startTime = performance.now();
 
+        let frames = 0;
         const tick = (now) => {
           const elapsed = now - startTime;
           const progress = Math.min(elapsed / duration, 1);
-          // Ease-out expo for dramatic, energetic running numbers that decelerate smoothly to destination
+          // Ease-out expo — update React state every other frame to cut main-thread work
           const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-          const current = ease * end;
-          setCount(current);
+          frames += 1;
+          if (progress === 1 || frames % 2 === 0) {
+            setCount(ease * end);
+          }
 
           if (progress < 1) {
             frameId = requestAnimationFrame(tick);
@@ -766,8 +766,8 @@ export default function AstroHomePage() {
             className="astro-hero-banner__img astro-hero-banner__video"
             src={heroBannerImg}
             alt="Dr. Priyanka Singh - Tathaastu Co-Founder, Astrology & Healing"
-            width={3712}
-            height={1152}
+            width={1920}
+            height={620}
             decoding="async"
             fetchPriority="high"
           />
@@ -1219,51 +1219,61 @@ export default function AstroHomePage() {
             </div>
           </div>
 
-          <AstroServicesSection />
+          <LazyWhenVisible minHeight="18rem">
+            <AstroServicesSection />
+          </LazyWhenVisible>
         </div>
       </section>
 
-      <ServiceDeckSection />
+      <LazyWhenVisible minHeight="22rem">
+        <ServiceDeckSection />
+      </LazyWhenVisible>
 
       {/* DAILY HOROSCOPE */}
-      <DailyHoroscopeSection
-        zodiacCards={zodiacCards}
-        activeZodiac={activeZodiac}
-        setActiveZodiac={setActiveZodiac}
-        goPrevZodiac={goPrevZodiac}
-        goNextZodiac={goNextZodiac}
-        visibleZodiac={visibleZodiac}
-        scoreMeta={SCORE_META}
-      />
+      <LazyWhenVisible minHeight="28rem">
+        <DailyHoroscopeSection
+          zodiacCards={zodiacCards}
+          activeZodiac={activeZodiac}
+          setActiveZodiac={setActiveZodiac}
+          goPrevZodiac={goPrevZodiac}
+          goNextZodiac={goNextZodiac}
+          visibleZodiac={visibleZodiac}
+          scoreMeta={SCORE_META}
+        />
+      </LazyWhenVisible>
 
       {/* SACRED VEDIC REPORTS & CONSULTATION SUITE: NUMEROLOGY · MATCHMAKING · FULL KUNDLI */}
-      <VedicReportsSection
-        numerologyForm={numerologyForm}
-        setNumerologyForm={setNumerologyForm}
-        submitNumerology={submitNumerology}
-        numerologyLoading={numerologyLoading}
-        numerologyError={numerologyError}
-        numerologyResult={numerologyResult}
-        matchMakingForm={matchMakingForm}
-        setMatchMakingForm={setMatchMakingForm}
-        submitMatchMaking={submitMatchMaking}
-        matchMakingLoading={matchMakingLoading}
-        matchMakingError={matchMakingError}
-        matchMakingResult={matchMakingResult}
-        kundliForm={kundliForm}
-        setKundliForm={setKundliForm}
-        submitKundli={submitKundli}
-        kundliLoading={kundliLoading}
-        kundliError={kundliError}
-        kundliResult={kundliResult}
-        numerologyReportImg={numerologyReportImg}
-        kundliConsultationImg={kundliConsultationImg}
-        matchVideo={matchVideo}
-        navigate={navigate}
-      />
+      <LazyWhenVisible minHeight="36rem">
+        <VedicReportsSection
+          numerologyForm={numerologyForm}
+          setNumerologyForm={setNumerologyForm}
+          submitNumerology={submitNumerology}
+          numerologyLoading={numerologyLoading}
+          numerologyError={numerologyError}
+          numerologyResult={numerologyResult}
+          matchMakingForm={matchMakingForm}
+          setMatchMakingForm={setMatchMakingForm}
+          submitMatchMaking={submitMatchMaking}
+          matchMakingLoading={matchMakingLoading}
+          matchMakingError={matchMakingError}
+          matchMakingResult={matchMakingResult}
+          kundliForm={kundliForm}
+          setKundliForm={setKundliForm}
+          submitKundli={submitKundli}
+          kundliLoading={kundliLoading}
+          kundliError={kundliError}
+          kundliResult={kundliResult}
+          numerologyReportImg={numerologyReportImg}
+          matchmakingReportImg={matchmakingReportImg}
+          kundliConsultationImg={kundliConsultationImg}
+          navigate={navigate}
+        />
+      </LazyWhenVisible>
 
       {/* 6-CARD FREE SACRED TAROT READING EXPERIENCE */}
-      <FreeTarotSection onConsult={() => navigate("/pricing?service=tarot&flow=consult")} />
+      <LazyWhenVisible minHeight="40rem">
+        <FreeTarotSection onConsult={() => navigate("/pricing?service=tarot&flow=consult")} />
+      </LazyWhenVisible>
 
       {/* DOWNLOAD TATHAASTU APP — Figma promo banner */}
       <section className="astro-app-download-banner">
@@ -1334,34 +1344,42 @@ export default function AstroHomePage() {
       */}
 
       {/* CUSTOMER VIDEOS — horizontal strip above blogs */}
-      <CustomerVideosSection />
+      <LazyWhenVisible minHeight="26rem">
+        <CustomerVideosSection />
+      </LazyWhenVisible>
 
-      <section className="astro-clients-banner" aria-labelledby="clients-heading">
-        <div className="astro-section astro-clients-banner__inner">
-          <div className="astro-clients-banner__header">
-            <div className="astro-clients-banner__badge">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>Real Stories · 10 Lakh+ People Guided</span>
+      <LazyWhenVisible minHeight="22rem">
+        <section className="astro-clients-banner" aria-labelledby="clients-heading">
+          <div className="astro-section astro-clients-banner__inner">
+            <div className="astro-clients-banner__header">
+              <div className="astro-clients-banner__badge">
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>Real Stories · 10 Lakh+ People Guided</span>
+              </div>
+              <h2 id="clients-heading">What Our Clients Say</h2>
+              <p>
+                Hear authentic experiences from seekers who found clarity, alignment, and peace of mind
+                with Tathaastu’s personalised guidance.
+              </p>
             </div>
-            <h2 id="clients-heading">What Our Clients Say</h2>
-            <p>
-              Hear authentic experiences from seekers who found clarity, alignment, and peace of mind
-              with Tathaastu’s personalised guidance.
-            </p>
-          </div>
 
-          <div className="astro-clients-grid">
-            {CLIENT_TESTIMONIALS.map((testimonial) => (
-              <ClientTestimonialCard key={testimonial.id} testimonial={testimonial} />
-            ))}
+            <div className="astro-clients-grid">
+              {CLIENT_TESTIMONIALS.map((testimonial) => (
+                <ClientTestimonialCard key={testimonial.id} testimonial={testimonial} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </LazyWhenVisible>
 
       {/* BLOG */}
-      <AstroBlogSection blogs={blogs} />
+      <LazyWhenVisible minHeight="24rem">
+        <AstroBlogSection blogs={blogs} />
+      </LazyWhenVisible>
 
-      <AstroFaqSection />
+      <LazyWhenVisible minHeight="20rem">
+        <AstroFaqSection />
+      </LazyWhenVisible>
     </div>
   );
 }

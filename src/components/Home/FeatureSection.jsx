@@ -45,7 +45,7 @@ export default function FeatureSection() {
           CHAT WITH ASTROLOGERS – AI CHATBOT
         </div>
         <div className="bg-[#FAF1DE] p-4 rounded-xl shadow-sm text-[#073349] font-inter text-sm md:text-base">
-          TALK TO ASTROLOGERS – CUSTOMER SERVICE MOBILE NO.
+          TALK TO ASTROLOGERS – IN-APP CALL & CHAT
         </div>
         <div className="bg-[#FAF1DE] p-4 rounded-xl shadow-sm text-[#073349] font-inter text-sm md:text-base">
           WHO WILL ASSIGN THE ASTROLOGER TO THE CLIENT.

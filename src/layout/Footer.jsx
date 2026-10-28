@@ -25,20 +25,22 @@ export default function Footer() {
         <div className="mx-auto max-w-[1680px] px-4 py-5 sm:py-6 md:py-7 sm:px-6 md:px-8 lg:px-10">
           <div className="grid grid-cols-1 gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-2.5">
-              <div className="flex items-center">
+              <Link to="/" className="inline-flex items-center">
                 <img
                   src={tathaastuWhiteLogo}
                   alt="Tathaastu"
                   className="h-10 w-auto max-w-full object-contain sm:h-12 md:h-14"
                 />
-              </div>
+              </Link>
               <p className="text-xs leading-relaxed text-white/80">
                 At Tathasstu, we help you align your life with the rhythm of the universe. From astrology and healing to spiritual courses and remedies, we're your trusted guide on the journey to self-awareness and divine balance.
               </p>
 
               <div className="flex items-center gap-2 pt-1">
                 <a
-                  href="#"
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Facebook"
                   className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/10 transition hover:bg-white/15"
                 >
@@ -77,31 +79,31 @@ export default function Footer() {
             <div className="space-y-2.5">
               <div className="text-xs font-extrabold tracking-wide text-white/95 uppercase">Quick Links</div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-white/80">
-                <a href="#" className="hover:text-white">Home</a>
-                <a href="#" className="hover:text-white">Services</a>
-                <a href="#" className="hover:text-white">Courses</a>
-                <a href="#" className="hover:text-white">Pricing</a>
-                <a href="#" className="hover:text-white">Blog</a>
-                <a href="#" className="hover:text-white">Contact</a>
+                <Link to="/" className="hover:text-white">Home</Link>
+                <Link to="/services" className="hover:text-white">Services</Link>
+                <Link to="/courses" className="hover:text-white">Courses</Link>
+                <Link to="/pricing" className="hover:text-white">Pricing</Link>
+                <Link to="/blog" className="hover:text-white">Blog</Link>
+                <Link to="/contact" className="hover:text-white">Contact</Link>
               </div>
             </div>
 
             <div className="space-y-2.5">
               <div className="text-xs font-extrabold tracking-wide text-white/95 uppercase">Services</div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-white/80">
-                <a href="#" className="hover:text-white">Vaastu for Home</a>
-                <a href="#" className="hover:text-white">Vaastu for Offices</a>
-                <a href="#" className="hover:text-white">Vaastu for Factories</a>
-                <a href="#" className="hover:text-white">Astrology - Kundli Reading</a>
-                <a href="#" className="hover:text-white">Vedic Astrology</a>
-                <a href="#" className="hover:text-white">Numerology</a>
-                <a href="#" className="hover:text-white">Pooja Services</a>
-                <a href="#" className="hover:text-white">Horoscope Matching</a>
-                <a href="#" className="hover:text-white">Tarot Reading</a>
-                <a href="#" className="hover:text-white">Crystal Healing</a>
-                <a href="#" className="hover:text-white">Pet Healing</a>
-                <a href="#" className="hover:text-white">Dowsing</a>
-                <a href="#" className="hover:text-white">Aura Healing &amp; Scanning</a>
+                <Link to="/services/vastu-shastra" className="hover:text-white">Vaastu for Home</Link>
+                <Link to="/services/vastu-shastra" className="hover:text-white">Vaastu for Offices</Link>
+                <Link to="/services/vastu-shastra" className="hover:text-white">Vaastu for Factories</Link>
+                <Link to="/services/astrology-kundli" className="hover:text-white">Astrology - Kundli Reading</Link>
+                <Link to="/services/vedic-astrology" className="hover:text-white">Vedic Astrology</Link>
+                <Link to="/services/numerologists" className="hover:text-white">Numerology</Link>
+                <Link to="/services/pooja-services" className="hover:text-white">Pooja Services</Link>
+                <Link to="/services/horoscope-matching" className="hover:text-white">Horoscope Matching</Link>
+                <Link to="/services/tarot-reading" className="hover:text-white">Tarot Reading</Link>
+                <Link to="/services/crystal-healing" className="hover:text-white">Crystal Healing</Link>
+                <Link to="/services/pet-healing" className="hover:text-white">Pet Healing</Link>
+                <Link to="/services/dowsing" className="hover:text-white">Dowsing</Link>
+                <Link to="/services/aura-healing-scanning" className="hover:text-white">Aura Healing &amp; Scanning</Link>
               </div>
             </div>
 
