@@ -88,23 +88,24 @@
 .astro-hero-banner {
   position: relative;
   width: 100%;
-  background: #f6f1e6;
+  background: #fbf5ec;
 }
 
-.astro-hero-banner__video {
+.astro-hero-banner__video,
+.astro-hero-banner__img {
   display: block;
   width: 100%;
-  height: min(82vh, 760px);
+  height: min(82vh, 720px);
   object-fit: cover;
+  object-position: right center;
   vertical-align: top;
-  background: #073349;
+  background: #fbf5ec;
+  filter: none !important;
+  box-shadow: none !important;
 }
 
 .astro-hero-banner__scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(248, 255, 246, 0.94) 0%, rgba(248, 255, 246, 0.78) 36%, rgba(7, 51, 73, 0.28) 100%);
-  pointer-events: none;
+  display: none !important;
 }
 
 .astro-hero-banner__overlay {
@@ -119,19 +120,20 @@
 
 .astro-hero-banner__overlay .astro-hero__copy {
   pointer-events: auto;
-  max-width: min(40rem, 54%);
+  max-width: min(38rem, 50%);
   padding: 1.5rem 0;
 }
 
 .astro-hero-banner__overlay .astro-live-pill,
 .astro-hero-banner__overlay .astro-activity {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  box-shadow: 0 4px 14px rgba(6, 66, 51, 0.08);
 }
 
 .astro-btn-ghost--on-banner {
-  background: rgba(255, 255, 255, 0.88);
-  border-color: rgba(7, 51, 73, 0.2);
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(7, 51, 73, 0.25);
 }
 
 .astro-live-pill {

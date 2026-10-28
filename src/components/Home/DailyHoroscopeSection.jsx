@@ -294,20 +294,26 @@ export default function DailyHoroscopeSection({
 
         {/* Quick-Select Zodiac Sign Ribbon */}
         <div className="astro-horoscope-quickbar" role="tablist" aria-label="Select Zodiac Sign">
-          {zodiacCards.map((z, idx) => (
-            <button
-              key={z.name}
-              type="button"
-              role="tab"
-              aria-selected={idx === activeZodiac}
-              onClick={() => setActiveZodiac?.(idx)}
-              className={`astro-horoscope-quickbtn ${idx === activeZodiac ? "is-active" : ""}`}
-              title={z.name}
-            >
-              <img src={z.logo} alt="" aria-hidden="true" />
-              <span>{z.name.slice(0, 3)}</span>
-            </button>
-          ))}
+          {zodiacCards.map((z, idx) => {
+            const logoSrc = z.logo || zodiacLogo(z.name);
+            const resolvedSrc = typeof logoSrc === "object" && logoSrc?.src ? logoSrc.src : logoSrc;
+            return (
+              <button
+                key={z.name}
+                type="button"
+                role="tab"
+                aria-selected={idx === activeZodiac}
+                onClick={() => setActiveZodiac?.(idx)}
+                className={`astro-horoscope-quickbtn ${idx === activeZodiac ? "is-active" : ""}`}
+                title={z.name}
+              >
+                {resolvedSrc ? (
+                  <img src={resolvedSrc} alt={z.name} aria-hidden="true" />
+                ) : null}
+                <span>{z.name.slice(0, 3)}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Indicator Cosmic Dots (Commented out per request) */}

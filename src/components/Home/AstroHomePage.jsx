@@ -71,7 +71,7 @@ import capricornHover from "../../assets/products/capricorn-hover.jpg";
 import mukhiHover from "../../assets/products/mukhi-hover.jpg";
 import amethystHover from "../../assets/products/amethyst-hover.jpg";
 import pyramidHover from "../../assets/products/pyramid-hover.jpg";
-const heroBannerImg = "/tathasstu-home-banner.webp";
+const heroBannerImg = "/Main-Banner.png";
 const matchVideo = "/videos/life-partner.mp4";
 
 const sectionFallback = () => <div className="astro-section min-h-[12rem]" aria-hidden="true" />;
@@ -763,15 +763,14 @@ export default function AstroHomePage() {
       <section className="astro-hero">
         <div className="astro-hero-banner">
           <img
-            className="astro-hero-banner__video"
+            className="astro-hero-banner__img astro-hero-banner__video"
             src={heroBannerImg}
-            alt="Tathaastu astrology and healing"
-            width={1920}
-            height={760}
+            alt="Dr. Priyanka Singh - Tathaastu Co-Founder, Astrology & Healing"
+            width={3712}
+            height={1152}
             decoding="async"
             fetchPriority="high"
           />
-          <div className="astro-hero-banner__scrim" />
           <div className="astro-hero-banner__overlay">
             <div className="astro-hero__copy">
               <p className="astro-live-pill">

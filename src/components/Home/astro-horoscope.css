@@ -585,7 +585,9 @@
   width: 1.45rem;
   height: 1.45rem;
   object-fit: contain;
-  transition: transform 0.25s ease;
+  border-radius: 50%;
+  display: block;
+  transition: transform 0.25s ease, filter 0.25s ease;
 }
 
 .astro-horoscope-quickbtn span {
@@ -613,7 +615,7 @@
 }
 
 .astro-horoscope-quickbtn.is-active img {
-  filter: brightness(1.2);
+  filter: drop-shadow(0 2px 6px rgba(212, 168, 83, 0.5)) brightness(1.15);
 }
 
 /* Dots Indicator */

@@ -28,5 +28,9 @@ export const ZODIAC_LOGOS = {
 };
 
 export function zodiacLogo(name) {
-  return ZODIAC_LOGOS[name] || null;
+  if (!name) return null;
+  const capitalized = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  const raw = ZODIAC_LOGOS[capitalized] || ZODIAC_LOGOS[name];
+  if (!raw) return null;
+  return typeof raw === "object" && raw?.src ? raw.src : raw;
 }
