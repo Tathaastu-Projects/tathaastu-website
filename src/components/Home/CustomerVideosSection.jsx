@@ -133,9 +133,11 @@ function VideoCard({ item, shouldLoad, shouldPlay, registerVideo }) {
                 <i />
               </span>
             </div>
+            {/* Temporarily commented out Abhimantrit Store link per user request:
             <a href="https://www.abhimantritstore.com/" target="_blank" rel="noopener noreferrer" className="astro-video-card__buy">
               Shop
             </a>
+            */}
           </div>
         ) : null}
       </div>

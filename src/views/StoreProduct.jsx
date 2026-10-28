@@ -5,12 +5,21 @@ import React, { useEffect } from "react";
 const ABHIMANTRIT_STORE_URL = "https://www.abhimantritstore.com/";
 
 export default function StoreProduct() {
+  /* Temporarily commented out for 2 days per user request:
   useEffect(() => {
     window.location.replace(ABHIMANTRIT_STORE_URL);
   }, []);
+  */
 
   return (
     <div style={{ minHeight: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "system-ui, sans-serif", gap: "1rem" }}>
+      <p style={{ fontSize: "1.25rem", color: "#4E1B6E", fontWeight: "600" }}>
+        Abhimantrit Store
+      </p>
+      <p style={{ fontSize: "1rem", color: "#666" }}>
+        Coming Soon
+      </p>
+      {/*
       <p style={{ fontSize: "1.1rem", color: "#064233" }}>
         Redirecting you to <strong>Abhimantrit Store</strong>...
       </p>
@@ -27,6 +36,7 @@ export default function StoreProduct() {
       >
         Click here if not redirected
       </a>
+      */}
     </div>
   );
 }

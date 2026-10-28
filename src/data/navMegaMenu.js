@@ -69,6 +69,7 @@ export const NAV_MEGA_MENUS = [
       { name: "Blogs", path: "/blog" },
     ],
   },
+  /* Temporarily commented out for 2 days per user request:
   {
     id: "store",
     label: "Abhimantrit Store",
@@ -78,4 +79,5 @@ export const NAV_MEGA_MENUS = [
     external: true,
     items: [],
   },
+  */
 ];

@@ -257,7 +257,7 @@ export default function Pricing() {
         "Detailed Kundli PDF for Future Reference",
         "Personalised Guidance on Career, Relationships, Life Decisions, and Personal Growth",
         "Astrological Remedies Tailored to Your Kundli",
-        "Exclusive Discount on the Abhimantrit Store",
+        // "Exclusive Discount on the Abhimantrit Store",
       ],
       buttonText: "Book Now",
       isPopular: false,

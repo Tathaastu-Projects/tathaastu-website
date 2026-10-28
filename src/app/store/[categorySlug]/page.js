@@ -1,5 +1,6 @@
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 export default function Page() {
-  redirect("https://www.abhimantritstore.com/");
+  // redirect("https://www.abhimantritstore.com/");
+  return null;
 }

@@ -114,7 +114,7 @@ export default function Footer() {
                 <Link to="/terms-and-conditions" className="hover:text-white">Terms &amp; Conditions</Link>
                 <Link to="/cancellation-refund-policy" className="hover:text-white">Cancellation &amp; Refund</Link>
               </div>
-              <div className="pt-2 text-xs text-white/75 space-y-1">
+              <div className="pt-2 text-xs text-white/75 space-y-1.5">
                 <div>
                   <span className="text-white/50">Email:</span>{" "}
                   <a href="mailto:care@tathasstu.com" className="text-[#ecd599] hover:underline font-medium">
@@ -126,6 +126,12 @@ export default function Footer() {
                   <a href="tel:+919756303737" className="text-[#ecd599] hover:underline font-medium">
                     +91-9756303737
                   </a>
+                </div>
+                <div className="pt-2 text-xs text-white/80 leading-relaxed border-t border-white/10 mt-2">
+                  <div className="text-white/50 text-[11px] font-semibold uppercase tracking-wider mb-1">Office Address</div>
+                  <div className="text-white/75">Office no -201, Plot no 3, Stellar 1423</div>
+                  <div className="text-white/75">Sector 142, Noida, Gautambuddha Nagar</div>
+                  <div className="text-white/75">Uttar Pradesh, 201305</div>
                 </div>
               </div>
             </div>
