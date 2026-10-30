@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useNavigate } from "@/lib/router";
+import { Link } from "@/lib/router";
 import {
   ArrowRight,
   BadgeCheck,
@@ -42,14 +42,8 @@ import "./astro-guidance.css";
 // Store products temporarily disabled
 // import "../Store/store.css";
 import AppDownloadBanner from "../../assets/background_banner/app_download_banner.svg";
-import FreeKundliLogo from "../../assets/home_services/Free-kundli.png";
 import AppleLogoPng from "../../assets/logo/apple_logo.png";
 import PlayStoreLogoPng from "../../assets/logo/playstore_logo.png";
-import DailyHoroscopeLogo from "../../assets/home_services/Daily-Horoscope.png";
-import TarotReadingLogo from "../../assets/home_services/tarot-reading.png";
-import NumerologyLogo from "../../assets/home_services/Numerology.png";
-import VastuLogo from "../../assets/home_services/Vastu.png";
-import CrystalHealingLogo from "../../assets/home_services/crystal-healing.png";
 const LoveCategoryIcon = "/home/Love%20%26%20Relationship.png";
 const MarriageCategoryIcon = "/home/Marriage.png";
 const CareerCategoryIcon = "/home/Career.png";
@@ -338,59 +332,20 @@ const TRUST_BADGES = [
   {
     title: "Get Free Numerology Report",
     desc: "Discover what your numbers reveal",
-    icon: Sparkles,
+    img: "/home/home-four/Numerology%202.png",
     path: "/numerology",
   },
   {
     title: "Get Free Tarot Reading",
     desc: "Find clarity with a free spread",
-    icon: Star,
+    img: "/home/home-four/TAROT.png",
     path: "/#free-tarot-section",
   },
   {
     title: "Get Free AI Kundli Reading",
     desc: "Preview your birth chart instantly",
-    icon: Compass,
+    img: "/home/home-four/Kundli%201.png",
     path: "/calculator",
-  },
-];
-
-const SERVICE_TILES = [
-  {
-    title: "Free Kundli",
-    desc: "Understand Your Birth Chart And Get A Personalised View Of Your Life.",
-    img: FreeKundliLogo,
-    path: "/calculator",
-  },
-  {
-    title: "Daily Horoscope",
-    desc: "Start Your Day With Simple Guidance For What May Lie Ahead.",
-    img: DailyHoroscopeLogo,
-    path: "/pricing?flow=consult&service=daily-horoscope",
-  },
-  {
-    title: "Tarot Reading",
-    desc: "Get A Fresh Perspective When You’re Looking For Clarity.",
-    img: TarotReadingLogo,
-    path: "/pricing?flow=consult&service=tarot",
-  },
-  {
-    title: "Numerology",
-    desc: "Discover What Your Numbers Can Tell You About Your Journey.",
-    img: NumerologyLogo,
-    path: "/pricing?flow=consult&service=numerology",
-  },
-  {
-    title: "Vastu",
-    desc: "Create A Home That Feels Balanced, Comfortable, And Positive.",
-    img: VastuLogo,
-    path: "/pricing?flow=consult&service=vastu",
-  },
-  {
-    title: "Crystal Healing",
-    desc: "Bring A Little More Calm And Balance Into Your Everyday Life.",
-    img: CrystalHealingLogo,
-    path: "/pricing?flow=consult&service=crystal-healing",
   },
 ];
 
@@ -499,7 +454,6 @@ function RunningCounter({
 }
 
 export default function AstroHomePage() {
-  const navigate = useNavigate();
   const blogs = useMemo(() => blogsData.slice(0, 4), []);
 
   return (
@@ -510,7 +464,7 @@ export default function AstroHomePage() {
           <img
             className="astro-hero-banner__img astro-hero-banner__video"
             src={heroBannerImg}
-            alt="Dr. Priyanka Singh - Tathaastu Founder, Astrology & Healing"
+            alt="Dr. Priyanka Singh . Head Astrologer - Tathaastu, Astrology & Healing"
             width={1920}
             height={600}
             decoding="async"
@@ -518,7 +472,7 @@ export default function AstroHomePage() {
           />
           <div className="astro-hero-banner__overlay">
             <div className="astro-hero__copy">
-              <p className="astro-hero__eyebrow">Priyanka Singh · Vedic Astrology</p>
+              <p className="astro-hero__eyebrow">Dr. Priyanka Singh . Head Astrologer</p>
               <h1>
                 <span className="astro-hero__line">Unlock Your Destiny &amp;</span>
                 <span className="astro-hero__line astro-hero__line--accent">
@@ -527,14 +481,14 @@ export default function AstroHomePage() {
                 <span className="astro-hero__line">With The Cosmos</span>
               </h1>
               <p className="astro-hero__lead">
-                With over 15 years of expertise in Vedic astrology, Priyanka Singh
+                With over 15 years of expertise in Vedic astrology, Dr. Priyanka Singh . Head Astrologer
                 deciphers cosmic energies and celestial alignments to guide
                 individuals towards spiritual harmony, karmic clarity, and
                 alignment with their higher purpose.
               </p>
               <div className="astro-hero__actions">
                 <Link
-                  to="/pricing?flow=consult&service=consult"
+                  to="/pricing?flow=consult&service=consult&expertName=Dr.+Priyanka+Singh"
                   className="astro-founder__btn astro-hero__cta"
                 >
                   Book Appointment
@@ -566,9 +520,9 @@ export default function AstroHomePage() {
         <div className="astro-stat">
           <span className="astro-stat__icon"><Users className="h-5 w-5" /></span>
           <strong className="astro-stat__number">
-            <RunningCounter end={10000} suffix="+" duration={2200} delay={180} />
+            <RunningCounter end={1000} suffix="+" duration={2200} delay={180} />
           </strong>
-          <span className="astro-stat__label">Users Guided</span>
+          <span className="astro-stat__label">People Guided</span>
         </div>
         <div className="astro-stat__divider" aria-hidden="true" />
         <div className="astro-stat">
@@ -584,7 +538,7 @@ export default function AstroHomePage() {
       <section className="astro-services-section">
         <div className="astro-section astro-services-section__inner">
           <div className="astro-trust-bar">
-            {TRUST_BADGES.map(({ title, desc, icon: Icon, path }) => (
+            {TRUST_BADGES.map(({ title, desc, icon: Icon, img, path }) => (
               <Link
                 key={title}
                 to={path}
@@ -592,7 +546,11 @@ export default function AstroHomePage() {
                 style={{ textDecoration: "none" }}
               >
                 <span className="astro-trust-item__icon" aria-hidden="true">
-                  <Icon strokeWidth={1.75} />
+                  {img ? (
+                    <img src={img} alt="" className="astro-trust-item__icon-img" />
+                  ) : Icon ? (
+                    <Icon strokeWidth={1.75} />
+                  ) : null}
                 </span>
                 <div className="astro-trust-item__text">
                   <strong>{title}</strong>
@@ -642,15 +600,14 @@ export default function AstroHomePage() {
             {/* Category Cards Grid */}
             <div className="astro-category-grid">
               {CATEGORIES.map(({ title, count, img, focus }) => (
-                <button
+                <Link
                   key={title}
-                  type="button"
+                  to={`/pricing?flow=consult&category=${encodeURIComponent(title)}`}
                   className="astro-category"
-                  onClick={() => navigate(`/pricing?flow=consult&category=${encodeURIComponent(title)}`)}
                   aria-label={`${title} - ${count}`}
                 >
                   <div className="astro-category__medallion">
-                    <img src={img} alt="" className="astro-category__icon" />
+                    <img src={img} alt="" className="astro-category__icon" loading="lazy" decoding="async" />
                   </div>
                   <div className="astro-category__text">
                     <div className="astro-category__top">
@@ -665,7 +622,7 @@ export default function AstroHomePage() {
                   <div className="astro-category__arrow" aria-hidden="true">
                     <ChevronRight className="h-4 w-4" />
                   </div>
-                </button>
+                </Link>
               ))}
             </div>
           </div>
@@ -708,11 +665,11 @@ export default function AstroHomePage() {
           <div className="astro-founder__copy">
             <div className="astro-founder__badge">
               <Award className="h-3.5 w-3.5" />
-              <span>Founder & Occult Healer</span>
+              <span>Head Astrologer</span>
             </div>
 
             <p className="astro-founder__kicker">Vedic Wisdom · Modern Clarity</p>
-            <h2 id="founder-heading">Priyanka Singh</h2>
+            <h2 id="founder-heading">Dr. Priyanka Singh . Head Astrologer</h2>
             <p className="astro-founder__credentials">
               Vedic Astrology · Gold Medalist · 15+ Years Consulting
             </p>
@@ -723,7 +680,7 @@ export default function AstroHomePage() {
             </blockquote>
 
             <p className="astro-founder__desc">
-              With over 15 years of experience in classical Vedic astrology, Priyanka Singh has
+              With over 15 years of experience in classical Vedic astrology, Dr. Priyanka Singh . Head Astrologer has
               guided seekers through crucial life transitions, relationships, and career paths. Her
               personalized consultations combine sacred astrological shastras with grounded,
               compassionate modern clarity.
@@ -753,7 +710,7 @@ export default function AstroHomePage() {
                   <Users size={22} />
                 </div>
                 <div>
-                  <strong>10 Lakh+</strong>
+                  <strong>1,000+</strong>
                   <span>People Guided</span>
                   <small>Across 45+ countries</small>
                 </div>
@@ -761,8 +718,8 @@ export default function AstroHomePage() {
             </div>
 
             <div className="astro-founder__action">
-              <Link to="/pricing?flow=consult&expertName=Priyanka+Singh" className="astro-founder__btn">
-                <span>Book Consultation with Priyanka</span>
+              <Link to="/pricing?flow=consult&expertName=Dr.+Priyanka+Singh" className="astro-founder__btn">
+                <span>Book Consultation with Dr. Priyanka Singh . Head Astrologer</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -772,7 +729,7 @@ export default function AstroHomePage() {
             <div className="astro-founder__photo-frame">
               <img
                 src={drPriyankaImg?.src || drPriyankaImg}
-                alt="Priyanka Singh - Founder of Tathaastu"
+                alt="Dr. Priyanka Singh . Head Astrologer - Tathaastu"
                 className="astro-founder__photo-img"
                 loading="lazy"
               />
@@ -785,10 +742,10 @@ export default function AstroHomePage() {
 
               <div className="astro-founder__floating-card">
                 <div className="astro-founder__floating-name">
-                  <strong>Priyanka Singh</strong>
+                  <strong>Dr. Priyanka Singh . Head Astrologer</strong>
                   <CheckCircle2 size={16} className="astro-founder__check-icon" />
                 </div>
-                <span>Founder · Occult Healer, Tathaastu</span>
+                <span>Tathaastu</span>
               </div>
             </div>
           </div>
@@ -887,36 +844,26 @@ export default function AstroHomePage() {
                       {/* Footer: Dual Prominent Action Buttons (Pricing Removed) */}
                       <div className="astro-expert-card__footer">
                         <div className="astro-expert-card__actions">
-                          <button
-                            type="button"
+                          <Link
+                            to={`/pricing?flow=consult&astrologer=${encodeURIComponent(
+                              a.id || a.name
+                            )}&expertName=${encodeURIComponent(a.name)}`}
                             className="astro-expert-btn astro-expert-btn--chat"
-                            onClick={() =>
-                              navigate(
-                                `/pricing?flow=consult&astrologer=${encodeURIComponent(
-                                  a.id || a.name
-                                )}&expertName=${encodeURIComponent(a.name)}`
-                              )
-                            }
                             aria-label={`Chat with ${a.name}`}
                           >
                             <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
                             <span>Chat</span>
-                          </button>
-                          <button
-                            type="button"
+                          </Link>
+                          <Link
+                            to={`/pricing?flow=consult&astrologer=${encodeURIComponent(
+                              a.id || a.name
+                            )}&expertName=${encodeURIComponent(a.name)}`}
                             className="astro-expert-btn astro-expert-btn--call"
-                            onClick={() =>
-                              navigate(
-                                `/pricing?flow=consult&astrologer=${encodeURIComponent(
-                                  a.id || a.name
-                                )}&expertName=${encodeURIComponent(a.name)}`
-                              )
-                            }
                             aria-label={`Call ${a.name}`}
                           >
                             <Phone className="h-3.5 w-3.5" aria-hidden="true" />
                             <span>Call</span>
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -955,26 +902,26 @@ export default function AstroHomePage() {
             </p>
 
             <div className="astro-app-download-banner__actions">
-              <button type="button" className="astro-app-download-banner__cta" onClick={() => navigate("/pricing?flow=consult")}>
+              <Link to="/pricing?flow=consult" className="astro-app-download-banner__cta">
                 Download The App Now
                 <ArrowRight className="h-4 w-4" />
-              </button>
+              </Link>
 
               <div className="astro-app-download-banner__stores">
-                <button type="button" className="astro-app-store-btn" onClick={() => navigate("/pricing?flow=consult")}>
-                  <img src={AppleLogoPng} alt="Apple logo" className="astro-app-store-btn__icon" />
+                <Link to="/pricing?flow=consult" className="astro-app-store-btn">
+                  <img src={AppleLogoPng} alt="Apple logo" className="astro-app-store-btn__icon" loading="lazy" decoding="async" />
                   <span>
                     <small>Download on the</small>
                     <strong>App Store</strong>
                   </span>
-                </button>
-                <button type="button" className="astro-app-store-btn" onClick={() => navigate("/pricing?flow=consult")}>
-                  <img src={PlayStoreLogoPng} alt="Google Play logo" className="astro-app-store-btn__icon" />
+                </Link>
+                <Link to="/pricing?flow=consult" className="astro-app-store-btn">
+                  <img src={PlayStoreLogoPng} alt="Google Play logo" className="astro-app-store-btn__icon" loading="lazy" decoding="async" />
                   <span>
                     <small>Get it on</small>
                     <strong>Play Store</strong>
                   </span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -1017,7 +964,7 @@ export default function AstroHomePage() {
             <div className="astro-clients-banner__header">
               <div className="astro-clients-banner__badge">
                 <Sparkles className="h-3.5 w-3.5" />
-                <span>Real Stories · 10 Lakh+ People Guided</span>
+                <span>Real Stories · 1,000+ People Guided</span>
               </div>
               <h2 id="clients-heading">What Our Clients Say</h2>
               <p>

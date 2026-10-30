@@ -4,22 +4,32 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "@/lib/router";
 import Footer from "../layout/Footer";
 import SiteNavbar from "../layout/SiteNavbar";
-import drPriyankaImg from "../assets/home/Priyanka Mam.svg";
 import {
   ArrowRight,
   Check,
-  CheckCircle2,
   Clock,
-  FileText,
-  ShieldCheck,
   Sparkles,
   Star,
   Users,
-  Video,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import "./pricing.css";
 import { fetchPlans } from "../services/plansApi";
-import PriyankaConsultationScreen from "../components/Pricing/PriyankaConsultationScreen";
+
+const PriyankaConsultationScreen = dynamic(
+  () => import("../components/Pricing/PriyankaConsultationScreen"),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        aria-hidden="true"
+        style={{ minHeight: "42vh", display: "grid", placeItems: "center", color: "#b88628" }}
+      >
+        Loading packages…
+      </div>
+    ),
+  }
+);
 
 export default function Pricing() {
   const navigate = useNavigate();
@@ -43,19 +53,24 @@ export default function Pricing() {
     expertImg: "",
   });
   const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  // Show cards immediately — delayed reveal made pricing feel slow after CTA clicks.
+  const [isVisible] = useState(true);
   const [apiPlans, setApiPlans] = useState([]);
 
   useEffect(() => {
+    let cancelled = false;
     fetchPlans()
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
+        if (!cancelled && Array.isArray(data) && data.length > 0) {
           setApiPlans(data);
         }
       })
       .catch((err) => {
         console.warn("Could not load plans from API:", err);
       });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -73,43 +88,6 @@ export default function Pricing() {
       expertSlug: params.get("expertSlug") || "",
       expertImg: params.get("expertImg") || "",
     });
-  }, []);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    if (typeof window !== "undefined" && !("IntersectionObserver" in window)) {
-      setIsVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.08,
-        rootMargin: "0px 0px -40px 0px",
-      }
-    );
-
-    observer.observe(el);
-
-    // Defensive fallback: ensure cards are always revealed after 1.2s regardless of scroll state
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 1200);
-
-    return () => {
-      observer.disconnect();
-      clearTimeout(timer);
-    };
   }, []);
 
   const handleGetStarted = (plan) => {
@@ -169,7 +147,7 @@ export default function Pricing() {
             duration: pkg.duration,
             mode: "video",
             service: pkg.serviceKey,
-            astrologer: "Dr. Priyanka Singh",
+            astrologer: "Dr. Priyanka Singh . Head Astrologer",
             astrologerId: "priyanka-singh",
           })
         );
@@ -183,7 +161,7 @@ export default function Pricing() {
       service: pkg.serviceKey,
       planId: pkg.id,
       mode: "video",
-      astrologer: "Dr. Priyanka Singh",
+      astrologer: "Dr. Priyanka Singh . Head Astrologer",
       astrologerId: "priyanka-singh",
       astrologerSlug: "priyanka-singh",
       expertRating: "5.0",
@@ -268,25 +246,6 @@ export default function Pricing() {
     },
   ];
 
-  const defaultExclusivePlan = {
-    name: "Exclusive Consultation with Founder Priyanka Singh",
-    subtitle: "Lead Spiritual Mentor & Vedic Astrologer",
-    price: "₹21,000",
-    priceNote: "Starting from",
-    duration: "1 Hour",
-    format: "Face-to-face meeting or video call",
-    description:
-      "For those looking for a more exclusive consultation, connect with Tathaastu founder Priyanka Singh for a personalised session focused on your questions and concerns.",
-    features: [
-      "Personalised Kundli reading to help you understand your birth chart",
-      "One-on-one guidance on your personal and spiritual concerns",
-      "Astrological remedies tailored to your Kundli and needs",
-      "A chance to discuss the questions and concerns on your mind",
-      "Deeper insights to help you find clarity and direction in life",
-    ],
-    buttonText: "Consult Now",
-  };
-
   // Astrologer packages only (exclude Founder / Priyanka exclusive + audio add-ons)
   const pricingPlans = apiPlans.length > 0
     ? apiPlans
@@ -309,24 +268,6 @@ export default function Pricing() {
         }))
     : defaultPricingPlans;
 
-  const exclusivePlan = apiPlans.length > 0 && apiPlans.find((p) => p.isExclusive)
-    ? {
-        id: apiPlans.find((p) => p.isExclusive).id,
-        code: apiPlans.find((p) => p.isExclusive).code,
-        name: apiPlans.find((p) => p.isExclusive).name,
-        subtitle: "Lead Spiritual Mentor & Vedic Astrologer",
-        price: apiPlans.find((p) => p.isExclusive).priceLabel || `₹${apiPlans.find((p) => p.isExclusive).priceInr}`,
-        priceInr: apiPlans.find((p) => p.isExclusive).priceInr,
-        priceNote: "Starting from",
-        duration: apiPlans.find((p) => p.isExclusive).durationLabel || `${apiPlans.find((p) => p.isExclusive).durationMinutes} Minutes`,
-        mode: apiPlans.find((p) => p.isExclusive).mode,
-        format: "Face-to-face meeting or video call",
-        description: apiPlans.find((p) => p.isExclusive).description,
-        features: apiPlans.find((p) => p.isExclusive).features || [],
-        buttonText: "Consult Now",
-      }
-    : defaultExclusivePlan;
-
   return (
     <div className="bg-white text-[#073349]">
       <SiteNavbar />
@@ -341,7 +282,7 @@ export default function Pricing() {
               onClick={() => setActiveTab("priyanka")}
             >
               <Sparkles className="h-4 w-4" />
-              <span>Dr. Priyanka Singh (Founder)</span>
+              <span>Dr. Priyanka Singh . Head Astrologer</span>
               <span className="pricing-master-pill">5 Exclusive Packages</span>
             </button>
             <button
@@ -412,41 +353,41 @@ export default function Pricing() {
                         </div>
                       )}
 
-                      <div className="pricing-card__meta-bar">
-                        <span className="pricing-card__num-token">
-                          {plan.displayNumber || String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="pricing-card__duration-badge">
-                          <Clock />
-                          <span>{plan.duration}</span>
-                        </span>
+                      <div>
+                        <div className="pricing-card__meta-bar">
+                          <span className="pricing-card__num-token">
+                            {plan.displayNumber || String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span className="pricing-card__duration-badge">
+                            <Clock />
+                            <span>{plan.duration}</span>
+                          </span>
+                        </div>
+
+                        <div className="pricing-card__price-wrap">
+                          <p className="pricing-card__price">{plan.price}</p>
+                          <span className="pricing-card__price-sub">| {plan.duration}</span>
+                        </div>
+
+                        <h2 className="pricing-card__title">{plan.name}</h2>
+                        <p className="pricing-card__desc">{plan.description}</p>
+
+                        <div className="pricing-card__divider" />
+
+                        <div className="pricing-card__features-head">
+                          <Sparkles className="h-3.5 w-3.5 text-[#d4a853]" />
+                          <span>What&apos;s Included</span>
+                        </div>
+
+                        <ul className="pricing-card__features-list">
+                          {plan.features.map((feature) => (
+                            <li key={feature} className="pricing-card__feature-item">
+                              <Check className="pricing-card__check-icon" />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-
-                      <div className="pricing-card__price-wrap">
-                        <p className="pricing-card__price">{plan.price}</p>
-                        <span className="pricing-card__price-sub">/ One-time session</span>
-                      </div>
-
-                      <h2 className="pricing-card__title">{plan.name}</h2>
-                      <p className="pricing-card__desc">{plan.description}</p>
-
-                      <div className="pricing-card__divider" />
-
-                      <div className="pricing-card__features-head">
-                        <Sparkles className="h-3 w-3 text-[#c4842a]" />
-                        <span>What&apos;s Included</span>
-                      </div>
-
-                      <ul className="pricing-card__features-list">
-                        {plan.features.map((feature) => (
-                          <li key={feature} className="pricing-card__feature-item">
-                            <span className="pricing-card__check-disc">
-                              <Check />
-                            </span>
-                            <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
 
                       <button
                         type="button"
@@ -459,85 +400,6 @@ export default function Pricing() {
                     </article>
                   ))}
                 </div>
-
-                {/* EXCLUSIVE FOUNDER CONSULTATION CARD */}
-                <article className="pricing-exclusive-card">
-                  <div className="pricing-exclusive-inner">
-                    <div>
-                      <div className="pricing-exclusive-badge">
-                        <Star className="h-3 w-3 fill-[#ffd88a]" />
-                        <span>Exclusive VIP Concierge</span>
-                      </div>
-
-                      <div className="pricing-exclusive-header-row">
-                        <div className="pricing-exclusive-portrait-wrap">
-                          <img
-                            src={drPriyankaImg?.src || drPriyankaImg}
-                            alt="Priyanka Singh"
-                            loading="lazy"
-                          />
-                        </div>
-                        <div>
-                          <h2 className="pricing-exclusive-title">{exclusivePlan.name}</h2>
-                          <p className="text-xs font-semibold tracking-wider text-[#ffd88a] uppercase mt-1">
-                            {exclusivePlan.subtitle}
-                          </p>
-                        </div>
-                      </div>
-
-                      <p className="pricing-exclusive-desc">
-                        {exclusivePlan.description}
-                      </p>
-
-                      <div className="pricing-exclusive-features-head">
-                        <Sparkles className="h-3 w-3 text-[#ffd88a]" />
-                        <span>What&apos;s Included</span>
-                      </div>
-
-                      <ul className="pricing-exclusive-features-list">
-                        {exclusivePlan.features.map((feature) => (
-                          <li key={feature} className="pricing-exclusive-feature-item">
-                            <Star className="h-3 w-3 fill-[#ffd88a]" />
-                            <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="pricing-exclusive-price-box">
-                      <span className="pricing-exclusive-price-note">
-                        {exclusivePlan.priceNote}
-                      </span>
-                      <p className="pricing-exclusive-price-val">{exclusivePlan.price}</p>
-
-                      <dl className="pricing-exclusive-specs">
-                        <div className="pricing-exclusive-spec-row">
-                          <Clock />
-                          <div>
-                            <dt>Duration</dt>
-                            <dd>{exclusivePlan.duration}</dd>
-                          </div>
-                        </div>
-                        <div className="pricing-exclusive-spec-row">
-                          <Video />
-                          <div>
-                            <dt>Format</dt>
-                            <dd>{exclusivePlan.format}</dd>
-                          </div>
-                        </div>
-                      </dl>
-
-                      <button
-                        type="button"
-                        onClick={() => setActiveTab("priyanka")}
-                        className="pricing-exclusive-cta-btn"
-                      >
-                        <span>Explore All 5 Founder Consultations</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                </article>
               </div>
             </section>
           </>

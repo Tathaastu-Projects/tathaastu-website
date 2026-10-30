@@ -3,12 +3,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "@/lib/router";
 import { ArrowRight, Sparkles } from "lucide-react";
-import FreeKundliLogo from "../../assets/home_services/Free-kundli.png";
-import DailyHoroscopeLogo from "../../assets/home_services/Daily-Horoscope.png";
-import TarotReadingLogo from "../../assets/home_services/tarot-reading.png";
-import NumerologyLogo from "../../assets/home_services/Numerology.png";
-import VastuLogo from "../../assets/home_services/Vastu.png";
-import CrystalHealingLogo from "../../assets/home_services/crystal-healing.png";
 import "./astro-services.css";
 
 export const SERVICE_TILES = [
@@ -16,42 +10,42 @@ export const SERVICE_TILES = [
     tag: "Vedic Chart",
     title: "Free Kundli",
     desc: "Understand Your Birth Chart And Get A Personalised View Of Your Life.",
-    img: FreeKundliLogo,
+    img: "/home/homeservice/Kundli.png",
     path: "/calculator",
   },
   {
     tag: "Daily Guidance",
     title: "Daily Horoscope",
     desc: "Start Your Day With Simple Guidance For What May Lie Ahead.",
-    img: DailyHoroscopeLogo,
+    img: "/home/homeservice/Horoscope.png",
     path: "/pricing?flow=consult&service=daily-horoscope",
   },
   {
     tag: "Intuitive Cards",
     title: "Tarot Reading",
     desc: "Get A Fresh Perspective When You’re Looking For Clarity.",
-    img: TarotReadingLogo,
+    img: "/home/homeservice/Tarot-card.png",
     path: "/pricing?flow=consult&service=tarot",
   },
   {
     tag: "Sacred Numbers",
     title: "Numerology",
     desc: "Discover What Your Numbers Can Tell You About Your Journey.",
-    img: NumerologyLogo,
+    img: "/home/homeservice/Numerology%20(1).png",
     path: "/pricing?flow=consult&service=numerology",
   },
   {
     tag: "Space Harmony",
     title: "Vastu",
     desc: "Create A Home That Feels Balanced, Comfortable, And Positive.",
-    img: VastuLogo,
+    img: "/home/homeservice/Vastu.png",
     path: "/pricing?flow=consult&service=vastu",
   },
   {
     tag: "Energy Balance",
     title: "Crystal Healing",
     desc: "Bring A Little More Calm And Balance Into Your Everyday Life.",
-    img: CrystalHealingLogo,
+    img: "/home/homeservice/Crystal-Healing.png",
     path: "/pricing?flow=consult&service=crystal-healing",
   },
 ];

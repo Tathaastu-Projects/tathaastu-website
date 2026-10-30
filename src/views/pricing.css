@@ -130,37 +130,37 @@
 }
 
 .pricing-cards-container {
-  max-width: 76rem;
+  max-width: 1220px;
   margin: 0 auto;
 }
 
 .pricing-cards-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.85rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+  width: 100%;
   perspective: 1200px;
 }
 
-/* --- The Luxury Package Card --- */
+/* --- The Luxury Package Card (matched to Priyanka exclusive cards) --- */
 .pricing-card {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   height: 100%;
-  border-radius: 1.6rem;
-  background: linear-gradient(180deg, #ffffff 0%, #fefcf9 52%, #f8f3e8 100%);
-  border: 1.5px solid rgba(212, 168, 83, 0.32);
-  padding: 2rem 1.85rem 1.85rem;
-  box-shadow: 0 14px 34px rgba(6, 66, 51, 0.05), 0 2px 8px rgba(196, 132, 42, 0.06);
-  transition: transform 0.4s cubic-bezier(0.2, 0.85, 0.25, 1),
-              box-shadow 0.4s ease,
-              border-color 0.4s ease;
+  border-radius: 1.35rem;
+  background: #ffffff;
+  border: 1.5px solid rgba(212, 168, 83, 0.28);
+  padding: 1.65rem 1.35rem 1.4rem;
+  box-shadow: 0 16px 40px rgba(212, 168, 83, 0.1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 
-  /* Scroll reveal initial state */
-  opacity: 0;
-  transform: translateY(45px) scale(0.95);
-  filter: blur(4px);
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 
 /* Top accent line on cards */
@@ -205,21 +205,17 @@
 /* --- Scroll Animation Trigger --- */
 .pricing-cards-section.is-visible .pricing-card {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0px);
-  transition: opacity 0.82s cubic-bezier(0.2, 0.85, 0.25, 1),
-              transform 0.82s cubic-bezier(0.2, 0.85, 0.25, 1),
-              filter 0.82s cubic-bezier(0.2, 0.85, 0.25, 1),
-              box-shadow 0.35s ease,
-              border-color 0.35s ease;
-  transition-delay: calc(var(--plan-index, 0) * 125ms);
+  transform: none;
+  filter: none;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  transition-delay: 0s;
 }
 
 /* --- Hover State --- */
 .pricing-cards-section.is-visible .pricing-card:hover {
-  transform: translateY(-9px) scale(1.015);
-  border-color: rgba(212, 168, 83, 0.75);
-  box-shadow: 0 24px 50px rgba(6, 66, 51, 0.12), 0 8px 24px rgba(196, 132, 42, 0.16);
+  transform: translateY(-4px);
+  border-color: #d4a853;
+  box-shadow: 0 24px 50px rgba(212, 168, 83, 0.18);
   transition-delay: 0s !important;
 }
 
@@ -273,28 +269,32 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffffff 0%, #fffbf2 70%, #f4e8d3 100%);
-  border: 1.5px solid rgba(212, 168, 83, 0.5);
-  box-shadow: 0 3px 8px rgba(196, 132, 42, 0.12), inset 0 1px 2px #fff;
-  font-family: "Playfair Display SC", "Playfair Display", Georgia, serif;
-  font-size: 0.94rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  color: #9c671e;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9a7b3c;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.14);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  min-width: auto;
+  width: auto;
+  height: auto;
+  font-family: inherit;
+  box-shadow: none;
 }
 
 .pricing-card__duration-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.32rem 0.85rem;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
   border-radius: 999px;
-  background: rgba(6, 66, 51, 0.05);
-  border: 1px solid rgba(6, 66, 51, 0.12);
-  color: #064233;
-  font-size: 0.76rem;
+  background: rgba(251, 245, 236, 0.9);
+  border: 1px solid rgba(212, 168, 83, 0.22);
+  color: #5f746c;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.02em;
 }
@@ -302,7 +302,7 @@
 .pricing-card__duration-badge svg {
   width: 0.85rem;
   height: 0.85rem;
-  color: #064233;
+  color: #b88628;
 }
 
 /* --- Price Header --- */
@@ -317,18 +317,18 @@
 
 .pricing-card__price {
   margin: 0;
-  font-family: "Playfair Display SC", "Playfair Display", Georgia, serif;
-  font-size: clamp(2.4rem, 3.4vw, 2.95rem);
-  font-weight: 700;
+  font-family: var(--font-display), "Playfair Display", Georgia, serif;
+  font-size: clamp(1.55rem, 1.8vw, 1.95rem);
+  font-weight: 800;
   line-height: 1;
-  color: #064233;
+  color: #05382c;
   letter-spacing: -0.02em;
 }
 
 .pricing-card__price-sub {
-  font-size: 0.76rem;
+  font-size: 0.84rem;
   font-weight: 600;
-  color: #7d6e61;
+  color: #b88628;
 }
 
 /* --- Title & Description --- */
@@ -336,21 +336,22 @@
   position: relative;
   z-index: 1;
   margin: 0.45rem 0 0;
-  font-family: "Playfair Display SC", "Playfair Display", Georgia, serif;
-  font-size: 1.48rem;
+  font-family: var(--font-display), "Playfair Display", Georgia, serif;
+  font-size: 1.15rem;
   font-weight: 700;
   line-height: 1.25;
-  color: #064233;
+  color: #05382c;
+  text-transform: none;
 }
 
 .pricing-card__desc {
   position: relative;
   z-index: 1;
-  margin: 0.65rem 0 0;
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: #55483b;
-  min-height: 2.8rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #445854;
+  min-height: 0;
 }
 
 /* --- Divider --- */
@@ -358,28 +359,29 @@
   position: relative;
   z-index: 1;
   height: 1px;
+  width: 100%;
   background: linear-gradient(
     90deg,
-    rgba(212, 168, 83, 0.5) 0%,
-    rgba(212, 168, 83, 0.18) 70%,
-    transparent 100%
+    rgba(212, 168, 83, 0.1) 0%,
+    rgba(212, 168, 83, 0.4) 50%,
+    rgba(212, 168, 83, 0.1) 100%
   );
-  margin: 1.4rem 0 1.2rem;
+  margin: 1.4rem 0;
 }
 
 /* --- What's Included --- */
 .pricing-card__features-head {
   position: relative;
   z-index: 1;
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #9c671e;
-  margin-bottom: 0.85rem;
+  color: #b88628;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
 .pricing-card__features-list {
@@ -387,10 +389,10 @@
   z-index: 1;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 1.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.85rem;
   flex: 1;
 }
 
@@ -399,31 +401,24 @@
   align-items: flex-start;
   gap: 0.65rem;
   font-size: 0.86rem;
-  line-height: 1.48;
-  color: #2b231a;
+  line-height: 1.45;
+  color: #445854;
 }
 
-.pricing-card__check-disc {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.15rem;
-  height: 1.15rem;
-  border-radius: 50%;
-  background: rgba(212, 168, 83, 0.15);
-  border: 1px solid rgba(212, 168, 83, 0.4);
-  color: #9c671e;
+.pricing-card__check-icon {
+  width: 1rem;
+  height: 1rem;
+  color: #d4a853;
   flex-shrink: 0;
-  margin-top: 0.15rem;
-}
-
-.pricing-card__check-disc svg {
-  width: 0.72rem;
-  height: 0.72rem;
+  margin-top: 2px;
   stroke-width: 2.5;
 }
 
-/* --- Card Action Button --- */
+.pricing-card__check-disc {
+  display: none;
+}
+
+/* --- Card Action Button (match Priyanka gold CTAs) --- */
 .pricing-card__btn {
   position: relative;
   z-index: 1;
@@ -432,29 +427,26 @@
   justify-content: center;
   gap: 0.55rem;
   width: 100%;
-  margin-top: 1.75rem;
-  padding: 0.92rem 1.5rem;
-  border-radius: 1rem;
+  margin-top: auto;
+  padding: 0.95rem 1.35rem;
+  border-radius: 0.85rem;
   font-size: 0.94rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.02em;
   cursor: pointer;
-  border: 1px solid rgba(212, 168, 83, 0.4);
+  border: none;
   text-decoration: none;
   overflow: hidden;
-
-  /* Deep Emerald Luxury Gradient */
-  background: linear-gradient(135deg, #064233 0%, #0c5643 100%);
-  color: #ffffff;
-  box-shadow: 0 10px 24px rgba(6, 66, 51, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  background: linear-gradient(135deg, #f6e0a4 0%, #d4a853 50%, #c49232 100%);
+  color: #3d2e0e;
+  box-shadow: 0 8px 24px rgba(212, 168, 83, 0.28);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
 }
 
-/* Most Popular card CTA button: Coral/Ruby with Gold Trim */
 .pricing-card.is-popular .pricing-card__btn {
-  background: linear-gradient(135deg, #c4384d 0%, #dd485f 50%, #b82d41 100%);
-  border-color: rgba(255, 212, 130, 0.6);
-  box-shadow: 0 10px 24px rgba(221, 72, 95, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, #ffedb5 0%, #d4a853 45%, #b88628 100%);
+  border: none;
+  box-shadow: 0 10px 26px rgba(212, 168, 83, 0.34);
 }
 
 .pricing-card__btn::after {
@@ -476,12 +468,12 @@
 
 .pricing-card__btn:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 212, 130, 0.9);
-  box-shadow: 0 14px 30px rgba(6, 66, 51, 0.3);
+  box-shadow: 0 12px 30px rgba(212, 168, 83, 0.4);
+  background: linear-gradient(135deg, #ffedb5 0%, #e0b45a 50%, #b88628 100%);
 }
 
 .pricing-card.is-popular .pricing-card__btn:hover {
-  box-shadow: 0 14px 30px rgba(221, 72, 95, 0.42);
+  box-shadow: 0 14px 32px rgba(212, 168, 83, 0.45);
 }
 
 .pricing-card__btn:hover::after {
@@ -763,17 +755,23 @@
     padding: 2rem 1.75rem;
   }
 
-  .pricing-cards-grid {
-    grid-template-columns: 1fr;
-    gap: 1.4rem;
-  }
-
   .pricing-hero-section {
     padding-top: 3rem;
   }
 }
 
+@media (max-width: 1100px) {
+  .pricing-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.4rem;
+  }
+}
+
 @media (max-width: 640px) {
+  .pricing-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
   .pricing-card {
     padding: 1.6rem 1.25rem 1.5rem;
     border-radius: 1.35rem;

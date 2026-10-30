@@ -89,13 +89,29 @@ export function AuthProvider({ children }) {
       setBooting(false);
     }
 
-    authHealth()
-      .then((res) => {
-        if (res?.data) setHealth(res.data);
-      })
-      .catch(() => {
-        /* ignore network errors on health */
-      });
+    // Defer health check so first paint / CTA clicks aren't competing with it.
+    let idleId = 0;
+    let timer = 0;
+    const runHealth = () => {
+      authHealth()
+        .then((res) => {
+          if (res?.data) setHealth(res.data);
+        })
+        .catch(() => {
+          /* ignore network errors on health */
+        });
+    };
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(runHealth, { timeout: 4000 });
+    } else {
+      timer = window.setTimeout(runHealth, 1200);
+    }
+    return () => {
+      if (idleId && typeof window !== "undefined" && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timer) window.clearTimeout(timer);
+    };
   }, [refreshMe]);
 
   const applyAuthSuccess = useCallback(

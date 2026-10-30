@@ -324,7 +324,7 @@ const AstrologyHome = () => {
                 </div>
                 <div className="home_top_banner_stat">
                   <span className="home_top_banner_stat_dot" aria-hidden="true" />
-                  <span>10,000+ Happy Users</span>
+                  <span>1,000+ People Guided</span>
                 </div>
               </div>
             </div>

@@ -201,10 +201,14 @@
 }
 
 .astro-hero__line--accent {
-  color: #c2475a;
   font-style: italic;
   font-weight: 500;
   letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #c9a227 0%, #d4a853 45%, #b88628 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #d4a853;
 }
 
 .astro-hero__brand-green {
@@ -990,6 +994,13 @@
   flex: none;
   display: block;
   overflow: visible;
+}
+
+.astro-trust-item__icon-img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  display: block;
 }
 
 .astro-trust-item__text {
@@ -1988,6 +1999,7 @@
   color: #fff;
   font-size: 0.95rem;
   font-weight: 700;
+  text-decoration: none;
   box-shadow: 0 12px 22px rgba(231, 70, 96, 0.25);
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
@@ -2013,6 +2025,7 @@
   border-radius: 0.95rem;
   background: rgba(9, 15, 16, 0.92);
   color: #fff;
+  text-decoration: none;
   cursor: pointer;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }

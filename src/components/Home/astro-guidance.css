@@ -150,7 +150,7 @@
   gap: 1.15rem;
 }
 
-/* Category Card Button */
+/* Category Card Button (also used as <Link>) */
 .astro-category {
   position: relative;
   display: flex;
@@ -158,6 +158,8 @@
   gap: 1.15rem;
   width: 100%;
   text-align: left;
+  text-decoration: none;
+  color: inherit;
   padding: 1.1rem 1.25rem;
   border-radius: 1.35rem;
   background: linear-gradient(135deg, #ffffff 0%, #fffdfa 55%, #fbf6ec 100%);
@@ -167,7 +169,7 @@
     0 1px 0 rgba(255, 255, 255, 0.95) inset;
   cursor: pointer;
   overflow: hidden;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 /* Luxury Light Reflection on Hover */

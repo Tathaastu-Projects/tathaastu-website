@@ -40,7 +40,11 @@ export default function LazyWhenVisible({
     <div
       ref={ref}
       className={className}
-      style={visible ? undefined : { minHeight }}
+      style={
+        visible
+          ? { contentVisibility: "auto", containIntrinsicSize: minHeight }
+          : { minHeight, contentVisibility: "auto", containIntrinsicSize: minHeight }
+      }
     >
       {visible ? children : null}
     </div>

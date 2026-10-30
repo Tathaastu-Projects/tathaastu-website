@@ -7,6 +7,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   // Avoid picking a parent lockfile as the workspace root (slows tracing).
   outputFileTracingRoot: path.join(__dirname),
+  poweredByHeader: false,
+  reactStrictMode: true,
   images: {
     // Keep Vite-style imports (`import img from './a.png'`) as URL strings so
     // existing <img src={imported}> usage stays valid. Prefer compressing
@@ -16,7 +18,18 @@ const nextConfig = {
   },
   // Smaller JS payloads when libraries support it
   experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion"],
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+    ],
+  },
+  compiler: {
+    removeConsole:
+      process.env.NODE_ENV === "production"
+        ? { exclude: ["error", "warn"] }
+        : false,
   },
   webpack: (config, { dev }) => {
     config.module.rules.push({

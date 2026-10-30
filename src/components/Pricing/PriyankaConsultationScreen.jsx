@@ -24,7 +24,7 @@ export const PRIYANKA_PACKAGES = [
     priceInr: 21000,
     duration: "60 Minutes",
     description:
-      "Understand your space through a personalised Vastu consultation with Dr. Priyanka Singh. Discuss your home, workplace, or property and explore guidance based on your space, requirements, and specific concerns.",
+      "Understand your space through a personalised Vastu consultation with Dr. Priyanka Singh . Head Astrologer. Discuss your home, workplace, or property and explore guidance based on your space, requirements, and specific concerns.",
     inclusionsTitle: "Your Session Includes",
     inclusions: [
       {
@@ -41,7 +41,7 @@ export const PRIYANKA_PACKAGES = [
       },
       {
         title: "Dedicated One-on-One Consultation",
-        text: "Get personal attention and time to discuss your concerns directly with Dr. Priyanka Singh.",
+        text: "Get personal attention and time to discuss your concerns directly with Dr. Priyanka Singh . Head Astrologer.",
       },
     ],
     ctaText: "Book Your Vastu Consultation",
@@ -54,7 +54,7 @@ export const PRIYANKA_PACKAGES = [
     priceInr: 21000,
     duration: "60 Minutes",
     description:
-      "Explore your birth chart with Dr. Priyanka Singh and discuss the areas of life that matter most to you. Gain personalised astrological insights into your questions about career, relationships, family, personal growth, and important life decisions.",
+      "Explore your birth chart with Dr. Priyanka Singh . Head Astrologer and discuss the areas of life that matter most to you. Gain personalised astrological insights into your questions about career, relationships, family, personal growth, and important life decisions.",
     inclusionsTitle: "Your Session Includes",
     inclusions: [
       {
@@ -71,7 +71,7 @@ export const PRIYANKA_PACKAGES = [
       },
       {
         title: "Time for Your Questions",
-        text: "Have a focused conversation with Dr. Priyanka Singh about the concerns and decisions on your mind.",
+        text: "Have a focused conversation with Dr. Priyanka Singh . Head Astrologer about the concerns and decisions on your mind.",
       },
     ],
     ctaText: "Book Your Kundli Consultation",
@@ -84,7 +84,7 @@ export const PRIYANKA_PACKAGES = [
     priceInr: 11000,
     duration: "60 Minutes",
     description:
-      "Bring your questions to a personal tarot reading with Dr. Priyanka Singh. Explore the symbolism of the cards, reflect on your current circumstances, and consider different perspectives on the areas of life you wish to understand better.",
+      "Bring your questions to a personal tarot reading with Dr. Priyanka Singh . Head Astrologer. Explore the symbolism of the cards, reflect on your current circumstances, and consider different perspectives on the areas of life you wish to understand better.",
     inclusionsTitle: "Your Session Includes",
     inclusions: [
       {
@@ -114,7 +114,7 @@ export const PRIYANKA_PACKAGES = [
     priceInr: 11000,
     duration: "60 Minutes",
     description:
-      "Explore numerology with Dr. Priyanka Singh through a personalised discussion of your numbers and the questions you would like to understand better. Discover how numerology interpretations may relate to your personal and professional interests.",
+      "Explore numerology with Dr. Priyanka Singh . Head Astrologer through a personalised discussion of your numbers and the questions you would like to understand better. Discover how numerology interpretations may relate to your personal and professional interests.",
     inclusionsTitle: "Your Session Includes",
     inclusions: [
       {
@@ -131,7 +131,7 @@ export const PRIYANKA_PACKAGES = [
       },
       {
         title: "One-on-One Discussion",
-        text: "Ask questions and explore the interpretations directly with Dr. Priyanka Singh.",
+        text: "Ask questions and explore the interpretations directly with Dr. Priyanka Singh . Head Astrologer.",
       },
     ],
     ctaText: "Book Your Numerology Consultation",
@@ -144,7 +144,7 @@ export const PRIYANKA_PACKAGES = [
     priceInr: 14999,
     duration: "60 Minutes",
     description:
-      "Spend dedicated time with Dr. Priyanka Singh exploring your questions around aura and energy through a personalised spiritual consultation. Discuss your interests and concerns in a private, one-on-one setting designed around your needs.",
+      "Spend dedicated time with Dr. Priyanka Singh . Head Astrologer exploring your questions around aura and energy through a personalised spiritual consultation. Discuss your interests and concerns in a private, one-on-one setting designed around your needs.",
     inclusionsTitle: "Your Session Includes",
     inclusions: [
       {
@@ -198,11 +198,12 @@ export default function PriyankaConsultationScreen({ onSelectPackage, onBackToAl
           </div>
 
           <h1 className="priyanka-hero__title">
-            Personalised Guidance with <span>Dr. Priyanka Singh</span>
+            Personalised Guidance with{" "}
+            <span>Dr.&nbsp;Priyanka&nbsp;Singh&nbsp;.&nbsp;Head&nbsp;Astrologer</span>
           </h1>
 
           <p className="priyanka-hero__copy">
-            Some questions deserve more time, attention, and a personal conversation. Dr. Priyanka Singh offers dedicated one-on-one consultations for those seeking deeper insights into their lives, decisions, and personal concerns.
+            Some questions deserve more time, attention, and a personal conversation. Dr. Priyanka Singh . Head Astrologer offers dedicated one-on-one consultations for those seeking deeper insights into their lives, decisions, and personal concerns.
           </p>
 
           <p className="priyanka-hero__copy-sub">
@@ -251,13 +252,13 @@ export default function PriyankaConsultationScreen({ onSelectPackage, onBackToAl
             <div className="priyanka-spotlight__avatar-frame">
               <img
                 src="/Priyanka.webp"
-                alt="Dr. Priyanka Singh - Founder of Tathaastu"
+                alt="Dr. Priyanka Singh . Head Astrologer - Tathaastu"
                 className="priyanka-spotlight__avatar-img"
               />
             </div>
             <div className="priyanka-spotlight__info">
-              <h3>Dr. Priyanka Singh</h3>
-              <p>Founder &amp; Occult Healer · Lead Spiritual Mentor</p>
+              <h3>Dr. Priyanka Singh . Head Astrologer</h3>
+              <p>Lead Spiritual Mentor · Tathaastu</p>
             </div>
           </div>
 
@@ -268,7 +269,7 @@ export default function PriyankaConsultationScreen({ onSelectPackage, onBackToAl
             </span>
             <span className="priyanka-spotlight__badge">
               <Users size={14} className="text-[#d4a853]" />
-              <span>10 Lakh+ Seekers Guided</span>
+              <span>1,000+ People Guided</span>
             </span>
             <span className="priyanka-spotlight__badge">
               <ShieldCheck size={14} className="text-[#d4a853]" />
@@ -388,7 +389,7 @@ export default function PriyankaConsultationScreen({ onSelectPackage, onBackToAl
           <div className="priyanka-concierge__items">
             <div className="priyanka-concierge__item">
               <ShieldCheck size={18} className="priyanka-concierge__item-icon" />
-              <span>Direct, private 1-on-1 consultation with Founder Dr. Priyanka Singh</span>
+              <span>Direct, private 1-on-1 consultation with Dr. Priyanka Singh . Head Astrologer</span>
             </div>
             <div className="priyanka-concierge__item">
               <Compass size={18} className="priyanka-concierge__item-icon" />

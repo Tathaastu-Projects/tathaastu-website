@@ -406,9 +406,11 @@
   font-weight: 800;
   cursor: pointer;
   letter-spacing: 0.02em;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   text-decoration: none;
+  color: inherit;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .astro-expert-btn--chat {

@@ -29,6 +29,10 @@ const RouteTracker = dynamic(
     })),
   { ssr: false }
 );
+const RoutePrefetcher = dynamic(
+  () => import("@/components/performance/RoutePrefetcher"),
+  { ssr: false }
+);
 
 function ScrollManager() {
   useScrollToTop();
@@ -60,11 +64,16 @@ function DeferredChrome({ children }) {
   return (
     <>
       <ScrollManager />
-      {extrasReady ? <RouteTracker /> : null}
-      {children}
-      <WhatsAppFloatingButton />
       {extrasReady ? (
         <>
+          <RoutePrefetcher />
+          <RouteTracker />
+        </>
+      ) : null}
+      {children}
+      {extrasReady ? (
+        <>
+          <WhatsAppFloatingButton />
           {/* <SmoothScroll /> */}
           {/* <CardTilt /> */}
           {/* <FloatingPromoVideo /> */}

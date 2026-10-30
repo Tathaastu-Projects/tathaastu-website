@@ -22,7 +22,7 @@ export default function SpotlightSection() {
           </div>
           <h2 id="spotlight-heading">In The Spotlight</h2>
           <p>
-            Watch Dr. Priyanka Singh answer real questions about love, career, and life.
+            Watch Dr. Priyanka Singh . Head Astrologer answer real questions about love, career, and life.
           </p>
         </div>
 
@@ -33,7 +33,7 @@ export default function SpotlightSection() {
             <div className="astro-spotlight__player">
               {playing ? (
                 <iframe
-                  title="Dr. Priyanka Singh — In The Spotlight"
+                  title="Dr. Priyanka Singh . Head Astrologer — In The Spotlight"
                   src={`${YOUTUBE_EMBED_URL}&autoplay=1`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
@@ -48,7 +48,7 @@ export default function SpotlightSection() {
                 >
                   <img
                     src={YOUTUBE_POSTER}
-                    alt="Dr. Priyanka Singh answering questions about love, career, and life"
+                    alt="Dr. Priyanka Singh . Head Astrologer answering questions about love, career, and life"
                     loading="lazy"
                     decoding="async"
                   />
@@ -61,8 +61,8 @@ export default function SpotlightSection() {
 
             <div className="astro-spotlight__meta">
               <div>
-                <strong>Dr. Priyanka Singh</strong>
-                <span>Founder & Occult Healer · Tathaastu</span>
+                <strong>Dr. Priyanka Singh . Head Astrologer</strong>
+                <span>Tathaastu</span>
               </div>
               <a
                 href={YOUTUBE_WATCH_URL}
