@@ -198,6 +198,7 @@ export default function Pricing() {
   const defaultPricingPlans = [
     {
       id: "01",
+      displayNumber: "01",
       name: "Kundli Clarity Session",
       price: "₹499",
       duration: "30 Minutes",
@@ -213,6 +214,7 @@ export default function Pricing() {
     },
     {
       id: "02",
+      displayNumber: "02",
       name: "Kundli Guidance Session",
       price: "₹1,099",
       duration: "45 Minutes",
@@ -229,6 +231,7 @@ export default function Pricing() {
     },
     {
       id: "03",
+      displayNumber: "03",
       name: "Detailed Kundli Consultation",
       price: "₹2,499",
       duration: "60 Minutes",
@@ -246,6 +249,7 @@ export default function Pricing() {
     },
     {
       id: "04",
+      displayNumber: "04",
       name: "In-Depth Life Analysis",
       price: "₹5,100",
       duration: "90 Minutes",
@@ -257,7 +261,7 @@ export default function Pricing() {
         "Detailed Kundli PDF for Future Reference",
         "Personalised Guidance on Career, Relationships, Life Decisions, and Personal Growth",
         "Astrological Remedies Tailored to Your Kundli",
-        // "Exclusive Discount on the Abhimantrit Store",
+        "Exclusive Discount on the Abhimantrit Store",
       ],
       buttonText: "Book Now",
       isPopular: false,
@@ -265,14 +269,14 @@ export default function Pricing() {
   ];
 
   const defaultExclusivePlan = {
-    name: "Exclusive Consultation with Co-Founder Priyanka Singh",
+    name: "Exclusive Consultation with Founder Priyanka Singh",
     subtitle: "Lead Spiritual Mentor & Vedic Astrologer",
     price: "₹21,000",
     priceNote: "Starting from",
     duration: "1 Hour",
     format: "Face-to-face meeting or video call",
     description:
-      "For those looking for a more exclusive consultation, connect with Tathaastu co-founder Priyanka Singh for a personalised session focused on your questions and concerns.",
+      "For those looking for a more exclusive consultation, connect with Tathaastu founder Priyanka Singh for a personalised session focused on your questions and concerns.",
     features: [
       "Personalised Kundli reading to help you understand your birth chart",
       "One-on-one guidance on your personal and spiritual concerns",
@@ -283,20 +287,26 @@ export default function Pricing() {
     buttonText: "Consult Now",
   };
 
+  // Astrologer packages only (exclude Founder / Priyanka exclusive + audio add-ons)
   const pricingPlans = apiPlans.length > 0
-    ? apiPlans.filter((p) => !p.isExclusive).map((p, idx) => ({
-        id: p.id || String(idx + 1).padStart(2, "0"),
-        code: p.code,
-        name: p.name,
-        price: p.priceLabel || `₹${p.priceInr}`,
-        priceInr: p.priceInr,
-        duration: p.durationLabel || `${p.durationMinutes} Minutes`,
-        mode: p.mode,
-        description: p.description,
-        features: p.features || [],
-        buttonText: "Book Now",
-        isPopular: Boolean(p.isPopular),
-      }))
+    ? apiPlans
+        .filter((p) => !p.isExclusive && String(p.mode || "video").toLowerCase() !== "audio")
+        .slice()
+        .sort((a, b) => Number(a.sortOrder || 0) - Number(b.sortOrder || 0))
+        .map((p, idx) => ({
+          id: p.id || p._id || String(idx + 1).padStart(2, "0"),
+          displayNumber: String(idx + 1).padStart(2, "0"),
+          code: p.code,
+          name: p.name,
+          price: p.priceLabel || `₹${Number(p.priceInr).toLocaleString("en-IN")}`,
+          priceInr: p.priceInr,
+          duration: p.durationLabel || `${p.durationMinutes} Minutes`,
+          mode: p.mode,
+          description: p.description,
+          features: p.features || [],
+          buttonText: "Book Now",
+          isPopular: Boolean(p.isPopular),
+        }))
     : defaultPricingPlans;
 
   const exclusivePlan = apiPlans.length > 0 && apiPlans.find((p) => p.isExclusive)
@@ -331,7 +341,7 @@ export default function Pricing() {
               onClick={() => setActiveTab("priyanka")}
             >
               <Sparkles className="h-4 w-4" />
-              <span>Dr. Priyanka Singh (Co-Founder)</span>
+              <span>Dr. Priyanka Singh (Founder)</span>
               <span className="pricing-master-pill">5 Exclusive Packages</span>
             </button>
             <button
@@ -404,7 +414,7 @@ export default function Pricing() {
 
                       <div className="pricing-card__meta-bar">
                         <span className="pricing-card__num-token">
-                          {plan.id}
+                          {plan.displayNumber || String(index + 1).padStart(2, "0")}
                         </span>
                         <span className="pricing-card__duration-badge">
                           <Clock />
@@ -450,7 +460,7 @@ export default function Pricing() {
                   ))}
                 </div>
 
-                {/* EXCLUSIVE CO-FOUNDER CONSULTATION CARD */}
+                {/* EXCLUSIVE FOUNDER CONSULTATION CARD */}
                 <article className="pricing-exclusive-card">
                   <div className="pricing-exclusive-inner">
                     <div>
@@ -522,7 +532,7 @@ export default function Pricing() {
                         onClick={() => setActiveTab("priyanka")}
                         className="pricing-exclusive-cta-btn"
                       >
-                        <span>Explore All 5 Co-Founder Consultations</span>
+                        <span>Explore All 5 Founder Consultations</span>
                         <ArrowRight className="h-4 w-4" />
                       </button>
                     </div>

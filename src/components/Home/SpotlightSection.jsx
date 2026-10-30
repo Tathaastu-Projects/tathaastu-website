@@ -62,7 +62,7 @@ export default function SpotlightSection() {
             <div className="astro-spotlight__meta">
               <div>
                 <strong>Dr. Priyanka Singh</strong>
-                <span>Co-Founder & Occult Healer · Tathaastu</span>
+                <span>Founder & Occult Healer · Tathaastu</span>
               </div>
               <a
                 href={YOUTUBE_WATCH_URL}

@@ -193,7 +193,7 @@ export default function PriyankaConsultationScreen({ onSelectPackage, onBackToAl
         <div className="priyanka-hero">
           <div className="priyanka-badge">
             <Sparkles size={14} />
-            <span>EXCLUSIVE CONSULTATIONS WITH OUR CO-FOUNDER</span>
+            <span>EXCLUSIVE CONSULTATIONS WITH OUR FOUNDER</span>
             <Sparkles size={14} />
           </div>
 
@@ -244,20 +244,20 @@ export default function PriyankaConsultationScreen({ onSelectPackage, onBackToAl
         </div>
 
         {/* =============================================================
-            CO-FOUNDER SPOTLIGHT CARD
+            FOUNDER SPOTLIGHT CARD
             ============================================================= */}
         <div className="priyanka-spotlight">
           <div className="priyanka-spotlight__left">
             <div className="priyanka-spotlight__avatar-frame">
               <img
                 src="/Priyanka.webp"
-                alt="Dr. Priyanka Singh - Co-Founder of Tathaastu"
+                alt="Dr. Priyanka Singh - Founder of Tathaastu"
                 className="priyanka-spotlight__avatar-img"
               />
             </div>
             <div className="priyanka-spotlight__info">
               <h3>Dr. Priyanka Singh</h3>
-              <p>Co-Founder &amp; Occult Healer · Lead Spiritual Mentor</p>
+              <p>Founder &amp; Occult Healer · Lead Spiritual Mentor</p>
             </div>
           </div>
 
@@ -388,7 +388,7 @@ export default function PriyankaConsultationScreen({ onSelectPackage, onBackToAl
           <div className="priyanka-concierge__items">
             <div className="priyanka-concierge__item">
               <ShieldCheck size={18} className="priyanka-concierge__item-icon" />
-              <span>Direct, private 1-on-1 consultation with Co-Founder Dr. Priyanka Singh</span>
+              <span>Direct, private 1-on-1 consultation with Founder Dr. Priyanka Singh</span>
             </div>
             <div className="priyanka-concierge__item">
               <Compass size={18} className="priyanka-concierge__item-icon" />

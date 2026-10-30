@@ -510,7 +510,7 @@ export default function AstroHomePage() {
           <img
             className="astro-hero-banner__img astro-hero-banner__video"
             src={heroBannerImg}
-            alt="Dr. Priyanka Singh - Tathaastu Co-Founder, Astrology & Healing"
+            alt="Dr. Priyanka Singh - Tathaastu Founder, Astrology & Healing"
             width={1920}
             height={600}
             decoding="async"
@@ -671,7 +671,7 @@ export default function AstroHomePage() {
           </div>
 
       {/* ============================================================== */}
-      {/* CONSULT SHOWCASE: MARQUEE HEADER & FEATURED CO-FOUNDER GURU   */}
+      {/* CONSULT SHOWCASE: MARQUEE HEADER & FEATURED FOUNDER GURU   */}
       {/* ============================================================== */}
       <div className="astro-section astro-consult-header-section">
         <div className="astro-consult-header">
@@ -708,7 +708,7 @@ export default function AstroHomePage() {
           <div className="astro-founder__copy">
             <div className="astro-founder__badge">
               <Award className="h-3.5 w-3.5" />
-              <span>Co-Founder & Occult Healer</span>
+              <span>Founder & Occult Healer</span>
             </div>
 
             <p className="astro-founder__kicker">Vedic Wisdom · Modern Clarity</p>
@@ -772,7 +772,7 @@ export default function AstroHomePage() {
             <div className="astro-founder__photo-frame">
               <img
                 src={drPriyankaImg?.src || drPriyankaImg}
-                alt="Priyanka Singh - Co-Founder of Tathaastu"
+                alt="Priyanka Singh - Founder of Tathaastu"
                 className="astro-founder__photo-img"
                 loading="lazy"
               />
@@ -788,7 +788,7 @@ export default function AstroHomePage() {
                   <strong>Priyanka Singh</strong>
                   <CheckCircle2 size={16} className="astro-founder__check-icon" />
                 </div>
-                <span>Co-Founder · Occult Healer, Tathaastu</span>
+                <span>Founder · Occult Healer, Tathaastu</span>
               </div>
             </div>
           </div>
