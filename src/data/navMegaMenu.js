@@ -1,21 +1,13 @@
 /**
  * Top nav for Tathaastu.
- * Column order matches the Nav Bar sheet: Home, Services, Free Reports,
- * Consultation, About Us, Abhimantrit Store.
- * Empty items means a direct link with no dropdown.
+ * Desktop: left (Services, Free Report, Sacred Remedies) · center logo ·
+ * right (Consultation, About Us). Home removed from the bar.
  */
 export const NAV_MEGA_MENUS = [
   {
-    id: "home",
-    label: "Home",
-    accent: "#073349",
-    tint: "#F4F7F8",
-    path: "/",
-    items: [],
-  },
-  {
     id: "services",
     label: "Services",
+    side: "left",
     accent: "#C9A227",
     tint: "#FBF6E8",
     path: "/services",
@@ -34,21 +26,40 @@ export const NAV_MEGA_MENUS = [
     ],
   },
   {
-    id: "free-reports",
-    label: "Free Reports",
+    id: "free-report",
+    label: "Free Calculator",
+    dropdownTitle: "Free Report",
+    side: "left",
     accent: "#2D7351",
+    tint: "#EEF6F1",
     path: "/calculator",
     items: [
-      { name: "FREE AI Kundli Report", path: "/calculator" },
-      { name: "FREE Matchmaking Test", path: "/matchmaking" },
-      { name: "FREE Numerology Report", path: "/numerology" },
+      { name: "Free AI Kundli Report", path: "/calculator" },
+      { name: "Free Matchmaking Report", path: "/matchmaking" },
+      { name: "Free Numerology Report", path: "/numerology" },
+      { name: "Free Tarot Reading", path: "/services#tarot-reading" },
       { name: "Daily Vedic Horoscope", path: "/daily-horoscope" },
-      { name: "Tarot Guidance", path: "/services#tarot-reading" },
+    ],
+  },
+  {
+    id: "sacred-remedies",
+    label: "Sacred Remedies",
+    side: "left",
+    accent: "#8B5E3C",
+    tint: "#F8F1EA",
+    path: "/services#crystal-healing",
+    items: [
+      { name: "Crystal Healing", path: "/services#crystal-healing" },
+      { name: "Vaastu Remedies", path: "/services#vastu-shastra" },
+      { name: "Pooja Services", path: "/services#pooja-services" },
+      { name: "Aura Healing", path: "/services#aura-healing-scanning" },
+      { name: "Pet Healing", path: "/services#pet-healing" },
     ],
   },
   {
     id: "consultation",
     label: "Consultation",
+    side: "right",
     accent: "#6B5B95",
     tint: "#F3EFFA",
     path: "/pricing",
@@ -61,6 +72,7 @@ export const NAV_MEGA_MENUS = [
   {
     id: "about",
     label: "About Us",
+    side: "right",
     accent: "#4A5568",
     tint: "#F4F5F7",
     path: "/about",
@@ -73,6 +85,7 @@ export const NAV_MEGA_MENUS = [
   {
     id: "store",
     label: "Abhimantrit Store",
+    side: "right",
     accent: "#C45C7A",
     tint: "#FBEFF2",
     path: "https://www.abhimantritstore.com/",
@@ -81,3 +94,6 @@ export const NAV_MEGA_MENUS = [
   },
   */
 ];
+
+export const NAV_LEFT_MENUS = NAV_MEGA_MENUS.filter((m) => m.side !== "right");
+export const NAV_RIGHT_MENUS = NAV_MEGA_MENUS.filter((m) => m.side === "right");

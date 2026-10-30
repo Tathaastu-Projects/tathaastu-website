@@ -9,7 +9,8 @@
   --talk-green: #15803d;
   --talk-green-light: #22c55e;
   --talk-border: rgba(197, 151, 62, 0.28);
-  --talk-max: 79.75rem; /* ~1276px content width from Figma */
+  --talk-max: 79.75rem;
+  /* ~1276px content width from Figma */
   min-height: 100vh;
   background: #ffffff;
   color: var(--talk-ink);
@@ -72,8 +73,17 @@
 }
 
 @keyframes talkPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.18); opacity: 0.85; }
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.18);
+    opacity: 0.85;
+  }
 }
 
 .talk-hero__title {
@@ -886,7 +896,7 @@
   max-width: 28rem;
 }
 
-.ap-hero__stats > div {
+.ap-hero__stats>div {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
@@ -894,7 +904,7 @@
   border-right: 1px solid rgba(6, 66, 51, 0.1);
 }
 
-.ap-hero__stats > div:last-child {
+.ap-hero__stats>div:last-child {
   border-right: 0;
 }
 

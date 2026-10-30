@@ -5,14 +5,11 @@ import { Link, useNavigate } from "@/lib/router";
 import {
   ArrowRight,
   BadgeCheck,
-  Briefcase,
   Calendar,
   ChevronLeft,
   ChevronRight,
   Clock,
-  Gem,
   Globe,
-  Heart,
   Lock,
   MapPin,
   MessageCircle,
@@ -23,7 +20,6 @@ import {
   Truck,
   User,
   Users,
-  Wallet,
   ChevronDown,
   Compass,
   Sun,
@@ -43,7 +39,8 @@ import drPriyankaImg from "../../assets/home/Priyanka Mam.svg";
 import "./astro-home.css";
 import "./astro-experts.css";
 import "./astro-guidance.css";
-import "../Store/store.css";
+// Store products temporarily disabled
+// import "../Store/store.css";
 import AppDownloadBanner from "../../assets/background_banner/app_download_banner.svg";
 import FreeKundliLogo from "../../assets/home_services/Free-kundli.png";
 import AppleLogoPng from "../../assets/logo/apple_logo.png";
@@ -53,26 +50,24 @@ import TarotReadingLogo from "../../assets/home_services/tarot-reading.png";
 import NumerologyLogo from "../../assets/home_services/Numerology.png";
 import VastuLogo from "../../assets/home_services/Vastu.png";
 import CrystalHealingLogo from "../../assets/home_services/crystal-healing.png";
-import LoveCategoryIcon from "../../assets/home/Love 2.svg";
-import MarriageCategoryIcon from "../../assets/home/Marriage 2.svg";
-import CareerCategoryIcon from "../../assets/home/career 2.svg";
-import MoneyCategoryIcon from "../../assets/home/Money 2.svg";
-import EducationCategoryIcon from "../../assets/home/education 2.svg";
-import FamilyCategoryIcon from "../../assets/home/family 2.svg";
+const LoveCategoryIcon = "/home/Love%20%26%20Relationship.png";
+const MarriageCategoryIcon = "/home/Marriage.png";
+const CareerCategoryIcon = "/home/Career.png";
+const MoneyCategoryIcon = "/home/Money%20%26%20Well%20being.png";
+const EducationCategoryIcon = "/home/Education.png";
+const FamilyCategoryIcon = "/home/Family.png";
 import ClientTestimonialCard from "./ClientTestimonialCard";
 import ankitCustomer from "../../assets/customers/ankit.jpg";
 import meeraCustomer from "../../assets/customers/meera.jpg";
 import neerajCustomer from "../../assets/customers/neeraj.jpg";
 import rishikaCustomer from "../../assets/customers/rishika.jpg";
-import { getProductBySlug } from "../../data/storeData";
-import capricornHover from "../../assets/products/capricorn-hover.jpg";
-import mukhiHover from "../../assets/products/mukhi-hover.jpg";
-import amethystHover from "../../assets/products/amethyst-hover.jpg";
-import pyramidHover from "../../assets/products/pyramid-hover.jpg";
-const heroBannerImg = "/tathasstu-home-banner.webp";
-const numerologyReportImg = "/Reports/Numerlogy Report.webp";
-const matchmakingReportImg = "/Reports/Matchmaking.webp";
-const kundliConsultationImg = "/Reports/Kundli Consultation.webp";
+// Store products temporarily disabled
+// import { getProductBySlug } from "../../data/storeData";
+// import capricornHover from "../../assets/products/capricorn-hover.jpg";
+// import mukhiHover from "../../assets/products/mukhi-hover.jpg";
+// import amethystHover from "../../assets/products/amethyst-hover.jpg";
+// import pyramidHover from "../../assets/products/pyramid-hover.jpg";
+const heroBannerImg = "/Main-Banner3.png";
 
 const sectionFallback = () => <div className="astro-section min-h-[12rem]" aria-hidden="true" />;
 
@@ -83,19 +78,14 @@ const LazyWhenVisible = dynamic(() => import("./LazyWhenVisible"), {
 const AstroServicesSection = dynamic(() => import("./AstroServicesSection"), {
   loading: sectionFallback,
 });
-const ServiceDeckSection = dynamic(() => import("./ServiceDeckSection"), {
-  loading: sectionFallback,
-});
 const DailyHoroscopeSection = dynamic(() => import("./DailyHoroscopeSection"), {
   loading: sectionFallback,
 });
-const VedicReportsSection = dynamic(() => import("./VedicReportsSection"), {
-  loading: sectionFallback,
-});
-const FreeTarotSection = dynamic(() => import("./FreeTarotSection"), {
-  loading: sectionFallback,
-});
-const CustomerVideosSection = dynamic(() => import("./CustomerVideosSection"), {
+// Explore reels temporarily replaced by YouTube spotlight
+// const CustomerVideosSection = dynamic(() => import("./CustomerVideosSection"), {
+//   loading: sectionFallback,
+// });
+const SpotlightSection = dynamic(() => import("./SpotlightSection"), {
   loading: sectionFallback,
 });
 const AstroBlogSection = dynamic(() => import("./AstroBlogSection"), {
@@ -104,9 +94,10 @@ const AstroBlogSection = dynamic(() => import("./AstroBlogSection"), {
 const AstroFaqSection = dynamic(() => import("./AstroFaqSection"), {
   loading: sectionFallback,
 });
-const ProductCard = dynamic(() => import("../Store/ProductCard"), {
-  loading: () => null,
-});
+// Store products temporarily disabled
+// const ProductCard = dynamic(() => import("../Store/ProductCard"), {
+//   loading: () => null,
+// });
 
 const CLIENT_TESTIMONIALS = [
   {
@@ -163,9 +154,7 @@ const CLIENT_TESTIMONIALS = [
   },
 ];
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL || "http://localhost:3032/api";
-
+/* Store products temporarily disabled
 const BEST_SELLER_HOVER = {
   "capricorn-zodiac-bracelet": capricornHover,
   "7-mukhi-rudraksha": mukhiHover,
@@ -190,6 +179,7 @@ const BEST_SELLERS = [
     return product ? { ...product, hoverImage: BEST_SELLER_HOVER[slug] } : null;
   })
   .filter(Boolean);
+*/
 
 const ASTROLOGERS = [
   {
@@ -339,10 +329,30 @@ const CATEGORIES = [
 ];
 
 const TRUST_BADGES = [
-  { title: "Authentic & Pure", desc: "Chosen With Care", icon: ShieldCheck },
-  { title: "Secure Payments", desc: "100% Safe Checkout", icon: Lock },
-  { title: "Fast & Reliable Delivery", desc: "Delivered Across India", icon: Truck },
-  { title: "Trusted By Thousands", desc: "4.8+ Average Rating", icon: Users },
+  {
+    title: "Talk to Astrologer",
+    desc: "Chat, call or video with experts",
+    icon: Phone,
+    path: "/talk-to-astrologers",
+  },
+  {
+    title: "Get Free Numerology Report",
+    desc: "Discover what your numbers reveal",
+    icon: Sparkles,
+    path: "/numerology",
+  },
+  {
+    title: "Get Free Tarot Reading",
+    desc: "Find clarity with a free spread",
+    icon: Star,
+    path: "/#free-tarot-section",
+  },
+  {
+    title: "Get Free AI Kundli Reading",
+    desc: "Preview your birth chart instantly",
+    icon: Compass,
+    path: "/calculator",
+  },
 ];
 
 const SERVICE_TILES = [
@@ -384,92 +394,16 @@ const SERVICE_TILES = [
   },
 ];
 
-const ZODIAC = [
-  {
-    name: "Aries",
-    blurb: "Bold, energetic, and driven. Today brings fresh momentum and opportunities to take the lead.",
-    scores: { love: 50, career: 85, marriage: 62, finance: 78 },
-  },
-  {
-    name: "Taurus",
-    blurb: "Steady and grounded. Focus on comfort, patience, and one meaningful goal that builds lasting value.",
-    scores: { love: 72, career: 60, marriage: 80, finance: 70 },
-  },
-  {
-    name: "Gemini",
-    blurb: "Curious energy opens doors. Conversations spark clarity—share ideas and stay flexible with plans.",
-    scores: { love: 65, career: 88, marriage: 55, finance: 58 },
-  },
-  {
-    name: "Cancer",
-    blurb: "Emotional intuition is strong. Nurture close bonds and protect your peace with gentle boundaries.",
-    scores: { love: 82, career: 54, marriage: 76, finance: 63 },
-  },
-  {
-    name: "Leo",
-    blurb: "Confidence shines today. Lead with warmth, celebrate progress, and let your creativity take center stage.",
-    scores: { love: 78, career: 90, marriage: 68, finance: 74 },
-  },
-  {
-    name: "Virgo",
-    blurb: "Detail brings results. Organize priorities, refine routines, and trust careful steps over rush.",
-    scores: { love: 58, career: 86, marriage: 70, finance: 81 },
-  },
-  {
-    name: "Libra",
-    blurb: "Balance and beauty guide you. Seek harmony in relationships and choose fairness in every decision.",
-    scores: { love: 84, career: 66, marriage: 88, finance: 60 },
-  },
-  {
-    name: "Scorpio",
-    blurb: "Depth and focus intensify. Transform one lingering issue and trust your instinct on hidden truths.",
-    scores: { love: 70, career: 75, marriage: 64, finance: 82 },
-  },
-  {
-    name: "Sagittarius",
-    blurb: "Adventure calls. Expand your view, say yes to learning, and keep optimism as your compass.",
-    scores: { love: 67, career: 79, marriage: 58, finance: 69 },
-  },
-  {
-    name: "Capricorn",
-    blurb: "Discipline pays off. Climb steadily, honor commitments, and build toward a long-term win.",
-    scores: { love: 55, career: 92, marriage: 72, finance: 88 },
-  },
-  {
-    name: "Aquarius",
-    blurb: "Fresh ideas flow freely. Innovate with community in mind and welcome unexpected allies.",
-    scores: { love: 61, career: 84, marriage: 57, finance: 73 },
-  },
-  {
-    name: "Pisces",
-    blurb: "Dreams feel vivid. Soften into intuition, create space for rest, and let compassion lead.",
-    scores: { love: 86, career: 52, marriage: 79, finance: 56 },
-  },
-];
-
-const SCORE_META = [
-  { key: "love", label: "Love", icon: Heart },
-  { key: "career", label: "Career", icon: Briefcase },
-  { key: "marriage", label: "Marriage", icon: Gem },
-  { key: "finance", label: "Finance", icon: Wallet },
-];
-
-const ACTIVITY = [
-  "Priya from Mumbai just started a chat with Acharya Prem",
-  "Rahul from Delhi booked a Vastu consultation",
-  "Neha from Hyderabad got her Kundli read",
-  "Amit from Pune consulted about career",
-  "Sneha from Bangalore received a tarot reading",
-];
-
 function SectionHeading({ eyebrow, title, subtitle, action }) {
   return (
     <div className="astro-section-head">
-      <div>
-        {eyebrow ? <p className="astro-eyebrow">{eyebrow}</p> : null}
-        <h2 className="astro-title">{title}</h2>
-        {subtitle ? <p className="astro-subtitle">{subtitle}</p> : null}
-      </div>
+      {(eyebrow || title || subtitle) ? (
+        <div>
+          {eyebrow ? <p className="astro-eyebrow">{eyebrow}</p> : null}
+          {title ? <h2 className="astro-title">{title}</h2> : null}
+          {subtitle ? <p className="astro-subtitle">{subtitle}</p> : null}
+        </div>
+      ) : null}
       {action}
     </div>
   );
@@ -566,196 +500,7 @@ function RunningCounter({
 
 export default function AstroHomePage() {
   const navigate = useNavigate();
-  const astrologersTrackRef = useRef(null);
-
-  const scrollAstrologers = (direction) => {
-    if (!astrologersTrackRef.current) return;
-    const container = astrologersTrackRef.current;
-    const card = container.querySelector(".astro-expert-card");
-    const scrollAmount = card ? (card.offsetWidth + 18) * 2 : 480;
-    container.scrollBy({
-      left: direction === "next" ? scrollAmount : -scrollAmount,
-      behavior: "smooth",
-    });
-  };
-  const [activeZodiac, setActiveZodiac] = useState(0);
-  const [zodiacCards, setZodiacCards] = useState(ZODIAC);
-  const [activityIdx, setActivityIdx] = useState(0);
-  const [numerologyForm, setNumerologyForm] = useState({ name: "", dob: "" });
-  const [matchMakingForm, setMatchMakingForm] = useState({ name: "", partnerName: "" });
-  const [kundliForm, setKundliForm] = useState({
-    name: "",
-    dob: "",
-    tob: "",
-    place: "",
-  });
-  const [tarotForm, setTarotForm] = useState({ name: "", question: "" });
-  const [numerologyLoading, setNumerologyLoading] = useState(false);
-  const [matchMakingLoading, setMatchMakingLoading] = useState(false);
-  const [kundliLoading, setKundliLoading] = useState(false);
-  const [tarotLoading, setTarotLoading] = useState(false);
-  const [numerologyResult, setNumerologyResult] = useState(null);
-  const [matchMakingResult, setMatchMakingResult] = useState(null);
-  const [kundliResult, setKundliResult] = useState(null);
-  const [tarotResult, setTarotResult] = useState(null);
-  const [numerologyError, setNumerologyError] = useState(null);
-  const [matchMakingError, setMatchMakingError] = useState(null);
-  const [kundliError, setKundliError] = useState(null);
-  const [tarotError, setTarotError] = useState(null);
   const blogs = useMemo(() => blogsData.slice(0, 4), []);
-
-  const goPrevZodiac = () => {
-    setActiveZodiac((i) => (i - 1 + zodiacCards.length) % zodiacCards.length);
-  };
-
-  const goNextZodiac = () => {
-    setActiveZodiac((i) => (i + 1) % zodiacCards.length);
-  };
-
-  const visibleZodiac = useMemo(() => {
-    const total = zodiacCards.length;
-    return [-2, -1, 0, 1, 2].map((offset) => {
-      const index = (activeZodiac + offset + total) % total;
-      return { ...zodiacCards[index], index, offset };
-    });
-  }, [activeZodiac, zodiacCards]);
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      setActivityIdx((i) => (i + 1) % ACTIVITY.length);
-    }, 3200);
-    return () => clearInterval(t);
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadHoroscopes = async () => {
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 20000);
-      try {
-        const response = await fetch(`${API_BASE}/ai/horoscope/daily`, {
-          signal: controller.signal,
-        });
-        if (!response.ok) return;
-        const payload = await response.json();
-        if (cancelled || !payload?.success || !Array.isArray(payload.data)) return;
-
-        setZodiacCards((prev) =>
-          prev.map((card) => {
-            const hit = payload.data.find((item) => item.name === card.name);
-            if (!hit) return card;
-            return {
-              ...card,
-              blurb: hit.blurb || card.blurb,
-              scores: hit.scores || card.scores,
-            };
-          })
-        );
-      } catch {
-        /* keep static ZODIAC fallback */
-      } finally {
-        clearTimeout(timer);
-      }
-    };
-
-    loadHoroscopes();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const submitNumerology = async (e) => {
-    e.preventDefault();
-    setNumerologyError(null);
-    setNumerologyResult(null);
-    setNumerologyLoading(true);
-    try {
-      const response = await fetch(`${API_BASE}/ai/numerology/report`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(numerologyForm),
-      });
-      const payload = await response.json().catch(() => null);
-      if (!response.ok) {
-        throw new Error(payload?.message || "Could not generate numerology report.");
-      }
-      setNumerologyResult(payload.data);
-    } catch (err) {
-      setNumerologyError(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setNumerologyLoading(false);
-    }
-  };
-
-  const submitMatchMaking = async (e) => {
-    e.preventDefault();
-    setMatchMakingError(null);
-    setMatchMakingResult(null);
-    setMatchMakingLoading(true);
-    try {
-      const response = await fetch(`${API_BASE}/ai/matchmaking/report`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(matchMakingForm),
-      });
-      const payload = await response.json().catch(() => null);
-      if (!response.ok) {
-        throw new Error(payload?.message || "Could not generate compatibility report.");
-      }
-      setMatchMakingResult(payload.data);
-    } catch (err) {
-      setMatchMakingError(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setMatchMakingLoading(false);
-    }
-  };
-
-  const submitTarot = async (e) => {
-    e.preventDefault();
-    setTarotError(null);
-    setTarotResult(null);
-    setTarotLoading(true);
-    try {
-      const response = await fetch(`${API_BASE}/ai/tarot/reading`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(tarotForm),
-      });
-      const payload = await response.json().catch(() => null);
-      if (!response.ok) {
-        throw new Error(payload?.message || "Could not generate tarot reading.");
-      }
-      setTarotResult(payload.data);
-    } catch (err) {
-      setTarotError(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setTarotLoading(false);
-    }
-  };
-
-  const submitKundli = async (e) => {
-    e.preventDefault();
-    setKundliError(null);
-    setKundliResult(null);
-    setKundliLoading(true);
-    try {
-      const response = await fetch(`${API_BASE}/ai/kundli/lead`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(kundliForm),
-      });
-      const payload = await response.json().catch(() => null);
-      if (!response.ok) {
-        throw new Error(payload?.message || "Could not submit Kundli consultation.");
-      }
-      setKundliResult(payload.data);
-    } catch (err) {
-      setKundliError(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setKundliLoading(false);
-    }
-  };
 
   return (
     <div className="astro-home">
@@ -767,34 +512,33 @@ export default function AstroHomePage() {
             src={heroBannerImg}
             alt="Dr. Priyanka Singh - Tathaastu Co-Founder, Astrology & Healing"
             width={1920}
-            height={620}
+            height={600}
             decoding="async"
             fetchPriority="high"
           />
           <div className="astro-hero-banner__overlay">
             <div className="astro-hero__copy">
-              <p className="astro-live-pill">
-                <span className="astro-live-dot" />
-                Live now · Experts online
-              </p>
+              <p className="astro-hero__eyebrow">Priyanka Singh · Vedic Astrology</p>
               <h1>
-                <span className="astro-hero__brand-green">India’s Most Trusted</span>
-                <br />
-                <span className="astro-hero__coral">Astrology &amp; Healing</span>
-                <br />
-                <span className="astro-hero__brand-green">Platform</span>
+                <span className="astro-hero__line">Unlock Your Destiny &amp;</span>
+                <span className="astro-hero__line astro-hero__line--accent">
+                  Align Your Energy
+                </span>
+                <span className="astro-hero__line">With The Cosmos</span>
               </h1>
+              <p className="astro-hero__lead">
+                With over 15 years of expertise in Vedic astrology, Priyanka Singh
+                deciphers cosmic energies and celestial alignments to guide
+                individuals towards spiritual harmony, karmic clarity, and
+                alignment with their higher purpose.
+              </p>
               <div className="astro-hero__actions">
-                <Link to="/pricing?flow=consult&service=consult" className="astro-btn-primary" style={{ textDecoration: "none" }}>
-                  Consult with an Expert
+                <Link
+                  to="/pricing?flow=consult&service=consult"
+                  className="astro-founder__btn astro-hero__cta"
+                >
+                  Book Appointment
                 </Link>
-                <Link to="/calculator" className="astro-btn-ghost astro-btn-ghost--on-banner">
-                  Get Your Free Kundli
-                </Link>
-              </div>
-              <div className="astro-activity" key={activityIdx}>
-                <Sparkles className="h-4 w-4 text-[#E74660]" />
-                <span>{ACTIVITY[activityIdx]}</span>
               </div>
             </div>
           </div>
@@ -840,8 +584,13 @@ export default function AstroHomePage() {
       <section className="astro-services-section">
         <div className="astro-section astro-services-section__inner">
           <div className="astro-trust-bar">
-            {TRUST_BADGES.map(({ title, desc, icon: Icon }) => (
-              <div key={title} className="astro-trust-item">
+            {TRUST_BADGES.map(({ title, desc, icon: Icon, path }) => (
+              <Link
+                key={title}
+                to={path}
+                className="astro-trust-item"
+                style={{ textDecoration: "none" }}
+              >
                 <span className="astro-trust-item__icon" aria-hidden="true">
                   <Icon strokeWidth={1.75} />
                 </span>
@@ -849,9 +598,13 @@ export default function AstroHomePage() {
                   <strong>{title}</strong>
                   <span>{desc}</span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
+
+          <LazyWhenVisible minHeight="18rem">
+            <AstroServicesSection />
+          </LazyWhenVisible>
 
           <div className="astro-guidance-block">
             {/* Top Gold Trim Bar */}
@@ -915,24 +668,6 @@ export default function AstroHomePage() {
                 </button>
               ))}
             </div>
-
-            {/* Bottom Reassurance Strip */}
-            <div className="astro-guidance-footer">
-              <div className="astro-guidance-footer__item">
-                <ShieldCheck className="h-4 w-4 text-[#064233]" aria-hidden="true" />
-                <span>100% Confidential & Private</span>
-              </div>
-              <div className="astro-guidance-footer__divider" aria-hidden="true" />
-              <div className="astro-guidance-footer__item">
-                <Lock className="h-4 w-4 text-[#064233]" aria-hidden="true" />
-                <span>End-to-End Encrypted Sessions</span>
-              </div>
-              <div className="astro-guidance-footer__divider" aria-hidden="true" />
-              <div className="astro-guidance-footer__item">
-                <Sparkles className="h-4 w-4 text-[#c4842a]" aria-hidden="true" />
-                <span>First 5 Mins Satisfaction Guarantee</span>
-              </div>
-            </div>
           </div>
 
       {/* ============================================================== */}
@@ -952,8 +687,7 @@ export default function AstroHomePage() {
             </h2>
 
             <p className="astro-consult-header__subtitle">
-              Speak directly with Tathaastu’s Co-Founder and India’s most revered Vedic gurus. 
-              Receive authentic, compassionate clarity across life decisions, Kundli charts, and spiritual healing.
+              Receive authentic, compassionate clarity across life decisions, Kundli charts, and spiritual healing by connecting with our verified experts.
             </p>
           </div>
 
@@ -966,6 +700,7 @@ export default function AstroHomePage() {
         </div>
       </div>
 
+      {/* Priyanka founder showcase — temporarily hidden
       <section className="astro-section astro-founder" aria-labelledby="founder-heading">
         <div className="astro-founder__panel">
           <div className="astro-founder__watermark" aria-hidden="true" />
@@ -1059,38 +794,10 @@ export default function AstroHomePage() {
           </div>
         </div>
       </section>
+      */}
 
           <div className="astro-experts">
-            <SectionHeading
-              title="Connect with India’s Trusted Astrologers"
-              subtitle="Get personalised guidance from verified Astrologers who bring experience, clarity, and a caring approach to every consultation."
-              action={
-                <div className="astro-experts-nav-wrap">
-                  <div className="astro-experts-arrows" aria-label="Scroll astrologers">
-                    <button
-                      type="button"
-                      className="astro-nav-arrow astro-nav-arrow--prev"
-                      onClick={() => scrollAstrologers("prev")}
-                      aria-label="Previous Astrologers"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="astro-nav-arrow astro-nav-arrow--next"
-                      onClick={() => scrollAstrologers("next")}
-                      aria-label="Next Astrologers"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <Link to="/pricing?flow=consult" className="astro-link">
-                    View all <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              }
-            />
-            <div className="astro-astro-grid" ref={astrologersTrackRef}>
+            <div className="astro-astro-grid">
               {ASTROLOGERS.map((a) => {
                 const imgSrc = a.img?.src || a.img;
                 return (
@@ -1218,61 +925,12 @@ export default function AstroHomePage() {
               })}
             </div>
           </div>
-
-          <LazyWhenVisible minHeight="18rem">
-            <AstroServicesSection />
-          </LazyWhenVisible>
         </div>
       </section>
 
-      <LazyWhenVisible minHeight="22rem">
-        <ServiceDeckSection />
-      </LazyWhenVisible>
-
-      {/* DAILY HOROSCOPE */}
+      {/* DAILY HOROSCOPE — free daily APIs (Spiritclick / CosmyDay / horoscope-app-api) */}
       <LazyWhenVisible minHeight="28rem">
-        <DailyHoroscopeSection
-          zodiacCards={zodiacCards}
-          activeZodiac={activeZodiac}
-          setActiveZodiac={setActiveZodiac}
-          goPrevZodiac={goPrevZodiac}
-          goNextZodiac={goNextZodiac}
-          visibleZodiac={visibleZodiac}
-          scoreMeta={SCORE_META}
-        />
-      </LazyWhenVisible>
-
-      {/* SACRED VEDIC REPORTS & CONSULTATION SUITE: NUMEROLOGY · MATCHMAKING · FULL KUNDLI */}
-      <LazyWhenVisible minHeight="36rem">
-        <VedicReportsSection
-          numerologyForm={numerologyForm}
-          setNumerologyForm={setNumerologyForm}
-          submitNumerology={submitNumerology}
-          numerologyLoading={numerologyLoading}
-          numerologyError={numerologyError}
-          numerologyResult={numerologyResult}
-          matchMakingForm={matchMakingForm}
-          setMatchMakingForm={setMatchMakingForm}
-          submitMatchMaking={submitMatchMaking}
-          matchMakingLoading={matchMakingLoading}
-          matchMakingError={matchMakingError}
-          matchMakingResult={matchMakingResult}
-          kundliForm={kundliForm}
-          setKundliForm={setKundliForm}
-          submitKundli={submitKundli}
-          kundliLoading={kundliLoading}
-          kundliError={kundliError}
-          kundliResult={kundliResult}
-          numerologyReportImg={numerologyReportImg}
-          matchmakingReportImg={matchmakingReportImg}
-          kundliConsultationImg={kundliConsultationImg}
-          navigate={navigate}
-        />
-      </LazyWhenVisible>
-
-      {/* 6-CARD FREE SACRED TAROT READING EXPERIENCE */}
-      <LazyWhenVisible minHeight="40rem">
-        <FreeTarotSection onConsult={() => navigate("/pricing?service=tarot&flow=consult")} />
+        <DailyHoroscopeSection />
       </LazyWhenVisible>
 
       {/* DOWNLOAD TATHAASTU APP — Figma promo banner */}
@@ -1343,9 +1001,14 @@ export default function AstroHomePage() {
       </section>
       */}
 
-      {/* CUSTOMER VIDEOS — horizontal strip above blogs */}
+      {/* Explore reels temporarily commented out — replaced by YouTube spotlight
       <LazyWhenVisible minHeight="26rem">
         <CustomerVideosSection />
+      </LazyWhenVisible>
+      */}
+
+      <LazyWhenVisible minHeight="28rem">
+        <SpotlightSection />
       </LazyWhenVisible>
 
       <LazyWhenVisible minHeight="22rem">

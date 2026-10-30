@@ -120,8 +120,8 @@
 
 .astro-hero-banner__overlay .astro-hero__copy {
   pointer-events: auto;
-  max-width: min(38rem, 50%);
-  padding: 1.5rem 0;
+  max-width: min(34rem, 46%);
+  padding: 1.75rem 0;
 }
 
 .astro-hero-banner__overlay .astro-live-pill,
@@ -171,27 +171,71 @@
   }
 }
 
+.astro-hero__eyebrow {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9a7b3c;
+}
+
 .astro-hero__copy h1 {
   margin: 0;
-  font-family: "Playfair Display SC", Georgia, serif;
-  font-size: clamp(1.75rem, 3.2vw, 2.9rem);
-  line-height: 1.15;
-  letter-spacing: 0.01em;
-  color: #064233;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+  display: grid;
+  gap: 0.18em;
+  font-family: var(--font-display), "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 3.6vw, 3.35rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #05382c;
+  text-shadow: none;
   box-sizing: border-box;
 }
 
+.astro-hero__line {
+  display: block;
+  color: #05382c;
+}
+
+.astro-hero__line--accent {
+  color: #c2475a;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
 .astro-hero__brand-green {
-  color: #064233;
+  color: #05382c;
   display: inline-block;
-  white-space: nowrap;
 }
 
 .astro-hero__coral {
-  color: var(--coral, #d44459);
+  color: #c2475a;
   display: inline-block;
-  white-space: nowrap;
+  font-style: italic;
+}
+
+.astro-hero__lead {
+  margin: 1.15rem 0 0;
+  max-width: 28rem;
+  color: #445854;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: clamp(0.94rem, 1.15vw, 1.05rem);
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-shadow: none;
+}
+
+/* Hero CTA reuses .astro-founder__btn green; size-only tweaks here */
+.astro-hero__actions .astro-hero__cta.astro-founder__btn {
+  min-width: 11.5rem;
+  justify-content: center;
+  text-transform: uppercase;
+  font-size: 0.9rem;
 }
 
 .astro-hero__bullets {
@@ -364,26 +408,17 @@
   align-items: center;
   padding: 1.75rem 2.25rem;
   border-radius: 1.5rem;
-  background: linear-gradient(135deg, #064233 0%, #0a5a45 50%, #073349 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  /* Green strip removed — keep stats content on a light surface */
+  background: #ffffff;
+  border: 1px solid rgba(7, 51, 73, 0.1);
   box-shadow:
-    0 20px 50px rgba(6, 66, 51, 0.35),
-    0 4px 16px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 14px 36px rgba(7, 51, 73, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
 
-/* Subtle shimmer overlay */
 .astro-stats::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    rgba(214, 179, 92, 0.08) 0%,
-    transparent 65%
-  );
-  pointer-events: none;
+  display: none;
 }
 
 .astro-stat {
@@ -407,11 +442,10 @@
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 50%;
-  background: rgba(214, 179, 92, 0.15);
-  border: 1px solid rgba(214, 179, 92, 0.3);
-  color: #d6b35c;
+  background: rgba(6, 66, 51, 0.08);
+  border: 1px solid rgba(6, 66, 51, 0.12);
+  color: #064233;
   margin-bottom: 0.2rem;
-  box-shadow: 0 0 14px rgba(214, 179, 92, 0.18);
   flex-shrink: 0;
 }
 
@@ -422,17 +456,16 @@
   line-height: 1.1;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
-  background: linear-gradient(135deg, #f0d080 0%, #d6b35c 50%, #c49a38 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #064233;
+  background: none;
+  -webkit-text-fill-color: currentColor;
 }
 
 .astro-stat__label {
   display: block;
   font-size: 0.78rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.65);
+  color: #5a6b73;
   letter-spacing: 0.03em;
   white-space: nowrap;
 }
@@ -444,8 +477,8 @@
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(255, 255, 255, 0.15) 30%,
-    rgba(255, 255, 255, 0.15) 70%,
+    rgba(7, 51, 73, 0.14) 30%,
+    rgba(7, 51, 73, 0.14) 70%,
     transparent
   );
   flex-shrink: 0;
@@ -467,7 +500,7 @@
 
   .astro-stat {
     padding: 0.75rem 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(7, 51, 73, 0.08);
   }
 
   .astro-stat:nth-child(n+5) {
@@ -2706,11 +2739,12 @@
   }
 
   .astro-hero-banner__overlay .astro-hero__copy {
-    max-width: min(38rem, 58%);
+    max-width: min(32rem, 48%);
   }
 
   .astro-hero__copy h1 {
     padding-right: 0;
+    font-size: clamp(1.85rem, 3.2vw, 2.85rem);
   }
 
   .astro-promo-banner__copy {
@@ -2936,15 +2970,34 @@
 
 
 
+  .astro-hero__eyebrow {
+    margin-bottom: 0.65rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+  }
+
   .astro-hero__copy h1 {
-    font-size: clamp(1.3rem, 6.2vw, 1.6rem);
-    line-height: 1.2;
-    color: #064233;
+    font-size: clamp(1.7rem, 7vw, 2.15rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #05382c;
   }
 
   .astro-hero__brand-green,
   .astro-hero__coral {
     white-space: normal;
+  }
+
+  .astro-hero__lead {
+    margin-top: 0.9rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    max-width: 100%;
+  }
+
+  .astro-hero__cta {
+    width: 100%;
+    max-width: 18rem;
   }
 
   .astro-hero__bullets {

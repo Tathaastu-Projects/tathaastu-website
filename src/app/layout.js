@@ -1,4 +1,4 @@
-import { Inter, Playfair_Display_SC } from "next/font/google";
+import { Inter, Playfair_Display, Playfair_Display_SC } from "next/font/google";
 import Providers from "@/components/providers/Providers";
 import { DEFAULT_DESCRIPTION, SITE_URL, organizationJsonLd } from "@/lib/seo";
 import "../index.css";
@@ -20,6 +20,15 @@ const playfair = Playfair_Display_SC({
   variable: "--font-playfair",
   display: "swap",
   preload: false,
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata = {
@@ -45,7 +54,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${playfair.variable} ${playfairDisplay.variable}`}
+      suppressHydrationWarning
+    >
       <body className={inter.className} suppressHydrationWarning>
         <script
           type="application/ld+json"

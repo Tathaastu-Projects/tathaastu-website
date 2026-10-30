@@ -1,336 +1,439 @@
 "use client";
 
-import React, { useState } from "react";
-import { ChevronLeft, ChevronRight, Sparkles, Heart, Briefcase, Gem, Wallet } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "@/lib/router";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { zodiacLogo } from "../../data/zodiacLogos";
+import { fetchDailyHoroscopes } from "../../lib/dailyHoroscope";
 import "./astro-horoscope.css";
+
+const PERIODS = ["Today", "Tomorrow", "Week", "Month"];
+
+const FALLBACK_CARDS = [
+  {
+    name: "Aries",
+    blurb: "Bold, energetic, and driven. Today brings fresh momentum and opportunities to take the lead.",
+    scores: { love: 50, career: 85, marriage: 62, finance: 78 },
+  },
+  {
+    name: "Taurus",
+    blurb: "Steady and grounded. Focus on comfort, patience, and one meaningful goal that builds lasting value.",
+    scores: { love: 72, career: 60, marriage: 80, finance: 70 },
+  },
+  {
+    name: "Gemini",
+    blurb: "Curious energy opens doors. Conversations spark clarity—share ideas and stay flexible with plans.",
+    scores: { love: 65, career: 88, marriage: 55, finance: 58 },
+  },
+  {
+    name: "Cancer",
+    blurb: "Emotional intuition is strong. Nurture close bonds and protect your peace with gentle boundaries.",
+    scores: { love: 82, career: 54, marriage: 76, finance: 63 },
+  },
+  {
+    name: "Leo",
+    blurb: "Confidence shines today. Lead with warmth, celebrate progress, and let your creativity take center stage.",
+    scores: { love: 78, career: 90, marriage: 68, finance: 74 },
+  },
+  {
+    name: "Virgo",
+    blurb: "Detail brings results. Organize priorities, refine routines, and trust careful steps over rush.",
+    scores: { love: 58, career: 86, marriage: 70, finance: 81 },
+  },
+  {
+    name: "Libra",
+    blurb: "Balance and beauty guide you. Seek harmony in relationships and choose fairness in every decision.",
+    scores: { love: 84, career: 66, marriage: 88, finance: 60 },
+  },
+  {
+    name: "Scorpio",
+    blurb: "Depth and focus intensify. Transform one lingering issue and trust your instinct on hidden truths.",
+    scores: { love: 70, career: 75, marriage: 64, finance: 82 },
+  },
+  {
+    name: "Sagittarius",
+    blurb: "Adventure calls. Expand your view, say yes to learning, and keep optimism as your compass.",
+    scores: { love: 67, career: 79, marriage: 58, finance: 69 },
+  },
+  {
+    name: "Capricorn",
+    blurb: "Discipline pays off. Climb steadily, honor commitments, and build toward a long-term win.",
+    scores: { love: 55, career: 92, marriage: 72, finance: 88 },
+  },
+  {
+    name: "Aquarius",
+    blurb: "Fresh ideas flow freely. Innovate with community in mind and welcome unexpected allies.",
+    scores: { love: 61, career: 84, marriage: 57, finance: 73 },
+  },
+  {
+    name: "Pisces",
+    blurb: "Dreams feel vivid. Soften into intuition, create space for rest, and let compassion lead.",
+    scores: { love: 86, career: 52, marriage: 79, finance: 56 },
+  },
+];
 
 export const ZODIAC_METADATA = {
   Aries: {
+    hindi: "Mesh",
     dates: "Mar 21 – Apr 19",
-    element: "Fire Element",
-    ruler: "Mars",
     luckyNum: "9",
     luckyColor: "Crimson",
+    colorHex: "#C62828",
     mood: "Driven",
+    moodEmoji: "🔥",
   },
   Taurus: {
+    hindi: "Vrishabh",
     dates: "Apr 20 – May 20",
-    element: "Earth Element",
-    ruler: "Venus",
     luckyNum: "6",
     luckyColor: "Forest Green",
+    colorHex: "#2E7D32",
     mood: "Grounded",
+    moodEmoji: "🌿",
   },
   Gemini: {
+    hindi: "Mithun",
     dates: "May 21 – Jun 20",
-    element: "Air Element",
-    ruler: "Mercury",
     luckyNum: "5",
     luckyColor: "Solar Gold",
+    colorHex: "#C9A227",
     mood: "Curious",
+    moodEmoji: "✨",
   },
   Cancer: {
+    hindi: "Kark",
     dates: "Jun 21 – Jul 22",
-    element: "Water Element",
-    ruler: "Moon",
     luckyNum: "2",
     luckyColor: "Pearl White",
+    colorHex: "#F5F5F5",
     mood: "Intuitive",
+    moodEmoji: "🌙",
   },
   Leo: {
+    hindi: "Singh",
     dates: "Jul 23 – Aug 22",
-    element: "Fire Element",
-    ruler: "Sun",
     luckyNum: "1",
     luckyColor: "Amber Gold",
+    colorHex: "#D4A853",
     mood: "Radiant",
+    moodEmoji: "😇",
   },
   Virgo: {
+    hindi: "Kanya",
     dates: "Aug 23 – Sep 22",
-    element: "Earth Element",
-    ruler: "Mercury",
     luckyNum: "5",
     luckyColor: "Emerald",
+    colorHex: "#1B8A5A",
     mood: "Refined",
+    moodEmoji: "💚",
   },
   Libra: {
+    hindi: "Tula",
     dates: "Sep 23 – Oct 22",
-    element: "Air Element",
-    ruler: "Venus",
     luckyNum: "6",
     luckyColor: "Rose Quartz",
+    colorHex: "#E8A0B0",
     mood: "Harmonious",
+    moodEmoji: "⚖️",
   },
   Scorpio: {
+    hindi: "Vrishchik",
     dates: "Oct 23 – Nov 21",
-    element: "Water Element",
-    ruler: "Mars",
     luckyNum: "9",
     luckyColor: "Deep Maroon",
-    mood: "Intuitive",
+    colorHex: "#7B1E3A",
+    mood: "Focused",
+    moodEmoji: "🦂",
   },
   Sagittarius: {
+    hindi: "Dhanu",
     dates: "Nov 22 – Dec 21",
-    element: "Fire Element",
-    ruler: "Jupiter",
     luckyNum: "3",
     luckyColor: "Royal Purple",
+    colorHex: "#6B5B95",
     mood: "Expansive",
+    moodEmoji: "🏹",
   },
   Capricorn: {
+    hindi: "Makar",
     dates: "Dec 22 – Jan 19",
-    element: "Earth Element",
-    ruler: "Saturn",
     luckyNum: "8",
     luckyColor: "Charcoal",
+    colorHex: "#455A64",
     mood: "Resolute",
+    moodEmoji: "🏔️",
   },
   Aquarius: {
+    hindi: "Kumbh",
     dates: "Jan 20 – Feb 18",
-    element: "Air Element",
-    ruler: "Saturn",
     luckyNum: "11",
     luckyColor: "Electric Blue",
+    colorHex: "#0288D1",
     mood: "Visionary",
+    moodEmoji: "💧",
   },
   Pisces: {
+    hindi: "Meen",
     dates: "Feb 19 – Mar 20",
-    element: "Water Element",
-    ruler: "Jupiter",
     luckyNum: "7",
     luckyColor: "Aquamarine",
+    colorHex: "#26A69A",
     mood: "Mystic",
+    moodEmoji: "🌊",
   },
 };
 
-const DEFAULT_SCORE_META = [
-  { key: "love", label: "Love", icon: Heart },
-  { key: "career", label: "Career", icon: Briefcase },
-  { key: "marriage", label: "Marriage", icon: Gem },
-  { key: "finance", label: "Finance", icon: Wallet },
+const PILLARS = [
+  { key: "love", label: "Love", tone: "love" },
+  { key: "career", label: "Career", tone: "career" },
+  { key: "marriage", label: "Health", tone: "health" },
+  { key: "finance", label: "Money", tone: "money" },
 ];
 
-export default function DailyHoroscopeSection({
-  zodiacCards = [],
-  activeZodiac = 0,
-  setActiveZodiac,
-  goPrevZodiac,
-  goNextZodiac,
-  visibleZodiac = [],
-  scoreMeta = DEFAULT_SCORE_META,
-}) {
-  const [touchStartX, setTouchStartX] = useState(null);
+function scoreLabel(value) {
+  if (value >= 85) return "Strong";
+  if (value >= 70) return "Good";
+  if (value >= 55) return "Steady";
+  return "Slow";
+}
 
-  const handleTouchStart = (e) => {
-    setTouchStartX(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = (e) => {
-    if (touchStartX === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-    if (diff > 50) {
-      goNextZodiac?.();
-    } else if (diff < -50) {
-      goPrevZodiac?.();
+function formatStamp(period, apiDate) {
+  try {
+    if (period === "Week") return "This week";
+    if (period === "Month") {
+      return new Intl.DateTimeFormat("en-GB", {
+        month: "long",
+        year: "numeric",
+      }).format(new Date());
     }
-    setTouchStartX(null);
+    const base = apiDate ? new Date(`${apiDate}T12:00:00`) : new Date();
+    if (Number.isNaN(base.getTime())) {
+      return new Intl.DateTimeFormat("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }).format(new Date());
+    }
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }).format(base);
+  } catch {
+    return "";
+  }
+}
+
+export default function DailyHoroscopeSection() {
+  const [period, setPeriod] = useState("Today");
+  const [activeZodiac, setActiveZodiac] = useState(0);
+  const [zodiacCards, setZodiacCards] = useState(FALLBACK_CARDS);
+  const [loading, setLoading] = useState(true);
+  const [apiDate, setApiDate] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let cancelled = false;
+
+    const load = async () => {
+      setLoading(true);
+      try {
+        const payload = await fetchDailyHoroscopes(period, controller.signal);
+        if (cancelled) return;
+        setApiDate(payload.date || null);
+        setZodiacCards((prev) =>
+          prev.map((card) => {
+            const hit = payload.data.find((item) => item.name === card.name);
+            if (!hit) return card;
+            return {
+              ...card,
+              blurb: hit.blurb || card.blurb,
+              scores: hit.scores || card.scores,
+              extras: hit.extras || null,
+            };
+          })
+        );
+      } catch {
+        /* keep last good / fallback cards */
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    load();
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [period]);
+
+  const dateStamp = useMemo(
+    () => formatStamp(period, apiDate),
+    [period, apiDate]
+  );
+
+  const active =
+    zodiacCards[activeZodiac] ||
+    zodiacCards[0] || {
+      name: "Aries",
+      blurb: "Bold energy opens the day. Lead with clarity and courage.",
+      scores: { love: 70, career: 80, marriage: 65, finance: 72 },
+    };
+
+  const baseMeta = ZODIAC_METADATA[active.name] || {
+    hindi: active.name,
+    dates: "Celestial Transit",
+    luckyNum: "7",
+    luckyColor: "Gold",
+    colorHex: "#D4A853",
+    mood: "Harmonious",
+    moodEmoji: "✨",
   };
+
+  const meta = {
+    ...baseMeta,
+    ...(active.extras || {}),
+  };
+
+  const logoSrc = active.logo || zodiacLogo(active.name);
 
   return (
-    <section id="daily-horoscope" className="astro-horoscope-section" aria-labelledby="horoscope-heading">
-      {/* Slow Rotating Sacred Background Mandalas (Commented out per request) */}
-      {/*
-      {leftMandala && (
-        <img
-          className="astro-horoscope-mandala astro-horoscope-mandala--left"
-          src={leftMandala}
-          alt=""
-          aria-hidden="true"
-        />
-      )}
-      {rightMandala && (
-        <img
-          className="astro-horoscope-mandala astro-horoscope-mandala--right"
-          src={rightMandala}
-          alt=""
-          aria-hidden="true"
-        />
-      )}
-      */}
-
-      <div className="astro-section">
-        {/* Header */}
-        <div className="astro-horoscope-head">
-          <div className="astro-horoscope-badge">
-            <Sparkles className="h-3.5 w-3.5 astro-horoscope-badge__sparkle" />
-            <span>Daily Celestial Forecast</span>
-          </div>
-          <h2 id="horoscope-heading">
-            Your Cosmic Guidance <span>For Today</span>
-          </h2>
-          <p className="astro-horoscope-sub">
-            Align with planetary transits, energy meters, and ancient Vedic wisdom tailored to your sun sign.
-          </p>
-        </div>
-
-        {/* 3D Carousel Stage */}
-        <div className="astro-horoscope-carousel">
-          <button
-            type="button"
-            className="astro-horoscope-nav"
-            onClick={goPrevZodiac}
-            aria-label="Previous zodiac sign"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-
-          <div
-            className="astro-horoscope-track"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            {visibleZodiac.map((z) => {
-              const meta = ZODIAC_METADATA[z.name] || {
-                dates: "Celestial Transit",
-                element: "Cosmic",
-                luckyNum: "7",
-                luckyColor: "Gold",
-                mood: "Harmonious",
-              };
-              const isActive = z.offset === 0;
-
-              return (
-                <article
-                  key={`${z.name}-${z.offset}`}
-                  className={`astro-horoscope-card is-offset-${Math.abs(z.offset)} ${
-                    isActive ? "is-active" : ""
-                  } ${z.offset < 0 ? "is-left" : ""} ${z.offset > 0 ? "is-right" : ""}`}
-                  onClick={() => setActiveZodiac?.(z.index)}
-                  tabIndex={isActive ? 0 : -1}
-                  role="group"
-                  aria-label={`${z.name} Horoscope`}
-                >
-                  {/* Decorative Corner Stars */}
-                  <span className="astro-horoscope-card__star astro-horoscope-card__star--tl" aria-hidden="true">✦</span>
-                  <span className="astro-horoscope-card__star astro-horoscope-card__star--tr" aria-hidden="true">✦</span>
-                  <span className="astro-horoscope-card__star astro-horoscope-card__star--bl" aria-hidden="true">✦</span>
-                  <span className="astro-horoscope-card__star astro-horoscope-card__star--br" aria-hidden="true">✦</span>
-
-                  {/* Element Badge */}
-                  <div className="astro-horoscope-card__element">
-                    <span>{meta.element}</span>
-                  </div>
-
-                  {/* Zodiac Emblem Halo */}
-                  <div className="astro-horoscope-card__logo">
-                    <img
-                      src={z.logo || zodiacLogo(z.name)}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-
-                  {/* Zodiac Title & Dates */}
-                  <h3>{z.name}</h3>
-                  <p className="astro-horoscope-card__dates">{meta.dates}</p>
-
-                  {/* Guidance Blurb */}
-                  <p>{z.blurb}</p>
-
-                  {/* Lucky Attributes Micro-Grid */}
-                  <div className="astro-horoscope-card__lucky" aria-label="Daily Lucky Attributes">
-                    <span className="astro-horoscope-lucky-pill">
-                      Lucky No: <b>{meta.luckyNum}</b>
-                    </span>
-                    <span className="astro-horoscope-lucky-pill">
-                      Color: <b>{meta.luckyColor}</b>
-                    </span>
-                    <span className="astro-horoscope-lucky-pill">
-                      Mood: <b>{meta.mood}</b>
-                    </span>
-                  </div>
-
-                  {/* Animated Aspect Energy Meters */}
-                  <div className="astro-horoscope-scores" aria-label="Energy Scores">
-                    {scoreMeta.map(({ key, label, icon: Icon }) => {
-                      const scoreVal = z.scores?.[key] ?? 70;
-                      return (
-                        <div key={key} className="astro-horoscope-score">
-                          <span className="astro-horoscope-score__label">
-                            <Icon className="h-3.5 w-3.5" />
-                            {label}
-                          </span>
-                          <span className="astro-horoscope-score__bar">
-                            <i
-                              style={{
-                                width: isActive ? `${scoreVal}%` : `${Math.max(20, scoreVal - 20)}%`,
-                              }}
-                            />
-                          </span>
-                          <span className="astro-horoscope-score__percent">
-                            {scoreVal}%
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </article>
-              );
-            })}
+    <section
+      id="daily-horoscope"
+      className="astro-horoscope-section"
+      aria-labelledby="horoscope-heading"
+    >
+      <div className="astro-section astro-horoscope-wrap">
+        <div className="astro-horoscope-top">
+          <div className="astro-horoscope-top__copy">
+            <p className="astro-horoscope-kicker">Your Daily Horoscope</p>
+            <h2 id="horoscope-heading">
+              Your Cosmic Guidance <em>For Today</em>
+            </h2>
+            <p className="astro-horoscope-sub">
+              Pick your raashi to see today’s pillars at a glance.
+            </p>
           </div>
 
-          <button
-            type="button"
-            className="astro-horoscope-nav"
-            onClick={goNextZodiac}
-            aria-label="Next zodiac sign"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+          <div className="astro-horoscope-periods" role="tablist" aria-label="Horoscope period">
+            {PERIODS.map((item) => (
+              <button
+                key={item}
+                type="button"
+                role="tab"
+                aria-selected={period === item}
+                className={`astro-horoscope-period ${period === item ? "is-active" : ""}`}
+                onClick={() => setPeriod(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Quick-Select Zodiac Sign Ribbon */}
-        <div className="astro-horoscope-quickbar" role="tablist" aria-label="Select Zodiac Sign">
+        <div className="astro-horoscope-signs" role="tablist" aria-label="Select zodiac sign">
           {zodiacCards.map((z, idx) => {
-            const logoSrc = z.logo || zodiacLogo(z.name);
-            const resolvedSrc = typeof logoSrc === "object" && logoSrc?.src ? logoSrc.src : logoSrc;
+            const zMeta = ZODIAC_METADATA[z.name] || {};
+            const src = z.logo || zodiacLogo(z.name);
+            const isActive = idx === activeZodiac;
             return (
               <button
                 key={z.name}
                 type="button"
                 role="tab"
-                aria-selected={idx === activeZodiac}
-                onClick={() => setActiveZodiac?.(idx)}
-                className={`astro-horoscope-quickbtn ${idx === activeZodiac ? "is-active" : ""}`}
-                title={z.name}
+                aria-selected={isActive}
+                className={`astro-horoscope-sign ${isActive ? "is-active" : ""}`}
+                onClick={() => setActiveZodiac(idx)}
               >
-                {resolvedSrc ? (
-                  <img src={resolvedSrc} alt={z.name} aria-hidden="true" />
-                ) : null}
-                <span>{z.name.slice(0, 3)}</span>
+                <span className="astro-horoscope-sign__avatar">
+                  {src ? <img src={src} alt="" loading="lazy" decoding="async" /> : null}
+                </span>
+                <strong>{z.name}</strong>
+                <span>{zMeta.hindi || z.name}</span>
               </button>
             );
           })}
         </div>
 
-        {/* Indicator Cosmic Dots (Commented out per request) */}
-        {/*
-        <div className="astro-horoscope-dots" role="tablist" aria-label="Horoscope slide dots">
-          {zodiacCards.map((z, idx) => (
-            <button
-              key={z.name}
-              type="button"
-              className={idx === activeZodiac ? "is-active" : ""}
-              aria-label={`Jump to ${z.name}`}
-              aria-selected={idx === activeZodiac}
-              onClick={() => setActiveZodiac?.(idx)}
-            />
-          ))}
-        </div>
-        */}
+        <article
+          className={`astro-horoscope-detail${loading ? " is-loading" : ""}`}
+          aria-live="polite"
+          aria-busy={loading}
+        >
+          <div className="astro-horoscope-detail__head">
+            <div className="astro-horoscope-detail__identity">
+              <span className="astro-horoscope-detail__avatar">
+                {logoSrc ? <img src={logoSrc} alt="" /> : null}
+              </span>
+              <div>
+                <h3>
+                  {active.name}{" "}
+                  <span className="astro-horoscope-detail__hindi">{meta.hindi}</span>
+                </h3>
+                <p>{meta.dates}</p>
+              </div>
+            </div>
+            <span className="astro-horoscope-detail__stamp">
+              {period}
+              {dateStamp ? ` · ${dateStamp}` : ""}
+            </span>
+          </div>
+
+          <div className="astro-horoscope-detail__body">
+            <div className="astro-horoscope-detail__copy">
+              <p>{active.blurb}</p>
+
+              <div className="astro-horoscope-facts">
+                <span>
+                  Mood:{" "}
+                  <b>
+                    {meta.moodEmoji} {meta.mood}
+                  </b>
+                </span>
+                <span>
+                  Lucky #: <b className="is-accent">{meta.luckyNum}</b>
+                </span>
+                <span className="astro-horoscope-facts__color">
+                  Color:
+                  <i style={{ background: meta.colorHex }} aria-hidden="true" />
+                  <b>{meta.luckyColor}</b>
+                </span>
+              </div>
+
+              <div className="astro-horoscope-detail__actions">
+                <Link to="/daily-horoscope" className="astro-horoscope-btn astro-horoscope-btn--primary">
+                  Get my detailed horoscope
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/pricing?flow=consult&service=daily-horoscope"
+                  className="astro-horoscope-btn astro-horoscope-btn--ghost"
+                >
+                  Talk to a specialist
+                </Link>
+              </div>
+            </div>
+
+            <div className="astro-horoscope-pillars" aria-label="Daily pillars">
+              <div className="astro-horoscope-pillars__badge">
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>Energy pillars</span>
+              </div>
+              {PILLARS.map(({ key, label, tone }) => {
+                const value = Number(active.scores?.[key] ?? 70);
+                return (
+                  <div key={key} className="astro-horoscope-pillar">
+                    <span className="astro-horoscope-pillar__label">{label}</span>
+                    <span className={`astro-horoscope-pillar__track tone-${tone}`}>
+                      <i style={{ width: `${Math.max(8, Math.min(100, value))}%` }} />
+                    </span>
+                    <span className="astro-horoscope-pillar__state">{scoreLabel(value)}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </article>
       </div>
     </section>
   );

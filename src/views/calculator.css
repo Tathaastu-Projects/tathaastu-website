@@ -492,8 +492,14 @@
 }
 
 @keyframes btnShimmer {
-  0% { left: -100%; }
-  25%, 100% { left: 200%; }
+  0% {
+    left: -100%;
+  }
+
+  25%,
+  100% {
+    left: 200%;
+  }
 }
 
 /* Loading status banner */
@@ -520,7 +526,9 @@
 }
 
 @keyframes spinMandala {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -673,8 +681,15 @@
 }
 
 @keyframes fadeInResult {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .kundli-result-header {
@@ -852,9 +867,17 @@
   border-radius: 50%;
 }
 
-.legend-lagna { background: #c59a45; }
-.legend-kendra { background: #064233; }
-.legend-trikona { background: #e74660; }
+.legend-lagna {
+  background: #c59a45;
+}
+
+.legend-kendra {
+  background: #064233;
+}
+
+.legend-trikona {
+  background: #e74660;
+}
 
 /* Tabs for In-depth Reading */
 .result-tabs-container {
@@ -1011,12 +1034,15 @@
   .kundli-card {
     padding: 1.5rem 1.25rem;
   }
+
   .kundli-row {
     grid-template-columns: 1fr;
   }
+
   .kundli-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .result-tabs-container {
     padding: 1.4rem 1.25rem;
   }

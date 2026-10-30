@@ -1,0 +1,209 @@
+/* In The Spotlight — premium centered YouTube feature */
+
+.astro-spotlight {
+  padding: 3.5rem 0 4rem;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(212, 168, 83, 0.1), transparent 70%),
+    linear-gradient(180deg, #ffffff 0%, #faf7f1 100%);
+  border-top: 1px solid rgba(7, 51, 73, 0.06);
+}
+
+.astro-spotlight__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.astro-spotlight__head {
+  text-align: center;
+  max-width: 36rem;
+  margin: 0 auto 1.75rem;
+}
+
+.astro-spotlight__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.7rem;
+  padding: 0.28rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(6, 66, 51, 0.06);
+  border: 1px solid rgba(212, 168, 83, 0.4);
+  color: #064233;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.astro-spotlight__head h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-weight: 700;
+  color: #073349;
+  line-height: 1.15;
+}
+
+.astro-spotlight__head p {
+  margin: 0.65rem 0 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #6b7c86;
+}
+
+.astro-spotlight__stage {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.astro-spotlight__frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.35rem;
+  background: #ffffff;
+  border: 1px solid rgba(7, 51, 73, 0.1);
+  box-shadow:
+    0 22px 50px rgba(7, 51, 73, 0.1),
+    0 2px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.astro-spotlight__trim {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212, 168, 83, 0.35) 20%,
+    #d4a853 50%,
+    rgba(212, 168, 83, 0.35) 80%,
+    transparent 100%
+  );
+}
+
+.astro-spotlight__player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #0b1f28;
+}
+
+.astro-spotlight__player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.astro-spotlight__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: #0b1f28;
+}
+
+.astro-spotlight__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.88;
+  transition: opacity 0.25s ease, transform 0.35s ease;
+}
+
+.astro-spotlight__poster:hover img {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.astro-spotlight__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(160deg, #e74660 0%, #c9364d 100%);
+  box-shadow:
+    0 12px 30px rgba(231, 70, 96, 0.4),
+    0 0 0 10px rgba(255, 255, 255, 0.14);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.astro-spotlight__poster:hover .astro-spotlight__play {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.astro-spotlight__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem 1.15rem;
+  background: linear-gradient(180deg, #fffdf9 0%, #faf6ee 100%);
+  border-top: 1px solid rgba(7, 51, 73, 0.06);
+}
+
+.astro-spotlight__meta strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #073349;
+}
+
+.astro-spotlight__meta span {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  color: #6b7c86;
+}
+
+.astro-spotlight__yt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  background: #064233;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.astro-spotlight__yt:hover {
+  background: #043529;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .astro-spotlight {
+    padding: 2.75rem 0 3.25rem;
+  }
+
+  .astro-spotlight__meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .astro-spotlight__yt {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .astro-spotlight__play {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+}

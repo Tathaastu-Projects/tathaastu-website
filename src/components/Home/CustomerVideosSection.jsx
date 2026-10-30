@@ -3,10 +3,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 import { Link } from "@/lib/router";
-import { CATALOG_PRODUCTS } from "../../data/catalogProducts";
-import { formatInr } from "../../data/storeData";
-
-const productBySlug = Object.fromEntries(CATALOG_PRODUCTS.map((product) => [product.slug, product]));
+// Store products temporarily disabled
+// import { CATALOG_PRODUCTS } from "../../data/catalogProducts";
+// import { formatInr } from "../../data/storeData";
+// const productBySlug = Object.fromEntries(CATALOG_PRODUCTS.map((product) => [product.slug, product]));
 
 /** Max videos decoding/playing at once — keeps the page smooth. */
 const MAX_CONCURRENT_PLAY = 2;
@@ -33,7 +33,8 @@ function VideoCard({ item, shouldLoad, shouldPlay, registerVideo }) {
   const cardRef = useRef(null);
   const muteChoice = useRef(true);
   const [muted, setMuted] = useState(true);
-  const product = productBySlug[item.productSlug];
+  // Store products temporarily disabled
+  // const product = productBySlug[item.productSlug];
 
   useEffect(() => {
     registerVideo(item.id, { cardRef, videoRef });
@@ -120,6 +121,7 @@ function VideoCard({ item, shouldLoad, shouldPlay, registerVideo }) {
           {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
         </button>
         {item.overlay ? <p className="astro-video-card__overlay">{item.overlay}</p> : null}
+        {/* Store products temporarily disabled
         {product ? (
           <div className="astro-video-card__shop">
             <img src={product.image} alt="" />
@@ -133,13 +135,12 @@ function VideoCard({ item, shouldLoad, shouldPlay, registerVideo }) {
                 <i />
               </span>
             </div>
-            {/* Temporarily commented out Abhimantrit Store link per user request:
             <a href="https://www.abhimantritstore.com/" target="_blank" rel="noopener noreferrer" className="astro-video-card__buy">
               Shop
             </a>
-            */}
           </div>
         ) : null}
+        */}
       </div>
     </article>
   );

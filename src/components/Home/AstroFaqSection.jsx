@@ -1,17 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { Link } from "@/lib/router";
-import { ArrowRight, Plus, Sparkles, MessageCircle } from "lucide-react";
+import { ArrowRight, Plus, MessageCircle } from "lucide-react";
 import "./astro-faq.css";
-
-export const FAQ_CATEGORIES = [
-  "All",
-  "General",
-  "Consultations",
-  "Kundli & Charts",
-  "Privacy & Safety",
-];
 
 export const HOME_FAQS = [
   {
@@ -52,13 +44,7 @@ export const HOME_FAQS = [
 ];
 
 export default function AstroFaqSection({ id = "faq" }) {
-  const [activeCategory, setActiveCategory] = useState("All");
   const [openFaq, setOpenFaq] = useState(0);
-
-  const filteredFaqs = useMemo(() => {
-    if (activeCategory === "All") return HOME_FAQS;
-    return HOME_FAQS.filter((f) => f.category === activeCategory);
-  }, [activeCategory]);
 
   const toggleFaq = (idx) => {
     setOpenFaq((prev) => (prev === idx ? -1 : idx));
@@ -66,47 +52,21 @@ export default function AstroFaqSection({ id = "faq" }) {
 
   return (
     <section id={id} className="astro-faq-section" aria-labelledby="faq-title">
-      {/* Decorative ambient background flares */}
       <div className="astro-faq-ambient astro-faq-ambient--top" aria-hidden="true" />
       <div className="astro-faq-ambient astro-faq-ambient--bottom" aria-hidden="true" />
 
       <div className="astro-faq-container">
-        {/* Header */}
         <div className="astro-faq-head">
-          <div className="astro-faq-badge">
-            <Sparkles className="h-3.5 w-3.5 astro-faq-badge__sparkle" />
-            <span>Clarity & Spiritual Guidance</span>
-          </div>
           <h2 id="faq-title" className="astro-faq-title">
             Frequently Asked <span>Questions</span>
           </h2>
           <p className="astro-faq-sub">
             Everything you need to know about Tathaastu, consultations, and your Vedic spiritual journey.
           </p>
-
-          {/* Category Filter Chips */}
-          <div className="astro-faq-filters" role="tablist" aria-label="FAQ categories">
-            {FAQ_CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                role="tab"
-                aria-selected={activeCategory === cat}
-                onClick={() => {
-                  setActiveCategory(cat);
-                  setOpenFaq(0);
-                }}
-                className={`astro-faq-filter-btn ${activeCategory === cat ? "is-active" : ""}`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Centered Accordion List */}
         <div className="astro-faq">
-          {filteredFaqs.map((item, idx) => {
+          {HOME_FAQS.map((item, idx) => {
             const open = openFaq === idx;
             const num = String(idx + 1).padStart(2, "0");
             return (
@@ -124,7 +84,6 @@ export default function AstroFaqSection({ id = "faq" }) {
                     {num}
                   </span>
                   <div className="astro-faq__q-wrap">
-                    <span className="astro-faq__category-tag">{item.category}</span>
                     <span className="astro-faq__q">{item.q}</span>
                   </div>
                   <span className={`astro-faq__toggle ${open ? "is-open" : ""}`} aria-hidden="true">
@@ -141,7 +100,6 @@ export default function AstroFaqSection({ id = "faq" }) {
           })}
         </div>
 
-        {/* Support Help Banner */}
         <div className="astro-faq-support">
           <div className="astro-faq-support__left">
             <div className="astro-faq-support__copy">
