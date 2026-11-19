@@ -9,6 +9,8 @@ const nextConfig = {
   outputFileTracingRoot: path.join(__dirname),
   poweredByHeader: false,
   reactStrictMode: true,
+  // Hide the floating Next.js "N" Dev Tools badge (bottom-left).
+  devIndicators: false,
   images: {
     // Keep Vite-style imports (`import img from './a.png'`) as URL strings so
     // existing <img src={imported}> usage stays valid. Prefer compressing
